@@ -1,0 +1,52 @@
+{
+  "presets": [
+    "@babel/preset-flow",
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "@babel/plugin-syntax-class-properties",
+    "@babel/plugin-syntax-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import"
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "@babel/preset-flow",
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "8.14.0"
+            }
+          }
+        ]
+      ],
+      "plugins": [
+        "babel-plugin-dynamic-import-node"
+      ]
+    },
+    "node": {
+      "presets": [
+        "@babel/preset-flow",
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": "8.14.0"
+            }
+          }
+        ]
+      ],
+      "plugins": [
+        "babel-plugin-dynamic-import-node"
+      ]
+    }
+  },
+  "overrides": [{
+    "test": "./src/**/*.ts",
+    "presets": [
+      "@babel/preset-typescript",
+      "@babel/preset-env"
+    ]
+  }]
+}
