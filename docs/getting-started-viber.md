@@ -8,6 +8,8 @@ Information will be asked for the first time when developing games on Viber:
 
 1. The name of the game
 2. The name of the orgnization
+3. Your Apple Developer Team ID
+4. An URL to your privacy policy
 
 We will give you back these information:
 
