@@ -13,4 +13,4 @@
 |`landing`|from landing page in /viber-play/, used to be `rgdeeplink`||
 |`clicker`|from Viber sticker clicker button||
 |`platform_ad`|ad campaign run by platform owner||
-|(empty)|if entry point is empty, it's either user opened link directly or it is traffic of other source (referral, search etc.). utm paramters might help to figure out that.||
+|`unknown`|if entry point is empty, it's either user opened link directly or it is traffic of other source (referral, search etc.). utm paramters might help to figure out that.||
