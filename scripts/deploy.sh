@@ -5,7 +5,7 @@ asset_upload_access_token=bar
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 version=$(git describe --abbrev=0 --tags)
 cdn_id=cdn-rgames-jp-lb
-gs_path_root=gs://rgames-portal-jp-production.appspot.com/static/libs/viber-play-sdk # TODO: move to another bucket and set up CDN
+gs_path_root=gs://rgames-portal-jp-production.appspot.com/static/libs/viber-play-sdk
 
 mkdir -p build
 
