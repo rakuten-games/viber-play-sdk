@@ -62,6 +62,11 @@ const initGCN = viberPlaySdk =>
     viberPlaySdk.switchGameAsync
   );
 
+/**
+ * Top level namespace wrapping the SDK's interfaces.
+ * @namespace ViberPlay
+ */
+
 const viberPlaySdk = {
   /**
    * Initialize the SDK for the game. In the background, SDK will try to
