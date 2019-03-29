@@ -46,7 +46,7 @@ FBInstant SDK won't be used in your Viber build for the game. Please make sure i
 Viber Play SDK is the interface for game developers to inter\act with platform features on Viber. Insert it before any game script.
 
 ```diff
-+ <script src="https://cdn.rgames.jp/static/libs/viber-play-sdk/x.x/bundle.js"></script>
++ <script src="https://vbrpl.io/libs/viber-play-sdk/x.x/bundle.js"></script>
   <script src="{{YOUR_GAME_SCRIPT}}"></script>
 ```
 
