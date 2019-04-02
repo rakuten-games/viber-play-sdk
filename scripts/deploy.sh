@@ -5,7 +5,7 @@ asset_upload_access_token=bar
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 version=$(git describe --abbrev=0 --tags)
 cdn_id=cdn-rgames-jp-lb
-gs_path_root=gs://rgames-portal-jp-production.appspot.com/static/libs/viber-play-sdk
+gs_path_root=gs://vbrpl-libs/libs/viber-play-sdk
 
 mkdir -p build
 
@@ -37,7 +37,7 @@ build_and_deploy_unstable() {
     cp -a public-read build/$i/* $gs_path_root/$i/
 
   echo "Invalidating cache..."
-  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/static/libs/viber-play-sdk/$i/bundle.js" &
+  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
 }
 
 build_and_deploy_stable() {
@@ -66,7 +66,7 @@ build_and_deploy_stable() {
     gsutil -m cp -a public-read build/$version/* $gs_path_root/$i/
 
     echo "Invalidating cache..."
-    gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/static/libs/viber-play-sdk/$i/bundle.js" &
+    gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
   done
 }
 
