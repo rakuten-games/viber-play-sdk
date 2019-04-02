@@ -62,7 +62,7 @@ export function addToWhiteList(host) {
   );
 }
 
-['vbrpl.io'].map(addToWhiteList);
+['vbrpl.io', 'rgames.jp'].map(addToWhiteList);
 
 function checkWhitelist(origin) {
   for (const matcher of originWhitelist) {
