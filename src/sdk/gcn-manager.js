@@ -176,23 +176,23 @@ const GCNManager = new class {
   }
 
   hasPreloadedAds() {
-    return this.client
-      ? this.client.adInstances.length > 0
-      : false;
+    return !this.client
+      ? false
+      : this.client.adInstances.length > 0;
   }
 
   preload(placementId) {
     return !this.client
-      ? Promise.reject(notLoadedError);
+      ? Promise.reject(notLoadedError)
       : this.client.preloadAd({
         ingamePlacementID: placementId
       });
   }
 
   show(placementId) {
-    return this.client
-      ? this.client.showPreloadedAd(placementId)
-      : Promise.reject(notLoadedError);
+    return !this.client
+      ? Promise.reject(notLoadedError)
+      : this.client.showPreloadedAd(placementId);
   }
 }();
 
