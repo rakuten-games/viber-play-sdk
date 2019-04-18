@@ -70,7 +70,7 @@ const GCN_APP_ID_ALIASES = {
   }
 };
 
-const notLoadedError = new Error('client not loaded');
+const notLoadedError = new Error('GCN client not loaded');
 
 const GCNManager = new class {
   constructor() {
@@ -176,9 +176,7 @@ const GCNManager = new class {
   }
 
   hasPreloadedAds() {
-    return !this.client
-      ? false
-      : this.client.adInstances.length > 0;
+    return !!(this.client && this.client.adInstances.length > 0);
   }
 
   preload(placementId) {
