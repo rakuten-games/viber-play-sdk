@@ -70,6 +70,8 @@ const GCN_APP_ID_ALIASES = {
   }
 };
 
+const notLoadedError = new Error('GCN client not loaded');
+
 const GCNManager = new class {
   constructor() {
     this.client = null;
@@ -81,12 +83,16 @@ const GCNManager = new class {
     getSignedPlayerInfo,
     switchGameAsync
   ): Promise<GCNClientInstance> {
+    const game = GCN_APP_ID_ALIASES[gameId];
+    if (!game) {
+      return Promise.resolve();
+    }
+
     if (GCNManager.initPromise) {
       return GCNManager.initPromise;
     }
 
-    const game = GCN_APP_ID_ALIASES[gameId];
-    const gcnGameId = game ? game.gameId : gameId;
+    const gcnGameId = game.gameId;
     const amplitudeKey =
       game && game.env === 'prod'
         ? process.env.GCN_PROD_AMPLITUDE_KEY
@@ -132,8 +138,6 @@ const GCNManager = new class {
           new AmplitudeTracker('gcn', amplitudeKey, playerId),
           platform
         );
-
-        return this.client;
       })
       .then(() => getSignedPlayerInfo())
       .then(result => result.getSignature())
@@ -159,7 +163,6 @@ const GCNManager = new class {
         if (this.client.initialized) return this.client;
 
         this.client.setAuthToken(token);
-        return this.client;
       })
       .catch(err => {
         if (err.message === 'GCN_SESSION_ERROR') {
@@ -173,17 +176,21 @@ const GCNManager = new class {
   }
 
   hasPreloadedAds() {
-    return this.client.adInstances.length > 0;
+    return !!(this.client && this.client.adInstances.length > 0);
   }
 
   preload(placementId) {
-    return this.client.preloadAd({
-      ingamePlacementID: placementId
-    });
+    return !this.client
+      ? Promise.reject(notLoadedError)
+      : this.client.preloadAd({
+        ingamePlacementID: placementId
+      });
   }
 
   show(placementId) {
-    return this.client.showPreloadedAd(placementId);
+    return !this.client
+      ? Promise.reject(notLoadedError)
+      : this.client.showPreloadedAd(placementId);
   }
 }();
 
