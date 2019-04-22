@@ -1,7 +1,5 @@
 #!/bin/bash
 
-debug_tool_game_id=foo
-asset_upload_access_token=bar
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 version=$(git describe --abbrev=0 --tags)
 cdn_id=cdn-rgames-jp-lb
