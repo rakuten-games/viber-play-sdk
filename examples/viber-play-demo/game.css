@@ -1,0 +1,45 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font: 12px sans-serif;
+  -webkit-text-size-adjust: 100%;
+  background: #fff;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.section{
+  margin: 2em 1em;
+}
+
+h2 {
+  margin: 0;
+  font-size: 120%;
+}
+
+.to-toc {
+  float: right;
+}
+
+.to-sec {
+  display: block;
+}
+
+/* for code-example */
+
+.CodeMirror {
+  height: auto;
+}
+
+.compiled-example-code {
+  margin: 1em 0;
+}

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1, user-scalable=no"
+/>
+<title>Viber Play Demo</title>
+<link rel="stylesheet" href="./libs/codemirror/5.37.0/codemirror.css" />
+<link rel="stylesheet" href="./libs/codemirror/5.37.0/theme/monokai.css" />
+<link rel="stylesheet" href="./game.css" />
+<script>
+document.write(
+  '<scr' +
+    'ipt src="' +
+    (/localhost/.test(location.href)
+      ? '../../lib/bundle.js'
+      : 'https://vbrpl.io/libs/viber-play-sdk/next/bundle.js') +
+    '"></scr' +
+    'ipt>'
+);
+</script>
+</head>
+
+<body>
+<div class="wrapper">
+<div class="toc section" id="toc">
+<h2>table of content</h2>
+</div>
+
+<div class="section">
+<h2>ua string</h2>
+<script class="example-code" type="text/plain">
+console.log(navigator.userAgent);
+</script>
+</div>
+
+<div class="section">
+<h2>inline video</h2>
+<div id="inline-video-placeholder"></div>
+<script class="example-code" type="text/plain">
+document.querySelector('#inline-video-placeholder').innerHTML =
+'<video playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4" style="width:280px;height:210px;"></video>';
+</script>
+<script class="example-code" type="text/plain">
+document.querySelector('#inline-video-placeholder').innerHTML =
+'<video autoplay muted loop playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4" style="width:280px;height:210px;"></video>';
+</script>
+<script class="example-code" type="text/plain">
+// get ref to video element
+window.vid = document.querySelector('#inline-video-placeholder > video');
+</script>
+<script class="example-code" type="text/plain">
+vid.play();
+</script>
+<script class="example-code" type="text/plain">
+vid.pause();
+</script>
+<script class="example-code" type="text/plain">
+// clean up video element
+document.querySelector('#inline-video-placeholder').innerHTML = '';
+</script>
+</div>
+
+<div class="section">
+<h2>screen size</h2>
+<script class="example-code" type="text/plain">
+console.log(window.innerWidth, window.innerHeight);
+</script>
+</div>
+
+<div class="section">
+<h2>hijack console</h2>
+<script class="example-code" type="text/plain">
+window.test1();
+window.test2();
+console.log('test3');
+</script>
+<script class="example-code" type="text/plain">
+console.log('LOG');
+console.log('1', '2', '3');
+
+console.log(NaN);
+console.log(Infinity);
+console.log(-Infinity);
+console.log(null);
+console.log(undefined);
+console.log(window);
+
+console.info('INFO');
+
+console.warn('WARN');
+
+console.error({code: 'ERROR'});
+console.error(new TypeError('ERROR'));
+</script>
+</div>
+
+<div class="section">
+<h2>initialize</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.initializeAsync()
+  .then(() => ViberPlay.setLoadingProgress(0))
+  .then(() => ViberPlay.setLoadingProgress(10))
+  .then(() => ViberPlay.setLoadingProgress(50))
+  .then(() => ViberPlay.setLoadingProgress(100))
+  .then(() => ViberPlay.startGameAsync())
+  .then(() => console.log('Game is loaded and started'));
+</script>
+</div>
+
+<div class="section">
+<h2>game bot (wip)</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.player.canSubscribeBotAsync()
+  .then((result) => console.log(result));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.player.subscribeBotAsync()
+  .then(() => console.log('ok'))
+  .catch((err) => console.error(err));
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  ViberPlay.subscribePlatformBotAsync();
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  ViberPlay.setSessionData({
+    "test-data-1": "test1",
+    "test-data-2": "test2"
+  });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+</div>
+
+<div class="section">
+<h2>ad viber (experimental)</h2>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  window.preloadedAd = null;
+
+  ViberPlay.getAdAsync(
+    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+  )
+    .then(function(ad) {
+      preloadedAd = ad;
+      return preloadedAd.loadAsync();
+    })
+    .then(function() {
+      console.log('ad preloaded');
+    })
+    .then(function() {
+      preloadedAd.showAsync();
+    })
+    .then(function() {
+      console.log('ad shown');
+    })
+    .catch(function(err){
+      console.error(err);
+    });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  window.preloadedAd = null;
+
+  ViberPlay.getRewardedAdAsync(
+    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+  )
+    .then(function(rewardedAd) {
+      preloadedAd = rewardedAd;
+      return preloadedAd.loadAsync();
+    })
+    .then(function() {
+      console.log('rewardedAd preloaded');
+    })
+    .then(function() {
+      preloadedAd.showAsync();
+    })
+    .then(function() {
+      console.log('rewardedAd shown');
+    })
+    .catch(function(err){
+      console.error(err);
+    });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+  if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+    window.preloadedAd = null;
+
+  ViberPlay.getInterstitialAdAsync(
+    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+  )
+    .then(function(interstitialAd) {
+      preloadedAd = interstitialAd;
+      return preloadedAd.loadAsync();
+    })
+    .then(function() {
+      console.log('interstitialAd preloaded');
+    })
+    .then(function() {
+      preloadedAd.showAsync();
+    })
+    .then(function() {
+      console.log('interstitialAd shown');
+    })
+    .catch(function(err){
+      console.error(err);
+    });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+</div>
+
+<div class="section">
+<h2>leaderboard</h2>
+<script class="example-code" type="text/plain">
+// Store global leaderboard to window.l9d
+ViberPlay.getLeaderboardAsync(`global_leaderboard`)
+  .then((leaderboard) => {
+    window.l9d = leaderboard;
+    console.log('Fetched leaderboard');
+  });
+</script>
+<script class="example-code" type="text/plain">
+// Store contextual leaderboard to window.l9d
+ViberPlay.getLeaderboardAsync(`context_leaderboard.${ViberPlay.context.getID()}`)
+  .then((leaderboard) => {
+    window.l9d = leaderboard;
+    console.log('Fetched leaderboard');
+  });
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9d.getName());
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9d.getContextID());
+</script>
+<script class="example-code" type="text/plain">
+window.l9d.getEntryCountAsync().then(console.log);
+</script>
+<script class="example-code" type="text/plain">
+// Store leaderboard entry to window.l9dEntry
+window.l9d.setScoreAsync(100, 'hello')
+  .then((entry) => {
+    window.l9dEntry = entry;
+    console.log('Score is set. Entry is stored at window.l9dEntry');
+  });
+</script>
+<script class="example-code" type="text/plain">
+// Store leaderboard entry to window.l9dEntry
+window.l9d.getPlayerEntryAsync()
+  .then((entry) => {
+    if (!entry) {
+      console.log('No player entry found');
+      return;
+    }
+
+    window.l9dEntry = entry;
+    console.log('Fetched player entry');
+  });
+</script>
+<script class="example-code" type="text/plain">
+// Store top 10 leaderboard entries to window.l9dEntries
+window.l9d.getEntriesAsync(10, 0)
+  .then((entries) => {
+    window.l9dEntries = entries;
+    console.log(`Fetched ${entries.length} entries.`);
+  });
+</script>
+<script class="example-code" type="text/plain">
+// Store top 10 leaderboard connected player entries to window.l9dEntries
+window.l9d.getConnectedPlayerEntriesAsync(10, 0)
+  .then((entries) => {
+    window.l9dEntries = entries;
+    console.log(`Fetched ${entries.length} entries.`);
+  });
+</script>
+</div>
+
+<div class="section">
+<h2>leaderboard entry</h2>
+<script class="example-code" type="text/plain">
+console.log(window.l9dEntry.getScore());
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9dEntry.getFormattedScore());
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9dEntry.getTimestamp());
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9dEntry.getRank());
+</script>
+<script class="example-code" type="text/plain">
+console.log(window.l9dEntry.getExtraData());
+</script>
+</div>
+
+<div class="section">
+<h2>leaderboard player</h2>
+<script class="example-code" type="text/plain">
+const player = window.l9dEntry.getPlayer();
+console.log(JSON.stringify({
+  id: player.getID(),
+  name: player.getName(),
+  photo: player.getPhoto(),
+}));
+</script>
+</div>
+
+<div class="section">
+<h2>context</h2>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.context.getID());
+</script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.context.getType());
+</script>
+<script class="example-code" type="text/plain">
+console.log(JSON.stringify(ViberPlay.context.isSizeBetween(2, 2)));
+</script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.context.isSizeBetween(null, null));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.getPlayersAsync()
+  .then((players) => console.log(JSON.stringify(players.map(player =>
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()})))));
+</script>
+</div>
+
+<div class="section">
+<h2>context switch</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.context.createAsync(prompt())
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.createAsync('4793589783592960')
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.switchAsync(ViberPlay.context.getID())
+  .catch((err) => console.log(err));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.switchAsync(prompt())
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.switchAsync('5356498330845184')
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+</div>
+
+<div class="section">
+<h2>context choose</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync()
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['NEW_CONTEXT_ONLY']})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['INCLUDE_EXISTING_CHALLENGES']})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['NEW_PLAYERS_ONLY']})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({minSize: 3})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+</div>
+
+<div class="section">
+<h2>update</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: {
+    default: 'Play in l10n fallback',
+    localizations: {
+      ja_JP: 'Play in ja_JP',
+      en_US: 'Play in en_US',
+      ru_RU: 'Play in ru_RU',
+    },
+  },
+  template: 'play_turn',
+  image: b64Img,
+  text: {
+    default: 'This is update async test message in l10n fallback',
+    localizations: {
+      ja_JP: 'This is update async test message in ja_JP',
+      en_US: 'This is update async test message in en_US',
+      ru_RU: 'This is update async test message in ru_RU',
+    },
+  },
+  data: {foo: 'bar'},
+  strategy: 'IMMEDIATE',
+}).then(() => console.log('ok'));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: 'Play',
+  template: 'play_turn',
+  image: b64Img,
+  text: 'This is IMMEDIATE update async test message',
+  data: {foo: 'bar'},
+  strategy: 'IMMEDIATE',
+}).then(() => console.log('ok'));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: 'Play',
+  template: 'play_turn',
+  image: b64Img,
+  text: 'This is a LAST update async test message to be cancelled',
+  data: {foo: 'bar'},
+  strategy: 'LAST',
+}).then(() => console.log('ok'));
+
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: 'Play',
+  template: 'play_turn',
+  image: b64Img,
+  text: 'This is LAST update async test message',
+  data: {foo: 'bar'},
+  strategy: 'LAST',
+}).then(() => console.log('ok'));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: 'Play',
+  template: 'play_turn',
+  image: b64Img,
+  text: 'This is a LAST update async test message to be cancelled',
+  data: {foo: 'bar'},
+  strategy: 'LAST',
+}).then(() => console.log('ok'));
+
+ViberPlay.updateAsync({
+  action: 'CUSTOM',
+  cta: 'Play',
+  template: 'play_turn',
+  image: b64Img,
+  text: 'This is IMMEDIATE_CLEAR update async test message',
+  data: {foo: 'bar'},
+  strategy: 'IMMEDIATE_CLEAR',
+}).then(() => console.log('ok'));
+</script>
+</div>
+
+<div class="section">
+<h2>share</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.shareAsync({
+  intent: 'REQUEST',
+  image: b64Img,
+  text: 'This is share async test message',
+  data: {foo: 'bar'}
+}).then(() => console.log('ok'));
+</script>
+<script class="example-code" type="text/plain">
+console.log(JSON.stringify(ViberPlay.getEntryPointData()));
+</script>
+</div>
+
+<div class="section">
+<h2>player</h2>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.player.getID());
+</script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.player.getName());
+</script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.player.getPhoto());
+</script>
+</div>
+
+<div class="section">
+<h2>player data</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.player.getDataAsync(['hp'])
+  .then((data) => console.log('hp is ' + data.hp));
+</script>
+<script class="example-code" type="text/plain">
+var hp = Math.random();
+ViberPlay.player.setDataAsync({ hp: hp })
+  .then(() => console.log('hp is set to ' + hp));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.player.setDataAsync({ hp: null })
+  .then(() => console.log('hp is set to ' + null));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.player.setDataAsync({ hp: oneMegabytePayload })
+  .then(() => console.log('hp is set to oneMegabytePayload'))
+  .catch(() => console.log('oneMegabytePayload is refused'));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.player.flushDataAsync()
+  .then(() => console.log('flushed'));
+</script>
+</div>
+
+<div class="section">
+<h2>connected player</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.player.getConnectedPlayersAsync()
+  .then((players) => console.log(JSON.stringify(players.map(player =>
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()})))));
+</script>
+</div>
+
+<div class="section">
+<h2>signed info</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.player.getSignedPlayerInfoAsync('my_metadata')
+  .then((result) => {
+    console.log('id: ' + result.getPlayerID() + ', signature: ' + result.getSignature());
+  });
+</script>
+</div>
+
+<div class="section">
+<h2>misc</h2>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.getLocale());
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.quit();
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  console.log(ViberPlay.getTrafficSource());
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.getEntryPointAsync().then(console.log);
+</script>
+</div>
+
+<div class="section">
+<h2>cors</h2>
+<script class="example-code" type="text/plain">
+fetch(ViberPlay.player.getPhoto())
+  .then((data) => { console.log('Photo fetched'); })
+  .catch(() => { console.log(`Failed to fetch ${ViberPlay.player.getPhoto()}`); });
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.player.getConnectedPlayersAsync()
+  .then((players) => {
+    players.slice(0, 5).forEach(player => {
+      fetch(player.getPhoto())
+        .then((data) => { console.log(`Photo fetched`); })
+        .catch(() => { console.log(`Failed to fetch ${player.getPhoto()}`); });
+    })
+  })
+</script>
+</div>
+
+<div class="section">
+<h2>game switch</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.switchGameAsync('GZyjMh6RX5HLMcHdX9WkTGyI8047eEsa', {
+  hello: 'world'
+});
+</script>
+<script class="example-code" type="text/plain">
+// payload unserializable
+ViberPlay.switchGameAsync('GZyjMh6RX5HLMcHdX9WkTGyI8047eEsa', window)
+  .catch((err) => console.error(err));
+</script>
+<script class="example-code" type="text/plain">
+// payload over size
+ViberPlay.switchGameAsync('GZyjMh6RX5HLMcHdX9WkTGyI8047eEsa', {
+  hp: oneMegabytePayload
+})
+  .catch((err) => console.error(err));
+</script>
+<script class="example-code" type="text/plain">
+// game not exists
+ViberPlay.switchGameAsync('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+  .catch((err) => console.error(err));
+</script>
+</div>
+
+<div class="section">
+<h2>sandbox</h2>
+<script class="example-code" type="text/plain"></script>
+</div>
+
+<div style="height:70vh"></div>
+</div>
+
+<script src="./libs/codemirror/5.37.0/codemirror.js"></script>
+<script src="./libs/codemirror/5.37.0/mode/javascript/javascript.js"></script>
+<script src="logger.js"></script>
+<script>
+var oneMegabytePayload = '1';
+
+for (var i = 0; i < 20; i++) {
+  oneMegabytePayload += oneMegabytePayload;
+}
+
+var b64Img =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAYAAABccqhmAAAM80lEQVR4Xu3ZWajvcxfH8e8xZYpQ5jgyXBAyZQgRKSWUMs8XIgoZEpIyZihxQYYL3EiGokTmC1OmKBEZIslcZsewn9avZ++2cx776bnQWk/r9S855+z932ut92f93v/v77cXzczMzAwvBBBoSWARAbTM3dAITAQIwCIg0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECKBx+EZHgADsAAKNCRBA4/CNjgAB2AEEGhMggMbhGx0BArADCDQmQACNwzc6AgRgBxBoTIAAGodvdAQIwA4g0JgAATQO3+gIEIAdQKAxAQJoHL7RESAAO4BAYwIE0Dh8oyNAAHYAgcYECOD/IPwlS5aMP/74Y6yyyir/aLc//fTTWHHFFaf/vHoQIICknH///fdxzDHHjPPPP3/stNNOC3Zx2223jUceeWQ8+OCD/2i3e+655zj77LPHYYcd9o/W8cPrECCApCxmZmbGxRdfPE466aSxxRZbEEBSDt3LEkDiBsQpYPnllx+LFi2a6+LTTz8dq6666lhrrbXm/m3pE8Cff/45QiDx3nj98ssv47PPPhubbrrpWG655aZ/i++JV/z9448/HhtttNHc988fOXqIr8d7991333HmmWf+5QTwzTffjF9//XVssMEGc2+L96ywwgpT3e+++26su+6609d+/vnn8fXXX4+NN954Gar/aa5E9Er/mwABJK7CJptsMu6///6xyy67jLhADj/88OmCiv/22WefERf+SiutNP1/9hbg22+/HXvssce49tprx0EHHTRuvvnmcc0114zFixePr776ajz00ENjs802m97z5ptvjnfffXd88MEH46WXXhprr732X6Z9+umnx9FHHz023HDDERf1999/P/3cuAX47bffxqmnnjpefPHFSUjrr7/+1Gv0EzKJW5dbbrllfPnll+OEE04YW2655bjpppumOeJ9V1999VRrobkS0StNAPk7MF8ABx988Nhqq63GddddN33iHnjggeOAAw4YF1xwwZwA7rvvvumi33///cc555wzXn311XHUUUeNl19+eay55prjzjvvHE8++eS46667pvecddZZ46mnnhq77rrrMsP++OOP00V7ww03zIknRHTllVdOAoh/f/7558c999wznSLiVmWvvfYaJ5988iSAY489drrI33///ennXHbZZdMtzeuvvz523333ET8/TigLzZWfgA6cABJ3YFYA22233Vh99dXHhx9+OHd8jos9ZBCfwLMngLjQ4gJ7/PHHp64vueSS8c4770wXZbziBHDFFVeMt99+e3pPfGI/+uij09dee+218cUXX0x/3nbbbacL9/jjjx8fffTRHIH5DwH33nvvSUA777zz9PUQSZwQ4sQRAnj44YfHjjvuOH0tTghvvPHGJIL4bUXcHnz++eeTlBaaKxG90k4A+TswK4C4/15vvfXGDz/8MFZbbbWpsfgkj6P0e++9N13MF1100XSBxf16HN3jweHpp58+3nrrrel2YfYVzw7iPj7eExdp3BLE6/bbb5++N15xavjkk0+mT/s4Rcy+5gtgm222mW5N4tZi9rXDDjuMQw45ZBkBrLHGGtPPif7iFc804plEnBwWmis/AR04ASTuwPxbgLgPv/vuu8d+++03dRSf5PFpHyeBuJjjYn3llVemT/V77713OgXceuut44EHHhiPPfbYMlMsLYClvyE+seNIHxfqrHR22223cd555023ACGJOClceOGFy/zspU8AfyeAeG6w0FyJ6JV2AsjfgfkCiPv2Sy+9dFx++eXTg7UQwBNPPDHi9mD+Q8B4uh8PAU877bRxxBFHTEf0OAEceuih07E+PnHjz/9NADF9PPWPi/fEE0+cJBL3+3fcccckgLiNiK+HELbffvvx3HPPTQ8M41P+fxHAQnPlJ6ADJ4DEHZgvgGjjmWeemT7h4xM57uvjoWC84ngdtwJHHnnk9Pc4ysdtwBlnnDHdNsTT+HgWsPnmm08P6+KTN94TvwGIT/K/e8WDuhtvvHG6HYiHdfHkP37G1ltvPb0lnkmEEOLZQdwOHHfccWPllVce119//SSD2V8NXnXVVeOUU04Z66yzzvS+ENm555473f8vNFcieqWdAPJ3IH4t9+yzz05HbS8EMgg4ASRQn/9kPz5l41PVC4EMAgSQQD2O5i+88MJ0jx23AV4IZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgAABFAhBCwhkESCALPLqIlCAAAEUCEELCGQRIIAs8uoiUIAAARQIQQsIZBEggCzy6iJQgMC/ACxHmlvWjhvWAAAAAElFTkSuQmCC';
+
+function wait(duration) {
+  return () => new Promise(resolve => setTimeout(resolve, duration));
+}
+
+function testGameStart() {
+  const isSimulator = /(#|&)platform=simulator/i.test(
+    window.location.href
+  );
+  const initConfig = Object.assign(
+    {},
+    isSimulator && { platform: 'simulator' }
+  );
+
+  Promise.resolve()
+    .then(() => {
+      ViberPlay.setLoadingProgress(0);
+      console.log('setLoadingProgress: 0');
+    })
+    .then(wait(200))
+    .then(() => {
+      ViberPlay.setLoadingProgress(10);
+      console.log('setLoadingProgress: 10');
+    })
+    .then(wait(200))
+    .then(() => {
+      ViberPlay.setLoadingProgress(50);
+      console.log('setLoadingProgress: 50');
+    })
+    .then(wait(200))
+    .then(() => {
+      ViberPlay.setLoadingProgress(100);
+      console.log('setLoadingProgress: 100');
+    })
+    .then(wait(200))
+    .then(() => {
+      console.log('startGameAsync called');
+      return ViberPlay.startGameAsync();
+    })
+    .then(() => {
+      console.log('startGameAsync resolved');
+    });
+
+  return Promise.resolve()
+    .then(() => {
+      console.log('initializeAsync called');
+      return ViberPlay.initializeAsync(initConfig);
+    })
+    .then(() => {
+      console.log('initializeAsync resolved');
+    });
+}
+</script>
+<script>
+// initialize game
+testGameStart();
+
+window.test2 = () => {
+  console.log('test2');
+};
+</script>
+<script>
+function createTOC() {
+  var toc = document.querySelector('.toc');
+  document.querySelectorAll('h2').forEach(function(el) {
+    var id = el.textContent.replace(/\W/g, '-');
+    el.id = id;
+    var anchor = document.createElement('a');
+    anchor.className = 'to-sec';
+    anchor.href = '#' + id;
+    anchor.textContent = id;
+    toc.appendChild(anchor);
+
+    var toTopAnchor = document.createElement('a');
+    toTopAnchor.className = 'to-toc';
+    toTopAnchor.textContent = 'top';
+    toTopAnchor.href = '#toc';
+    el.insertBefore(toTopAnchor, el.childNodes[0]);
+  });
+}
+
+createTOC();
+</script>
+<script src="example-code.js"></script>
+</body>
+</html>
