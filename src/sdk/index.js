@@ -74,10 +74,10 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @private
    */
-  initializeAsync: (): Promise<void> =>
+  initializeAsync: (options: object): Promise<void> =>
     // TODO: prevent run more than once
     conn
-      .request('sgInitialize')
+      .request('sgInitialize', options)
       .then(({ player, context, entryPointData, trafficSource }) => {
         state.player = player;
         state.context = context;
