@@ -32,7 +32,7 @@ build_and_deploy_unstable() {
 
   echo "Uploading $i..."
   gsutil -m -h 'Cache-Control: no-cache, no-store, must-revalidate' \
-    cp -a public-read build/$i/* $gs_path_root/$i/
+    cp -Z -a public-read build/$i/* $gs_path_root/$i/
 
   echo "Invalidating cache..."
   gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
@@ -61,9 +61,10 @@ build_and_deploy_stable() {
 
   for i in ${output_paths[@]}; do
     echo "Uploading $version to $i..."
-    gsutil -m cp -a public-read build/$version/* $gs_path_root/$i/
+    gsutil -m -h 'Cache-Control: public, max-age=86400' \
+      cp -Z -a public-read build/$version/* $gs_path_root/$i/
 
-    echo "Invalidating cache..."
+    echo "Invalidating CDN cache..."
     gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
   done
 }

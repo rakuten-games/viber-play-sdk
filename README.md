@@ -1,3 +1,3 @@
 # viber-play-sdk
 
-Documentation can be found at [./docs/README.md](./docs/README.md)
+Documentations can be found at <https://dev.viberplay.io/docs/viber-play-sdk/sdk-features>
