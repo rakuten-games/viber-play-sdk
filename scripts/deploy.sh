@@ -5,6 +5,14 @@ version=$(git describe --abbrev=0 --tags)
 cdn_id=cdn-rgames-jp-lb
 gs_path_root=gs://vbrpl-libs/libs/viber-play-sdk
 
+cleanup() {
+  rv=$?
+  echo "Clean up"
+  exit $rv
+}
+
+trap "cleanup" INT TERM EXIT
+
 mkdir -p build
 
 run_test() {
