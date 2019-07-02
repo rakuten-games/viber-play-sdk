@@ -20,6 +20,7 @@ import type { SharePayload } from '../types/share-payload';
 import type { ContextSizeResponse } from '../types/context-size-response';
 import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
+import type { InitializationOptions } from '../types/initialization';
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -74,7 +75,7 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @private
    */
-  initializeAsync: (options: object): Promise<void> =>
+  initializeAsync: (options: InitializationOptions): Promise<void> =>
     // TODO: prevent run more than once
     conn
       .request('sgInitialize', options)
