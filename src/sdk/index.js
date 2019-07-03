@@ -73,9 +73,10 @@ const viberPlaySdk = {
    * Initialize the SDK for the game. In the background, SDK will try to
    * setup environment and retrieve data for later use in the game.
    * @memberof ViberPlay
+   * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    * @private
    */
-  initializeAsync: (options: InitializationOptions): Promise<void> =>
+  initializeAsync: (options?: InitializationOptions): Promise<void> =>
     // TODO: prevent run more than once
     conn
       .request('sgInitialize', options)
