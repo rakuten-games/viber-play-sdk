@@ -100,7 +100,7 @@ console.error(new TypeError('ERROR'));
 <div class="section">
 <h2>initialize</h2>
 <script class="example-code" type="text/plain">
-ViberPlay.initializeAsync()
+ViberPlay.initializeAsync({ useLegacyLeaderboard: false })
   .then(() => ViberPlay.setLoadingProgress(0))
   .then(() => ViberPlay.setLoadingProgress(10))
   .then(() => ViberPlay.setLoadingProgress(50))

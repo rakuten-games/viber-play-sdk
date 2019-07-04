@@ -20,6 +20,7 @@ import type { SharePayload } from '../types/share-payload';
 import type { ContextSizeResponse } from '../types/context-size-response';
 import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
+import type { InitializationOptions } from '../types/initialization';
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -72,12 +73,12 @@ const viberPlaySdk = {
    * Initialize the SDK for the game. In the background, SDK will try to
    * setup environment and retrieve data for later use in the game.
    * @memberof ViberPlay
-   * @private
+   * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
-  initializeAsync: (): Promise<void> =>
+  initializeAsync: (options: ?InitializationOptions): Promise<void> =>
     // TODO: prevent run more than once
     conn
-      .request('sgInitialize')
+      .request('sgInitialize', options)
       .then(({ player, context, entryPointData, trafficSource }) => {
         state.player = player;
         state.context = context;
