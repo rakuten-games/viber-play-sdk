@@ -57,7 +57,7 @@ build_and_deploy_stable() {
     exit 1
   fi
 
-  build_lib
+  NODE_ENV=production build_lib
 
   echo "Cleaning up existing builds..."
   rm -rf build/*
@@ -78,7 +78,7 @@ build_and_deploy_stable() {
 }
 
 build_and_deploy_npm() {
-  build_lib 'node'
+  NODE_ENV=production build_lib 'node'
 
   echo "Ready to run npm publish"
 }

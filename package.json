@@ -9,7 +9,7 @@
     "start:node": "BABEL_ENV=node npm start",
     "start:examples": "./scripts/start-examples.sh",
     "prebuild": "rm -rf lib",
-    "build": "NODE_ENV=production webpack -p",
+    "build": "webpack -p",
     "build:node": "BABEL_ENV=node npm run build",
     "document": "documentation build src --shallow -f md -o docs/api.md --config documentation.yaml",
     "deploy": "./scripts/deploy.sh",

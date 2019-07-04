@@ -75,10 +75,13 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
-  initializeAsync: (options: ?InitializationOptions): Promise<void> =>
+  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> =>
     // TODO: prevent run more than once
     conn
-      .request('sgInitialize', options)
+      .request('sgInitialize', {
+        ...options,
+        __sdk__: `${process.env.npm_package_name}@${process.env.NODE_ENV === 'production' ? process.env.npm_package_version : 'next'}`
+      })
       .then(({ player, context, entryPointData, trafficSource }) => {
         state.player = player;
         state.context = context;
