@@ -36,6 +36,7 @@ build_and_deploy_unstable() {
   build_lib
 
   echo "Copying lib to build/$i..."
+  rm -rf build/$i
   cp -r lib/ build/$i
 
   echo "Uploading $i..."
