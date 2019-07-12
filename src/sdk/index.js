@@ -982,7 +982,7 @@ const viberPlaySdk = {
      *   console.log('Ready to receive payments requests')
      * })
      */
-    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(callback)
+    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(() => callback())
   }
 };
 
