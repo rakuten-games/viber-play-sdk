@@ -1,7 +1,7 @@
 // @flow
 
 /**
- * @typedef {Object} Producct
+ * @typedef {Object} Product
  * @property {string} title - Title of the product
  * @property {string} productID - ID of the product
  * @property {string?} description - Text description of the product
@@ -17,3 +17,32 @@ export type Product = {
   price: string,
   priceCurrencyCode: string
 };
+
+/**
+ * @typedef {Object} PurchaseConfig
+ * @property {string} productID - ID of the product
+ * @property {string?} developerPayload - An optional payload can be assigned by game developer, which will be attached in the signed purchase request
+ */
+export type PurchaseConfig = {
+  productID: string,
+  developerPayload: ?string
+};
+
+/**
+ * @typedef {Object} Purchase
+ * @property {string} productID - ID of the product
+ * @property {string?} developerPayload - An optional payload can be assigned by game developer, which will be attached in the signed purchase request
+ */
+export type Purchase = {
+  developerPayload: ?string,
+  paymentID: string,
+  productID: string,
+  purhcaseTime: string,
+  purchaseToken: string,
+  signedRequest: SignedPurchaseRequest
+};
+
+/**
+ * @typedef {string} SignedPurchaseRequest
+ */
+export type SignedPurchaseRequest = string;

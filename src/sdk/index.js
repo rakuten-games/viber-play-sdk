@@ -21,7 +21,7 @@ import type { ContextSizeResponse } from '../types/context-size-response';
 import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
-import type { Product } from '../types/iap';
+import type { Product, Purchase, PurchaseConfig } from '../types/iap';
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -81,7 +81,11 @@ const viberPlaySdk = {
     conn
       .request('sgInitialize', {
         ...options,
-        __sdk__: `${process.env.npm_package_name}@${process.env.NODE_ENV === 'production' ? process.env.npm_package_version : 'next'}`
+        __sdk__: `${process.env.npm_package_name}@${
+          process.env.NODE_ENV === 'production'
+            ? process.env.npm_package_version
+            : 'next'
+        }`
       })
       .then(({ player, context, entryPointData, trafficSource }) => {
         state.player = player;
@@ -983,7 +987,8 @@ const viberPlaySdk = {
      *   console.log('Ready to receive payments requests')
      * })
      */
-    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(() => callback()),
+    onReady: (callback): void =>
+      conn.request('sgPaymentsOnReady').then(() => callback()),
 
     /**
      * (Experimental)
@@ -994,8 +999,29 @@ const viberPlaySdk = {
      * ViberPlay.payments.getCatalogAsync().then((catalog) => {
      *   console.log(catalog)
      * })
-      */
-    getCatalogAsync: (): Promise<Array<Product>> => conn.request('sgPaymentsGetCatalogAsync')
+     */
+    getCatalogAsync: (): Promise<Array<Product>> =>
+      conn.request('sgPaymentsGetCatalogAsync'),
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.purchaseAsync
+     * @param config - An object containing purchase configuration information
+     * @returns Purchase information
+     * @example
+     * ViberPlay.payments.purchaseAsync({
+     *   productID: 'someProduct',
+     *   developerPayload: 'somePayload'
+     * }).then((purchase) => {
+     *   console.log(purchase)
+     * })
+     */
+    purchaseAsync: (config: PurchaseConfig): Promise<Purchase> =>
+      conn.request('sgPaymentsPurchaseAsync', {
+        productId: config.productID,
+        developerPayload: config.developerPayload
+      })
   }
 };
 
