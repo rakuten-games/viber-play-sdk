@@ -969,6 +969,20 @@ const viberPlaySdk = {
      *   .catch((err) => console.error(err));
      */
     subscribeBotAsync: (): Promise<void> => conn.request('sgSubscribeBot')
+  },
+
+  payments: {
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.onReady
+     * @returns
+     * @example
+     * ViberPlay.payments.onReady(function () {
+     *   console.log('Ready to receive payments requests')
+     * })
+     */
+    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(() => callback())
   }
 };
 
