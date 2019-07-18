@@ -1001,7 +1001,7 @@ const viberPlaySdk = {
      * })
      */
     getCatalogAsync: (): Promise<Array<Product>> =>
-      conn.request('sgPaymentsGetCatalogAsync'),
+      conn.request('sgPaymentsGetCatalog'),
 
     /**
      * (Experimental)
@@ -1018,7 +1018,7 @@ const viberPlaySdk = {
      * })
      */
     purchaseAsync: (config: PurchaseConfig): Promise<Purchase> =>
-      conn.request('sgPaymentsPurchaseAsync', {
+      conn.request('sgPaymentsPurchase', {
         productId: config.productID,
         developerPayload: config.developerPayload
       })
