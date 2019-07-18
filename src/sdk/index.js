@@ -21,6 +21,7 @@ import type { ContextSizeResponse } from '../types/context-size-response';
 import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
+import type { Product } from '../types/iap';
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -982,7 +983,19 @@ const viberPlaySdk = {
      *   console.log('Ready to receive payments requests')
      * })
      */
-    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(() => callback())
+    onReady: (callback): void => conn.request('sgPaymentsOnReady').then(() => callback()),
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.getCatalogAsync
+     * @returns Array of products with pricing information
+     * @example
+     * ViberPlay.payments.getCatalogAsync().then((catalog) => {
+     *   console.log(catalog)
+     * })
+      */
+    getCatalogAsync: (): Promise<Array<Product>> => conn.request('sgPaymentsGetCatalogAsync')
   }
 };
 
