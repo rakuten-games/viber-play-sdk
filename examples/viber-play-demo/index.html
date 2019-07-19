@@ -128,8 +128,28 @@ ViberPlay.payments.getCatalogAsync().then((catalog) => {
     developerPayload: 'somePayload'
   }).then((purchase) => {
     console.log(purchase);
+
+    const verified = true; // should verify signature on game server
+
+    if (verified) {
+      return purchase;
+    } else {
+      throw new Error('Invalid purchase');
+    }
+  }).then((purchase) => {
+    ViberPlay.payments.consumePurchaseAsync(purchase.purchaseToken)
+  }).then(() => {
+    console.log('Purchase consumed');
   });
-  </script>
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.payments.purchaseAsync({invalid: 'param'})
+    .catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.payments.consumePurchaseAsync('invalidParam')
+    .catch(console.error);
+</script>
 </div>
 
 <div class="section">
