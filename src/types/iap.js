@@ -37,7 +37,7 @@ export type Purchase = {
   developerPayload: ?string,
   paymentID: string,
   productID: string,
-  purhcaseTime: string,
+  purchaseTime: string,
   purchaseToken: string,
   signedRequest: SignedPurchaseRequest
 };
