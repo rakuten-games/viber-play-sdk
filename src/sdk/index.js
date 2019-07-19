@@ -1026,7 +1026,7 @@ const viberPlaySdk = {
 
         throw err;
       }
-      
+
       if (typeof config.productID !== 'string') {
         const err = {
           code: 'INVALID_PARAM',
@@ -1039,7 +1039,33 @@ const viberPlaySdk = {
       return conn.request('sgPaymentsPurchase', {
         productId: config.productID,
         developerPayload: config.developerPayload
-      })
+      });
+    },
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.consumePurchaseAsync
+     * @param purchaseToken - A string of purchase token used for consumption
+     * @returns
+     * @example
+     * ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
+     *   console.log('Purchase is consumed');
+     * })
+     */
+    consumePurchaseAsync: (purchaseToken: string): Promise<void> => {
+      if (typeof purchaseToken !== 'string') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'Purchase token is expected to be a string.'
+        };
+
+        throw err;
+      }
+
+      return conn.request('sgPaymentsConsumePurchase', {
+        purchaseToken
+      });
     }
   }
 };
