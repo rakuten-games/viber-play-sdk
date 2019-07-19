@@ -143,17 +143,30 @@ ViberPlay.payments.purchaseAsync({
 }).catch(console.error);
 </script>
 <script class="example-code" type="text/plain">
-ViberPlay.payments.purchaseAsync({invalid: 'param'})
-  .catch(console.error);
-</script>
-<script class="example-code" type="text/plain">
-ViberPlay.payments.consumePurchaseAsync('invalidParam')
-  .catch(console.error);
+ViberPlay.payments.purchaseAsync({
+  productID: 'jp.rgames.kiki.purchase.gems_1',
+  developerPayload: 'somePayload'
+}).then((purchase) => {
+  console.log(purchase);
+}).catch(console.error);
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.payments.getPurchasesAsync().then((purchases) => {
   console.log(purchases);
 }).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
+  console.log('Purchase consumed');
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.purchaseAsync({invalid: 'param'})
+  .catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.consumePurchaseAsync()
+  .catch(console.error);
 </script>
 </div>
 
