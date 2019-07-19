@@ -1045,6 +1045,20 @@ const viberPlaySdk = {
     /**
      * (Experimental)
      * @memberof ViberPlay
+     * @method payments.getPurchasesAsync
+     * @returns
+     * @example
+     * ViberPlay.payments.getPurchasesAsync().then((purchases) => {
+     *   console.log(purchases);
+     * })
+     */
+    getPurchasesAsync: (): Promise<Array<Purchase>> => {
+      return conn.request('sgPaymentsGetPurchases');
+    },
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
      * @method payments.consumePurchaseAsync
      * @param purchaseToken - A string of purchase token used for consumption
      * @returns
