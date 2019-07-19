@@ -1017,11 +1017,30 @@ const viberPlaySdk = {
      *   console.log(purchase)
      * })
      */
-    purchaseAsync: (config: PurchaseConfig): Promise<Purchase> =>
-      conn.request('sgPaymentsPurchase', {
+    purchaseAsync: (config: PurchaseConfig): Promise<Purchase> => {
+      if (typeof config !== 'object') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'PurchaseConfig is expected to be an object.'
+        };
+
+        throw err;
+      }
+      
+      if (typeof config.productID !== 'string') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'ProductID is expected to be a string.'
+        };
+
+        throw err;
+      }
+
+      return conn.request('sgPaymentsPurchase', {
         productId: config.productID,
         developerPayload: config.developerPayload
       })
+    }
   }
 };
 

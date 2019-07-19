@@ -123,7 +123,10 @@ ViberPlay.payments.getCatalogAsync().then((catalog) => {
 });
 </script>
 <script class="example-code" type="text/plain">
-  ViberPlay.payments.purchaseAsync('jp.rgames.kiki.purchase.stored_gem_sale').then((purchase) => {
+  ViberPlay.payments.purchaseAsync({
+    productID: 'jp.rgames.kiki.purchase.gems_1',
+    developerPayload: 'somePayload'
+  }).then((purchase) => {
     console.log(purchase);
   });
   </script>
