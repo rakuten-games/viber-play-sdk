@@ -343,7 +343,7 @@ ViberPlay.getInterstitialAdAsync('DUMMY_PLACEMENT_ID')
   });
 ```
 
-Returns **[Promise][82]&lt;null>** 
+Returns **[Promise][82]&lt;InterstitialAdInstance>** 
 
 ### getRewardedVideoAdAsync
 
@@ -362,7 +362,7 @@ ViberPlay.getRewardedVideoAdAsync('DUMMY_PLACEMENT_ID')
   });
 ```
 
-Returns **[Promise][82]&lt;null>** 
+Returns **[Promise][82]&lt;RewardedVideoAdInstance>** 
 
 ### switchGameAsync
 

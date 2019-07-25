@@ -397,7 +397,7 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getInterstitialAdAsync: (placementId: string): Promise<null> =>
+  getInterstitialAdAsync: (placementId: string): Promise<InterstitialAdInstance> =>
     conn
       .request('sgGetInterstitialAd', {
         placementId
@@ -413,7 +413,7 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getRewardedVideoAdAsync: (placementId: string): Promise<null> =>
+  getRewardedVideoAdAsync: (placementId: string): Promise<RewardedVideoAdInstance> =>
     Promise.resolve(
       new RewardedVideoAdInstance({
         placementId
