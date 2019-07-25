@@ -203,60 +203,6 @@ if (ViberPlay.getMessengerPlatform() === 'VIBER') {
 <div class="section">
 <h2>ad viber (experimental)</h2>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
-
-  ViberPlay.getAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(ad) {
-      preloadedAd = ad;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('ad preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('ad shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
-
-  ViberPlay.getRewardedAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(rewardedAd) {
-      preloadedAd = rewardedAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('rewardedAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('rewardedAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
   if (ViberPlay.getMessengerPlatform() === 'VIBER') {
     window.preloadedAd = null;
 
@@ -275,6 +221,33 @@ if (ViberPlay.getMessengerPlatform() === 'VIBER') {
     })
     .then(function() {
       console.log('interstitialAd shown');
+    })
+    .catch(function(err){
+      console.error(err);
+    });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  window.preloadedAd = null;
+
+  ViberPlay.getRewardedVideoAdAsync(
+    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+  )
+    .then(function(rewardedVideoAd) {
+      preloadedAd = rewardedVideoAd;
+      return preloadedAd.loadAsync();
+    })
+    .then(function() {
+      console.log('rewardedVideoAd preloaded');
+    })
+    .then(function() {
+      preloadedAd.showAsync();
+    })
+    .then(function() {
+      console.log('rewardedVideoAd shown');
     })
     .catch(function(err){
       console.error(err);
@@ -368,6 +341,17 @@ console.log(window.l9dEntry.getRank());
 <script class="example-code" type="text/plain">
 console.log(window.l9dEntry.getExtraData());
 </script>
+<script class="example-code" type="text/plain">
+window.l9dEntries.forEach(entry => {
+  console.log(JSON.stringify({
+    score: entry.getScore(),
+    formattedScore: entry.getFormattedScore(),
+    timestamp: entry.getTimestamp(),
+    rank: entry.getRank(),
+    extraData: entry.getExtraData(),
+  }));
+});
+</script>
 </div>
 
 <div class="section">
@@ -379,6 +363,17 @@ console.log(JSON.stringify({
   name: player.getName(),
   photo: player.getPhoto(),
 }));
+</script>
+<script class="example-code" type="text/plain">
+window.l9dEntries.forEach(entry => {
+  const player = entry.getPlayer();
+
+  console.log(JSON.stringify({
+    id: player.getID(),
+    name: player.getName(),
+    photo: player.getPhoto(),
+  }));
+});
 </script>
 </div>
 
