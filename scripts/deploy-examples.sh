@@ -1,7 +1,5 @@
 #!/bin/bash
 
-GAME_ID=arrQ8wIzzfBHsR0Cerroqns8ledhtug5
-
 cleanup() {
   rv=$?
   echo "Clean up"
@@ -13,31 +11,47 @@ cleanup() {
 
 trap "cleanup" INT TERM EXIT
 
-echo "Packaging..."
-pushd examples/viber-play-demo
-zip -r ../../build/viber-play-demo.zip .
-popd
+deploy() {
+  echo "Packaging..."
+  pushd examples/viber-play-demo
+  zip -r ../../build/viber-play-demo.zip .
+  popd
 
-echo "Uploading to Viber Play..."
+  echo "Uploading to Viber Play..."
 
-version=$(curl -s -X POST \
-  https://api.rgames.jp/joker/developers/game/upload \
-  -H "APIKEY: $VIBER_PLAY_HTTP_API_APIKEY" \
-  -F "type=BUNDLE" \
-  -F "game_id=$GAME_ID" \
-  -F "asset=@./build/viber-play-demo.zip" \
-  -F "comment=API upload" | \
-  jq --raw-output ".data.version_id")
+  version=$(curl -s -X POST \
+    $api_root/joker/developers/game/upload \
+    -H "APIKEY: $api_key" \
+    -F "type=BUNDLE" \
+    -F "game_id=$game_id" \
+    -F "asset=@./build/viber-play-demo.zip" \
+    -F "comment=API upload" | \
+    jq --raw-output ".data.version_id")
 
-curl -s -X POST \
-  https://api.rgames.jp/joker/developers/game/deploy \
-  -H "APIKEY: $VIBER_PLAY_HTTP_API_APIKEY" \
-  -F "game_id=$GAME_ID" \
-  -F "version_id=$version" \
-  -F "environment=production" > /dev/null
+  curl -s -X POST \
+    $api_root/joker/developers/game/deploy \
+    -H "APIKEY: $api_key" \
+    -F "game_id=$game_id" \
+    -F "version_id=$version" \
+    -F "environment=production" > /dev/null
+
+  echo ""
+  echo "Done"
+  echo ""
+  echo "Current version: $version"
+  echo "Check it out on Viber Play: $viber_play_root/games/$game_id"
+}
+
+api_key=$TEST_VIBER_PLAY_HTTP_API_APIKEY \
+api_root=$TEST_VIBER_PLAY_HTTP_API_ROOT \
+game_id=$TEST_GAME_ID \
+viber_play_root=$TEST_VIBER_PLAY_ROOT \
+deploy
 
 echo ""
-echo "Done"
-echo ""
-echo "Current version: $version"
-echo "Check it out on Viber Play: https://vbrpl.io/play/$GAME_ID"
+
+api_key=$VIBER_PLAY_HTTP_API_APIKEY \
+api_root=$VIBER_PLAY_HTTP_API_ROOT \
+game_id=$GAME_ID \
+viber_play_root=$VIBER_PLAY_ROOT \
+deploy
