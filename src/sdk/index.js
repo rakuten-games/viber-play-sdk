@@ -7,13 +7,7 @@ import { getMessenger } from './messenger';
 import ConnectedPlayer from './connected-player';
 import ContextPlayer from './context-player';
 import Leaderboard from './leaderboard';
-import GCNManager from './gcn-manager';
-import {
-  InterstitialAdInstance,
-  RewardedVideoAdInstance,
-  GCNAdInstance,
-  RewardedGCNAdInstance
-} from './ad-instance';
+import { InterstitialAdInstance, RewardedVideoAdInstance } from './ad-instance';
 import getLocalizationString from '../utils/get-localization-string';
 import type { CustomUpdatePayload } from '../types/custom-update-payload';
 import type { SharePayload } from '../types/share-payload';
@@ -56,14 +50,6 @@ conn
   })
   .catch(err => {});
 
-const initGCN = viberPlaySdk =>
-  GCNManager.init(
-    state.gameId,
-    viberPlaySdk.player.getID(),
-    viberPlaySdk.player.getSignedPlayerInfoAsync,
-    viberPlaySdk.switchGameAsync
-  );
-
 /**
  * Top level namespace wrapping the SDK's interfaces.
  * @namespace ViberPlay
@@ -92,8 +78,6 @@ const viberPlaySdk = {
         state.context = context;
         state.entryPointData = entryPointData;
         state.trafficSource = trafficSource;
-
-        initGCN(viberPlaySdk);
       })
       .then(() => undefined),
 
@@ -413,7 +397,7 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getInterstitialAdAsync: (placementId: string): Promise<null> =>
+  getInterstitialAdAsync: (placementId: string): Promise<InterstitialAdInstance> =>
     conn
       .request('sgGetInterstitialAd', {
         placementId
@@ -429,54 +413,11 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getRewardedVideoAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new RewardedVideoAdInstance({
-          placementId
-        })
-    ),
-
-  /**
-   * (Experimental) Get AdInstance of an ad placement with optimized performance.
-   * Optimized performance is achieved by using different Ad formats and
-   * backfill strategies to give the best fill rate and then the best eCPM.
-   * Please be aware that this API is allowed to be used for rewarded usecase.
-   * This API is for Viber only.
-   * @memberof ViberPlay
-   * @example
-   * ViberPlay.getAdAsync('DUMMY_PLACEMENT_ID')
-   *   .then((adInstance) => {
-   *     // do something
-   *   });
-   */
-  getAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new GCNAdInstance({
-          placementId
-        })
-    ),
-
-  /**
-   * (Experimental) Get AdInstance of an rewarded ad placement with optimized performance.
-   * Optimized performance is achieved by using different Ad formats and
-   * backfill strategies to give the best fill rate and then the best eCPM.
-   * This API will only generate Ads allowed for rewarded usecase.
-   * This API is for Viber only.
-   * @memberof ViberPlay
-   * @example
-   * ViberPlay.getRewardedAdAsync('DUMMY_PLACEMENT_ID')
-   *   .then((adInstance) => {
-   *     // do something
-   *   });
-   */
-  getRewardedAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new RewardedGCNAdInstance({
-          placementId
-        })
+  getRewardedVideoAdAsync: (placementId: string): Promise<RewardedVideoAdInstance> =>
+    Promise.resolve(
+      new RewardedVideoAdInstance({
+        placementId
+      })
     ),
 
   /**
