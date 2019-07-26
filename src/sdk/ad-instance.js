@@ -85,26 +85,20 @@ export class RewardedVideoAdInstance extends AdInstance {
   }
 
   loadAsync(): string {
-    return Promise.resolve()
-      .then(() => {
-        const adsNoFillErr = {
-          code: 'ADS_NO_FILL',
-          message: 'Ads failed to be filled',
-        };
+    const adsNoFillErr = {
+      code: 'ADS_NO_FILL',
+      message: 'Ads failed to be filled',
+    };
 
-        throw adsNoFillErr;
-      });
+    return Promise.reject(adsNoFillErr);
   }
 
   showAsync(): Promise<void> {
-    return Promise.resolve()
-      .then(() => {
-        const adsNotLoadedErr = {
-          code: 'ADS_NOT_LOADED',
-          message: 'Ads failed to be filled or loaded',
-        };
+    const adsNotLoadedErr = {
+      code: 'ADS_NOT_LOADED',
+      message: 'Ads failed to be filled or loaded',
+    };
 
-        throw adsNotLoadedErr;
-      });
+    return Promise.reject(adsNotLoadedErr);
   }
 }
