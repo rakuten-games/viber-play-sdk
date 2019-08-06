@@ -97,8 +97,10 @@ const viberPlaySdk = {
   },
 
   /**
-   * Starts the game. Calling this method will turn off the loading screen once
-   * the initialization of SDK is done.
+   * Starts the game. Calling this method will turn off the loading screen as
+   * soon as these requirements are met:
+   * - ViberPlay.setLoadingProgress() is passed with a number > 99
+   * - ViberPlay.initializeAsync() is called and resolved
    * @memberof ViberPlay
    * @example
    * ViberPlay.startGameAsync().then(function() {
