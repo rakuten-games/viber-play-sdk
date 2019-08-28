@@ -625,7 +625,8 @@ const viberPlaySdk = {
                   ![
                     'NEW_CONTEXT_ONLY',
                     'INCLUDE_EXISTING_CHALLENGES',
-                    'NEW_PLAYERS_ONLY'
+                    'NEW_PLAYERS_ONLY',
+                    'NEW_INVITATIONS_ONLY'
                   ].includes(payload.filters[i])
                 ) {
                   const err = {
@@ -635,6 +636,14 @@ const viberPlaySdk = {
                   throw err;
                 }
               }
+            }
+
+            if (payload.hoursSinceInvitation && !Number.isInteger(payload.hoursSinceInvitation)) {
+              const err = {
+                code: 'INVALID_PARAM',
+                message: 'The hoursSinceInvitation is not integer'
+              };
+              throw err;
             }
 
             if (payload.minSize && !Number.isInteger(payload.minSize)) {
