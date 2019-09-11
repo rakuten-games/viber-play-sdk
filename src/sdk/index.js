@@ -52,6 +52,11 @@ conn
   .catch(err => {});
 
 /**
+ * @private
+ */
+let isInitialized = false
+
+/**
  * Top level namespace wrapping the SDK's interfaces.
  * @namespace ViberPlay
  */
@@ -64,8 +69,12 @@ const viberPlaySdk = {
    * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
   initializeAsync: (options: ?InitializationOptions = {}): Promise<void> => {
-    // TODO: prevent run more than once
-    lock(options.scrollTarget)
+    // avoid being executed more than once
+    if (isInitialized) return Promise.resolve()
+
+    if (options.scrollTarget) {
+      lock(options.scrollTarget)
+    }
 
     return conn
       .request('sgInitialize', {

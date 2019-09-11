@@ -2,8 +2,8 @@
 
 /**
  * @typedef {Object} InitializationOptions
- * @property {boolean} useLegacyLeaderboard - if set to true the legacy leaderboard service will be used
- * @property {string | Element} scrollTarget? - by default, scrolling will be disabled in game frame to prevent unexpected scrolling behavior. If scrolling is needed in the game, set the root element (or its selector) here, then any child element of it can be scrolled.
+ * @property {boolean} useLegacyLeaderboard - If set to true the legacy leaderboard service will be used.
+ * @property {string | Element} scrollTarget? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
  */
 export type InitializationOptions = {
   useLegacyLeaderboard: boolean,
