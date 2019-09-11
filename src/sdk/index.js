@@ -16,6 +16,7 @@ import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
 import type { Product, Purchase, PurchaseConfig } from '../types/iap';
+import { lock } from '../utils/scroll-lock'
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -62,9 +63,11 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
-  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> =>
+  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> => {
     // TODO: prevent run more than once
-    conn
+    lock(options.scrollTarget)
+
+    return conn
       .request('sgInitialize', {
         ...options,
         __sdk__: `${process.env.npm_package_name}@${
@@ -79,7 +82,8 @@ const viberPlaySdk = {
         state.entryPointData = entryPointData;
         state.trafficSource = trafficSource;
       })
-      .then(() => undefined),
+      .then(() => undefined)
+  },
 
   /**
    * Updates the load progress of the game. The value will be shown at the

@@ -16,7 +16,8 @@
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
   },
   "dependencies": {
-    "amplitude-js": "^5.2.2"
+    "amplitude-js": "^5.2.2",
+    "body-scroll-lock": "^2.6.4"
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -26,6 +27,7 @@
     "@babel/preset-env": "^7.2.0",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
+    "@types/body-scroll-lock": "^2.6.1",
     "@types/node": "^12.6.9",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
