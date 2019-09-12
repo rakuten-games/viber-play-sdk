@@ -16,6 +16,7 @@ import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
 import type { Product, Purchase, PurchaseConfig } from '../types/iap';
+import type { ShareResult } from '../types/share-result'
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -188,7 +189,7 @@ const viberPlaySdk = {
   },
 
   /**
-   * Share a message with the player's contact.
+   * Share message to selected users from player's contact.
    * @memberof ViberPlay
    * @param payload An object describes the message to be shared.
    * @example
@@ -196,13 +197,42 @@ const viberPlaySdk = {
    *   intent: 'REQUEST',
    *   image: base64Picture,
    *   text: 'Some text',
+   *   filters: 'NEW_CONTEXT_ONLY',
+   *   minShare: 3,
    *   data: { someData: '...' },
-   * }).then(function() {
-   *   // continue with the game.
+   * }).then(function(shareResult) {
+   *   // After share modal is closed, return number of messages are sent 
    * });
    */
-  shareAsync: (payload: SharePayload): Promise<void> =>
-    conn.request('sgShare', { ...payload }).then(() => undefined),
+  shareAsync: (payload: SharePayload): Promise<ShareResult> => {
+    if (payload.filters) {
+      for (let i = 0; i < payload.filters.length; i += 1) {
+        if (
+          ![
+            'NEW_CONTEXT_ONLY',
+            'INCLUDE_EXISTING_CHALLENGES',
+            'NEW_PLAYERS_ONLY'
+          ].includes(payload.filters[i])
+        ) {
+          const err = {
+            code: 'INVALID_PARAM',
+            message: 'Invalid filter'
+          };
+          throw err;
+        }
+      }
+    }
+
+    if (payload.minShare && payload.minShare > 50) {
+      const err = {
+        code: 'INVALID_PARAM',
+        message: 'The minShare cannot be larger than 50'
+      };
+      throw err;
+    }
+
+    return conn.request('sgShare', { ...payload }),
+  }
 
   /**
    * Close the game webview.
