@@ -446,6 +446,10 @@ ViberPlay.context.chooseAsync({filters: ['NEW_PLAYERS_ONLY']})
 ViberPlay.context.chooseAsync({minSize: 3})
   .then(() => console.log(ViberPlay.context.getID()));
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['NEW_INVITATIONS_ONLY'], hoursSinceInvitation: 24})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
 </div>
 
 <div class="section">
