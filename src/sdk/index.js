@@ -204,35 +204,8 @@ const viberPlaySdk = {
    *   // After share modal is closed, return number of messages are sent 
    * });
    */
-  shareAsync: (payload: SharePayload): Promise<ShareResult> => {
-    if (payload.filters) {
-      for (let i = 0; i < payload.filters.length; i += 1) {
-        if (
-          ![
-            'NEW_CONTEXT_ONLY',
-            'INCLUDE_EXISTING_CHALLENGES',
-            'NEW_PLAYERS_ONLY'
-          ].includes(payload.filters[i])
-        ) {
-          const err = {
-            code: 'INVALID_PARAM',
-            message: 'Invalid filter'
-          };
-          throw err;
-        }
-      }
-    }
-
-    if (payload.minShare && payload.minShare > 50) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'The minShare cannot be larger than 50'
-      };
-      throw err;
-    }
-
-    return conn.request('sgShare', { ...payload }),
-  }
+  shareAsync: (payload: SharePayload): Promise<ShareResult> => 
+    conn.request('sgShare', { ...payload }),
 
   /**
    * Close the game webview.
