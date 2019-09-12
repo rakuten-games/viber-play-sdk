@@ -97,36 +97,36 @@
         -   [Examples][93]
 -   [ContextSizeResponse][94]
     -   [Properties][95]
--   [LeaderboardPlayer][96]
--   [Leaderboard][97]
-    -   [getName][98]
-        -   [Examples][99]
-    -   [getContextID][100]
-        -   [Examples][101]
-    -   [getEntryCountAsync][102]
-        -   [Examples][103]
-    -   [setScoreAsync][104]
-        -   [Parameters][105]
-        -   [Examples][106]
-    -   [getPlayerEntryAsync][107]
+-   [Product][96]
+    -   [Properties][97]
+-   [Player][98]
+    -   [getID][99]
+        -   [Examples][100]
+    -   [getName][101]
+        -   [Examples][102]
+    -   [getPhoto][103]
+        -   [Examples][104]
+-   [LeaderboardPlayer][105]
+-   [Leaderboard][106]
+    -   [getName][107]
         -   [Examples][108]
-    -   [getEntriesAsync][109]
-        -   [Parameters][110]
-        -   [Examples][111]
-    -   [getConnectedPlayerEntriesAsync][112]
-        -   [Parameters][113]
-        -   [Examples][114]
--   [Player][115]
-    -   [getID][116]
+    -   [getContextID][109]
+        -   [Examples][110]
+    -   [getEntryCountAsync][111]
+        -   [Examples][112]
+    -   [setScoreAsync][113]
+        -   [Parameters][114]
+        -   [Examples][115]
+    -   [getPlayerEntryAsync][116]
         -   [Examples][117]
-    -   [getName][118]
-        -   [Examples][119]
-    -   [getPhoto][120]
-        -   [Examples][121]
--   [Product][122]
-    -   [Properties][123]
--   [ConnectedPlayer][124]
--   [ContextPlayer][125]
+    -   [getEntriesAsync][118]
+        -   [Parameters][119]
+        -   [Examples][120]
+    -   [getConnectedPlayerEntriesAsync][121]
+        -   [Parameters][122]
+        -   [Examples][123]
+-   [ContextPlayer][124]
+-   [ConnectedPlayer][125]
 -   [LocalizableContent][126]
     -   [Properties][127]
 -   [SharePayload][128]
@@ -808,7 +808,8 @@ Type: [Object][167]
 
 ### Properties
 
--   `useLegacyLeaderboard` **[boolean][170]** if set to true the legacy leaderboard service will be used
+-   `useLegacyLeaderboard` **[boolean][170]** If set to true the legacy leaderboard service will be used.
+-   `scrollTarget` **([string][166] \| [Element][171])** ? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
 
 ## SignedPlayerInfo
 
@@ -875,6 +876,59 @@ Type: [Object][167]
 -   `answer` **[boolean][170]** Result
 -   `minSize` **[number][162]** The minimum bound of the context size query
 -   `maxSize` **[number][162]** The maximum bound of the context size query.
+
+## Product
+
+Type: [Object][167]
+
+### Properties
+
+-   `title` **[string][166]** Title of the product
+-   `productID` **[string][166]** ID of the product
+-   `description` **[string][166]?** Text description of the product
+-   `imageURI` **[string][166]?** A URL to the product's image
+-   `price` **[string][166]** A localized string representing the product's pirce in the local currency, e.g. "$1"
+-   `priceCurrencyCode` **[string][166]** A string representing which currency is the price calculated in, following [ISO 4217][172]
+
+## Player
+
+Representing a player.
+
+### getID
+
+Get the player's ID.
+
+#### Examples
+
+```javascript
+player.getID(); // '5458282176661711'
+```
+
+Returns **[string][166]** Player ID
+
+### getName
+
+Get the player's name.
+
+#### Examples
+
+```javascript
+player.getName(); // 'Alpha Omega'
+```
+
+Returns **[string][166]** Player name
+
+### getPhoto
+
+Get the player's photo.
+
+#### Examples
+
+```javascript
+player.getPhoto(); // A CORS supported URL to user's photo
+```
+
+Returns **[string][166]** URL of player photo
 
 ## LeaderboardPlayer
 
@@ -962,7 +1016,7 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[Promise][161]&lt;[LeaderboardEntry][171]>** Entry info
+Returns **[Promise][161]&lt;[LeaderboardEntry][173]>** Entry info
 
 ### getPlayerEntryAsync
 
@@ -982,7 +1036,7 @@ leaderboard.getPlayerEntryAsync()
   });
 ```
 
-Returns **[Promise][161]&lt;[LeaderboardEntry][171]?>** Entry info
+Returns **[Promise][161]&lt;[LeaderboardEntry][173]?>** Entry info
 
 ### getEntriesAsync
 
@@ -1004,7 +1058,7 @@ leaderboard.getEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][161]&lt;[Array][172]&lt;[LeaderboardEntry][171]>>** Array of entry info
+Returns **[Promise][161]&lt;[Array][174]&lt;[LeaderboardEntry][173]>>** Array of entry info
 
 ### getConnectedPlayerEntriesAsync
 
@@ -1026,72 +1080,19 @@ leaderboard.getConnectedPlayerEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][161]&lt;[Array][172]&lt;[LeaderboardEntry][171]>>** Array of entry info
-
-## Player
-
-Representing a player.
-
-### getID
-
-Get the player's ID.
-
-#### Examples
-
-```javascript
-player.getID(); // '5458282176661711'
-```
-
-Returns **[string][166]** Player ID
-
-### getName
-
-Get the player's name.
-
-#### Examples
-
-```javascript
-player.getName(); // 'Alpha Omega'
-```
-
-Returns **[string][166]** Player name
-
-### getPhoto
-
-Get the player's photo.
-
-#### Examples
-
-```javascript
-player.getPhoto(); // A CORS supported URL to user's photo
-```
-
-Returns **[string][166]** URL of player photo
-
-## Product
-
-Type: [Object][167]
-
-### Properties
-
--   `title` **[string][166]** Title of the product
--   `productID` **[string][166]** ID of the product
--   `description` **[string][166]?** Text description of the product
--   `imageURI` **[string][166]?** A URL to the product's image
--   `price` **[string][166]** A localized string representing the product's pirce in the local currency, e.g. "$1"
--   `priceCurrencyCode` **[string][166]** A string representing which currency is the price calculated in, following [ISO 4217][173]
-
-## ConnectedPlayer
-
-**Extends Player**
-
-Representing a connected player.
+Returns **[Promise][161]&lt;[Array][174]&lt;[LeaderboardEntry][173]>>** Array of entry info
 
 ## ContextPlayer
 
 **Extends Player**
 
 Representing a context player.
+
+## ConnectedPlayer
+
+**Extends Player**
+
+Representing a connected player.
 
 ## LocalizableContent
 
@@ -1272,7 +1273,7 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[LeaderboardPlayer][174]** Player's info
+Returns **[LeaderboardPlayer][175]** Player's info
 
 ## PurchaseConfig
 
@@ -1298,7 +1299,7 @@ Type: [Object][167]
 
 ### Properties
 
--   `filters` **[Array][172]&lt;[ContextChooseFilter][175]>** Provide an array of filters you'd like to apply to the friend list.
+-   `filters` **[Array][174]&lt;[ContextChooseFilter][176]>** Provide an array of filters you'd like to apply to the friend list.
     Please note that filter combinations are not supported at the moment of
     writing. Only the first filter is respected, the later ones are simply just
     ignored.
@@ -1318,14 +1319,14 @@ Type: [Object][167]
 -   `action` **[string][166]** This should be 'CUSTOM'.
 -   `template` **[string][166]** [TODO] ID of the template this custom
     update is using. Templates should be predefined in fbapp-config.json.
-    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][176]
+    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][177]
     for documentation about fbapp-config.json.
--   `cta` **([string][166]? | [LocalizableContent][177]?)** [TODO] An optional
+-   `cta` **([string][166]? | [LocalizableContent][178]?)** [TODO] An optional
     call-to-action button text. By default we will use a localized 'Play'
     as the button text.
 -   `image` **[string][166]** A string containing data URL of a base64
     encoded image.
--   `text` **([string][166] \| [LocalizableContent][177])** Text message of this update.
+-   `text` **([string][166] \| [LocalizableContent][178])** Text message of this update.
 -   `data` **[Object][167]?** An object to be passed to any session launched
     from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
     Its size must be &lt;= 1000 chars when stringified.
@@ -1536,65 +1537,65 @@ Type: [string][166]
 
 [95]: #properties-1
 
-[96]: #leaderboardplayer
+[96]: #product
 
-[97]: #leaderboard
+[97]: #properties-2
 
-[98]: #getname
+[98]: #player
 
-[99]: #examples-30
+[99]: #getid
 
-[100]: #getcontextid
+[100]: #examples-30
 
-[101]: #examples-31
+[101]: #getname
 
-[102]: #getentrycountasync
+[102]: #examples-31
 
-[103]: #examples-32
+[103]: #getphoto
 
-[104]: #setscoreasync
+[104]: #examples-32
 
-[105]: #parameters-17
+[105]: #leaderboardplayer
 
-[106]: #examples-33
+[106]: #leaderboard
 
-[107]: #getplayerentryasync
+[107]: #getname-1
 
-[108]: #examples-34
+[108]: #examples-33
 
-[109]: #getentriesasync
+[109]: #getcontextid
 
-[110]: #parameters-18
+[110]: #examples-34
 
-[111]: #examples-35
+[111]: #getentrycountasync
 
-[112]: #getconnectedplayerentriesasync
+[112]: #examples-35
 
-[113]: #parameters-19
+[113]: #setscoreasync
 
-[114]: #examples-36
+[114]: #parameters-17
 
-[115]: #player
+[115]: #examples-36
 
-[116]: #getid
+[116]: #getplayerentryasync
 
 [117]: #examples-37
 
-[118]: #getname-1
+[118]: #getentriesasync
 
-[119]: #examples-38
+[119]: #parameters-18
 
-[120]: #getphoto
+[120]: #examples-38
 
-[121]: #examples-39
+[121]: #getconnectedplayerentriesasync
 
-[122]: #product
+[122]: #parameters-19
 
-[123]: #properties-2
+[123]: #examples-39
 
-[124]: #connectedplayer
+[124]: #contextplayer
 
-[125]: #contextplayer
+[125]: #connectedplayer
 
 [126]: #localizablecontent
 
@@ -1686,16 +1687,18 @@ Type: [string][166]
 
 [170]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[171]: #leaderboardentry
+[171]: https://developer.mozilla.org/docs/Web/API/Element
 
-[172]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[172]: https://en.wikipedia.org/wiki/ISO_4217
 
-[173]: https://en.wikipedia.org/wiki/ISO_4217
+[173]: #leaderboardentry
 
-[174]: #leaderboardplayer
+[174]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[175]: #contextchoosefilter
+[175]: #leaderboardplayer
 
-[176]: https://developers.facebook.com/docs/games/instant-games/bundle-config
+[176]: #contextchoosefilter
 
-[177]: #localizablecontent
+[177]: https://developers.facebook.com/docs/games/instant-games/bundle-config
+
+[178]: #localizablecontent
