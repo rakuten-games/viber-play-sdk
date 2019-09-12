@@ -39,7 +39,7 @@ const STYLESHEET = `
 
 const logEl = document.createElement('pre');
 logEl.id = LOG_ID;
-document.body.appendChild(logEl);
+document.querySelector('.wrapper').appendChild(logEl);
 
 const logStyle = document.createElement('style');
 logStyle.textContent = STYLESHEET;

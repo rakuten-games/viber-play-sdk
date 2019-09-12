@@ -100,7 +100,9 @@ console.error(new TypeError('ERROR'));
 <div class="section">
 <h2>initialize</h2>
 <script class="example-code" type="text/plain">
-ViberPlay.initializeAsync()
+ViberPlay.initializeAsync({
+  scrollTarget: '.wrapper'
+})
   .then(() => ViberPlay.setLoadingProgress(0))
   .then(() => ViberPlay.setLoadingProgress(10))
   .then(() => ViberPlay.setLoadingProgress(50))
@@ -729,8 +731,10 @@ function testGameStart() {
     window.location.href
   );
   const initConfig = Object.assign(
-    {},
-    isSimulator && { platform: 'simulator' }
+    {
+      scrollTarget: '.wrapper'
+    },
+    isSimulator && { platform: 'simulator' },
   );
 
   Promise.resolve()
