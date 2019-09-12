@@ -7,13 +7,7 @@ import { getMessenger } from './messenger';
 import ConnectedPlayer from './connected-player';
 import ContextPlayer from './context-player';
 import Leaderboard from './leaderboard';
-import GCNManager from './gcn-manager';
-import {
-  InterstitialAdInstance,
-  RewardedVideoAdInstance,
-  GCNAdInstance,
-  RewardedGCNAdInstance
-} from './ad-instance';
+import { InterstitialAdInstance, RewardedVideoAdInstance } from './ad-instance';
 import getLocalizationString from '../utils/get-localization-string';
 import type { CustomUpdatePayload } from '../types/custom-update-payload';
 import type { SharePayload } from '../types/share-payload';
@@ -21,6 +15,8 @@ import type { ContextSizeResponse } from '../types/context-size-response';
 import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
+import type { Product, Purchase, PurchaseConfig } from '../types/iap';
+import { lock } from '../utils/scroll-lock'
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -55,13 +51,10 @@ conn
   })
   .catch(err => {});
 
-const initGCN = viberPlaySdk =>
-  GCNManager.init(
-    state.gameId,
-    viberPlaySdk.player.getID(),
-    viberPlaySdk.player.getSignedPlayerInfoAsync,
-    viberPlaySdk.switchGameAsync
-  );
+/**
+ * @private
+ */
+let isInitialized = false
 
 /**
  * Top level namespace wrapping the SDK's interfaces.
@@ -75,22 +68,31 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
-  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> =>
-    // TODO: prevent run more than once
-    conn
+  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> => {
+    // avoid being executed more than once
+    if (isInitialized) return Promise.resolve()
+
+    if (options.scrollTarget) {
+      lock(options.scrollTarget)
+    }
+
+    return conn
       .request('sgInitialize', {
         ...options,
-        __sdk__: `${process.env.npm_package_name}@${process.env.NODE_ENV === 'production' ? process.env.npm_package_version : 'next'}`
+        __sdk__: `${process.env.npm_package_name}@${
+          process.env.NODE_ENV === 'production'
+            ? process.env.npm_package_version
+            : 'next'
+        }`
       })
       .then(({ player, context, entryPointData, trafficSource }) => {
         state.player = player;
         state.context = context;
         state.entryPointData = entryPointData;
         state.trafficSource = trafficSource;
-
-        initGCN(viberPlaySdk);
       })
-      .then(() => undefined),
+      .then(() => undefined)
+  },
 
   /**
    * Updates the load progress of the game. The value will be shown at the
@@ -108,8 +110,10 @@ const viberPlaySdk = {
   },
 
   /**
-   * Starts the game. Calling this method will turn off the loading screen once
-   * the initialization of SDK is done.
+   * Starts the game. Calling this method will turn off the loading screen as
+   * soon as these requirements are met:
+   * - ViberPlay.setLoadingProgress() is called with a number > 99
+   * - ViberPlay.initializeAsync() is called and resolved
    * @memberof ViberPlay
    * @example
    * ViberPlay.startGameAsync().then(function() {
@@ -408,7 +412,7 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getInterstitialAdAsync: (placementId: string): Promise<null> =>
+  getInterstitialAdAsync: (placementId: string): Promise<InterstitialAdInstance> =>
     conn
       .request('sgGetInterstitialAd', {
         placementId
@@ -424,54 +428,11 @@ const viberPlaySdk = {
    *     // do something
    *   });
    */
-  getRewardedVideoAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new RewardedVideoAdInstance({
-          placementId
-        })
-    ),
-
-  /**
-   * (Experimental) Get AdInstance of an ad placement with optimized performance.
-   * Optimized performance is achieved by using different Ad formats and
-   * backfill strategies to give the best fill rate and then the best eCPM.
-   * Please be aware that this API is allowed to be used for rewarded usecase.
-   * This API is for Viber only.
-   * @memberof ViberPlay
-   * @example
-   * ViberPlay.getAdAsync('DUMMY_PLACEMENT_ID')
-   *   .then((adInstance) => {
-   *     // do something
-   *   });
-   */
-  getAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new GCNAdInstance({
-          placementId
-        })
-    ),
-
-  /**
-   * (Experimental) Get AdInstance of an rewarded ad placement with optimized performance.
-   * Optimized performance is achieved by using different Ad formats and
-   * backfill strategies to give the best fill rate and then the best eCPM.
-   * This API will only generate Ads allowed for rewarded usecase.
-   * This API is for Viber only.
-   * @memberof ViberPlay
-   * @example
-   * ViberPlay.getRewardedAdAsync('DUMMY_PLACEMENT_ID')
-   *   .then((adInstance) => {
-   *     // do something
-   *   });
-   */
-  getRewardedAdAsync: (placementId: string): Promise<null> =>
-    initGCN(viberPlaySdk).then(
-      () =>
-        new RewardedGCNAdInstance({
-          placementId
-        })
+  getRewardedVideoAdAsync: (placementId: string): Promise<RewardedVideoAdInstance> =>
+    Promise.resolve(
+      new RewardedVideoAdInstance({
+        placementId
+      })
     ),
 
   /**
@@ -677,7 +638,8 @@ const viberPlaySdk = {
                   ![
                     'NEW_CONTEXT_ONLY',
                     'INCLUDE_EXISTING_CHALLENGES',
-                    'NEW_PLAYERS_ONLY'
+                    'NEW_PLAYERS_ONLY',
+                    'NEW_INVITATIONS_ONLY'
                   ].includes(payload.filters[i])
                 ) {
                   const err = {
@@ -687,6 +649,14 @@ const viberPlaySdk = {
                   throw err;
                 }
               }
+            }
+
+            if (payload.hoursSinceInvitation && !Number.isInteger(payload.hoursSinceInvitation)) {
+              const err = {
+                code: 'INVALID_PARAM',
+                message: 'The hoursSinceInvitation is not integer'
+              };
+              throw err;
             }
 
             if (payload.minSize && !Number.isInteger(payload.minSize)) {
@@ -969,6 +939,113 @@ const viberPlaySdk = {
      *   .catch((err) => console.error(err));
      */
     subscribeBotAsync: (): Promise<void> => conn.request('sgSubscribeBot')
+  },
+
+  payments: {
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.onReady
+     * @returns
+     * @example
+     * ViberPlay.payments.onReady(function () {
+     *   console.log('Ready to receive payments requests')
+     * })
+     */
+    onReady: (callback): void =>
+      conn.request('sgPaymentsOnReady').then(() => callback()),
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.getCatalogAsync
+     * @returns Array of products with pricing information
+     * @example
+     * ViberPlay.payments.getCatalogAsync().then((catalog) => {
+     *   console.log(catalog)
+     * })
+     */
+    getCatalogAsync: (): Promise<Array<Product>> =>
+      conn.request('sgPaymentsGetCatalog'),
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.purchaseAsync
+     * @param config - An object containing purchase configuration information
+     * @returns Purchase information
+     * @example
+     * ViberPlay.payments.purchaseAsync({
+     *   productID: 'someProduct',
+     *   developerPayload: 'somePayload'
+     * }).then((purchase) => {
+     *   console.log(purchase)
+     * })
+     */
+    purchaseAsync: (config: PurchaseConfig): Promise<Purchase> => {
+      if (typeof config !== 'object') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'PurchaseConfig is expected to be an object.'
+        };
+
+        throw err;
+      }
+
+      if (typeof config.productID !== 'string') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'ProductID is expected to be a string.'
+        };
+
+        throw err;
+      }
+
+      return conn.request('sgPaymentsPurchase', {
+        productId: config.productID,
+        developerPayload: config.developerPayload
+      });
+    },
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.getPurchasesAsync
+     * @returns
+     * @example
+     * ViberPlay.payments.getPurchasesAsync().then((purchases) => {
+     *   console.log(purchases);
+     * })
+     */
+    getPurchasesAsync: (): Promise<Array<Purchase>> => {
+      return conn.request('sgPaymentsGetPurchases');
+    },
+
+    /**
+     * (Experimental)
+     * @memberof ViberPlay
+     * @method payments.consumePurchaseAsync
+     * @param purchaseToken - A string of purchase token used for consumption
+     * @returns
+     * @example
+     * ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
+     *   console.log('Purchase is consumed');
+     * })
+     */
+    consumePurchaseAsync: (purchaseToken: string): Promise<void> => {
+      if (typeof purchaseToken !== 'string') {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'Purchase token is expected to be a string.'
+        };
+
+        throw err;
+      }
+
+      return conn.request('sgPaymentsConsumePurchase', {
+        purchaseToken
+      });
+    }
   }
 };
 

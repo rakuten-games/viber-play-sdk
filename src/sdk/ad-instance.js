@@ -1,7 +1,6 @@
 // @flow
 /* eslint-disable class-methods-use-this */
 import { getMessenger } from './messenger';
-import GCNManager from './gcn-manager';
 
 export type AdInstancePayload = {
   placementId: string
@@ -79,38 +78,27 @@ export class InterstitialAdInstance extends AdInstance {
   }
 }
 
-export class RewardedGCNAdInstance extends AdInstance {
+export class RewardedVideoAdInstance extends AdInstance {
   constructor(payload: AdInstancePayload) {
     super(payload);
     this.$ad.type = AD_TYPE_REWARDED_VIDEO;
   }
 
   loadAsync(): string {
-    return GCNManager.preload(this.$ad.placementId).then(() => undefined)
-      .catch(() => {
-        if (!GCNManager.hasPreloadedAds()) {
-          const adsNoFillErr = {
-            code: 'ADS_NO_FILL',
-            message: 'Ads failed to be filled',
-          };
+    const adsNoFillErr = {
+      code: 'ADS_NO_FILL',
+      message: 'Ads failed to be filled',
+    };
 
-          throw adsNoFillErr;
-        }
-      });
+    return Promise.reject(adsNoFillErr);
   }
 
   showAsync(): Promise<void> {
-    return GCNManager.show(this.$ad.placementId).then(() => undefined)
-      .catch(() => {
-        const adsNotLoadedErr = {
-          code: 'ADS_NOT_LOADED',
-          message: 'Ads failed to be filled or loaded',
-        };
+    const adsNotLoadedErr = {
+      code: 'ADS_NOT_LOADED',
+      message: 'Ads failed to be filled or loaded',
+    };
 
-        throw adsNotLoadedErr;
-      });
+    return Promise.reject(adsNotLoadedErr);
   }
 }
-
-export const RewardedVideoAdInstance = RewardedGCNAdInstance;
-export const GCNAdInstance = RewardedGCNAdInstance;

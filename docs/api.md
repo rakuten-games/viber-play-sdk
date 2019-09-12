@@ -4,77 +4,163 @@
 
 -   [ViberPlay][1]
     -   [initializeAsync][2]
-    -   [setLoadingProgress][3]
-    -   [startGameAsync][4]
-    -   [updateAsync][5]
-    -   [shareAsync][6]
-    -   [quit][7]
-    -   [getLocale][8]
-    -   [getEntryPointData][9]
-    -   [onPause][10]
-    -   [setSessionData][11]
-    -   [getLeaderboardAsync][12]
-    -   [subscribePlatformBotAsync][13]
-    -   [getMessengerPlatform][14]
-    -   [getInterstitialAdAsync][15]
-    -   [getRewardedVideoAdAsync][16]
-    -   [getAdAsync][17]
-    -   [getRewardedAdAsync][18]
-    -   [switchGameAsync][19]
-    -   [getTrafficSource][20]
-    -   [getEntryPointAsync][21]
-    -   [context.getID][22]
-    -   [context.getType][23]
-    -   [context.isSizeBetween][24]
-    -   [context.createAsync][25]
-    -   [context.switchAsync][26]
-    -   [context.chooseAsync][27]
-    -   [context.getPlayersAsync][28]
-    -   [player.getDataAsync][29]
-    -   [player.setDataAsync][30]
-    -   [player.flushDataAsync][31]
-    -   [player.getID][32]
-    -   [player.getName][33]
-    -   [player.getPhoto][34]
-    -   [player.getSignedPlayerInfoAsync][35]
-    -   [player.getConnectedPlayersAsync][36]
-    -   [player.canSubscribeBotAsync][37]
-    -   [player.subscribeBotAsync][38]
--   [InitializationOptions][39]
--   [SignedPlayerInfo][40]
-    -   [getPlayerID][41]
-    -   [getSignature][42]
--   [ContextChoosePayload][43]
--   [ContextSizeResponse][44]
--   [LeaderboardPlayer][45]
--   [Leaderboard][46]
-    -   [getName][47]
-    -   [getContextID][48]
-    -   [getEntryCountAsync][49]
-    -   [setScoreAsync][50]
-    -   [getPlayerEntryAsync][51]
-    -   [getEntriesAsync][52]
-    -   [getConnectedPlayerEntriesAsync][53]
--   [Player][54]
-    -   [getID][55]
-    -   [getName][56]
-    -   [getPhoto][57]
--   [ConnectedPlayer][58]
--   [ContextPlayer][59]
--   [LocalizableContent][60]
--   [SharePayload][61]
--   [AdInstance][62]
-    -   [getPlacementID][63]
-    -   [loadAsync][64]
-    -   [showAsync][65]
--   [LeaderboardEntry][66]
-    -   [getScore][67]
-    -   [getFormattedScore][68]
-    -   [getTimestamp][69]
-    -   [getRank][70]
-    -   [getExtraData][71]
-    -   [getPlayer][72]
--   [CustomUpdatePayload][73]
+        -   [Parameters][3]
+    -   [setLoadingProgress][4]
+        -   [Parameters][5]
+        -   [Examples][6]
+    -   [startGameAsync][7]
+        -   [Examples][8]
+    -   [updateAsync][9]
+        -   [Parameters][10]
+        -   [Examples][11]
+    -   [shareAsync][12]
+        -   [Parameters][13]
+        -   [Examples][14]
+    -   [quit][15]
+    -   [getLocale][16]
+        -   [Examples][17]
+    -   [getEntryPointData][18]
+    -   [onPause][19]
+    -   [setSessionData][20]
+        -   [Parameters][21]
+        -   [Examples][22]
+    -   [getLeaderboardAsync][23]
+        -   [Parameters][24]
+        -   [Examples][25]
+    -   [subscribePlatformBotAsync][26]
+        -   [Examples][27]
+    -   [getMessengerPlatform][28]
+        -   [Examples][29]
+    -   [getInterstitialAdAsync][30]
+        -   [Parameters][31]
+        -   [Examples][32]
+    -   [getRewardedVideoAdAsync][33]
+        -   [Parameters][34]
+        -   [Examples][35]
+    -   [switchGameAsync][36]
+        -   [Parameters][37]
+        -   [Examples][38]
+    -   [getTrafficSource][39]
+        -   [Examples][40]
+    -   [getEntryPointAsync][41]
+        -   [Examples][42]
+    -   [context.getID][43]
+    -   [context.getType][44]
+    -   [context.isSizeBetween][45]
+    -   [context.createAsync][46]
+        -   [Parameters][47]
+    -   [context.switchAsync][48]
+        -   [Parameters][49]
+    -   [context.chooseAsync][50]
+        -   [Parameters][51]
+    -   [context.getPlayersAsync][52]
+    -   [player.getDataAsync][53]
+        -   [Parameters][54]
+        -   [Examples][55]
+    -   [player.setDataAsync][56]
+        -   [Parameters][57]
+        -   [Examples][58]
+    -   [player.flushDataAsync][59]
+    -   [player.getID][60]
+        -   [Examples][61]
+    -   [player.getName][62]
+        -   [Examples][63]
+    -   [player.getPhoto][64]
+        -   [Examples][65]
+    -   [player.getSignedPlayerInfoAsync][66]
+        -   [Parameters][67]
+        -   [Examples][68]
+    -   [player.getConnectedPlayersAsync][69]
+        -   [Examples][70]
+    -   [player.canSubscribeBotAsync][71]
+        -   [Examples][72]
+    -   [player.subscribeBotAsync][73]
+        -   [Examples][74]
+    -   [payments.onReady][75]
+        -   [Examples][76]
+    -   [payments.getCatalogAsync][77]
+        -   [Examples][78]
+    -   [payments.purchaseAsync][79]
+        -   [Parameters][80]
+        -   [Examples][81]
+    -   [payments.getPurchasesAsync][82]
+        -   [Examples][83]
+    -   [payments.consumePurchaseAsync][84]
+        -   [Parameters][85]
+        -   [Examples][86]
+-   [InitializationOptions][87]
+    -   [Properties][88]
+-   [SignedPlayerInfo][89]
+    -   [getPlayerID][90]
+        -   [Examples][91]
+    -   [getSignature][92]
+        -   [Examples][93]
+-   [ContextSizeResponse][94]
+    -   [Properties][95]
+-   [LeaderboardPlayer][96]
+-   [Leaderboard][97]
+    -   [getName][98]
+        -   [Examples][99]
+    -   [getContextID][100]
+        -   [Examples][101]
+    -   [getEntryCountAsync][102]
+        -   [Examples][103]
+    -   [setScoreAsync][104]
+        -   [Parameters][105]
+        -   [Examples][106]
+    -   [getPlayerEntryAsync][107]
+        -   [Examples][108]
+    -   [getEntriesAsync][109]
+        -   [Parameters][110]
+        -   [Examples][111]
+    -   [getConnectedPlayerEntriesAsync][112]
+        -   [Parameters][113]
+        -   [Examples][114]
+-   [Player][115]
+    -   [getID][116]
+        -   [Examples][117]
+    -   [getName][118]
+        -   [Examples][119]
+    -   [getPhoto][120]
+        -   [Examples][121]
+-   [Product][122]
+    -   [Properties][123]
+-   [ConnectedPlayer][124]
+-   [ContextPlayer][125]
+-   [LocalizableContent][126]
+    -   [Properties][127]
+-   [SharePayload][128]
+    -   [Properties][129]
+-   [AdInstance][130]
+    -   [getPlacementID][131]
+        -   [Examples][132]
+    -   [loadAsync][133]
+        -   [Examples][134]
+    -   [showAsync][135]
+        -   [Examples][136]
+-   [ContextChooseFilter][137]
+-   [LeaderboardEntry][138]
+    -   [getScore][139]
+        -   [Examples][140]
+    -   [getFormattedScore][141]
+        -   [Examples][142]
+    -   [getTimestamp][143]
+        -   [Examples][144]
+    -   [getRank][145]
+        -   [Examples][146]
+    -   [getExtraData][147]
+        -   [Examples][148]
+    -   [getPlayer][149]
+        -   [Examples][150]
+-   [PurchaseConfig][151]
+    -   [Properties][152]
+-   [Purchase][153]
+    -   [Properties][154]
+-   [ContextChoosePayload][155]
+    -   [Properties][156]
+-   [CustomUpdatePayload][157]
+    -   [Properties][158]
+-   [SignedPurchaseRequest][159]
 
 ## ViberPlay
 
@@ -85,23 +171,23 @@ Top level namespace wrapping the SDK's interfaces.
 Initialize the SDK for the game. In the background, SDK will try to
 setup environment and retrieve data for later use in the game.
 
-**Parameters**
+#### Parameters
 
--   `options` **[InitializationOptions][74]?** Options to alter the runtime behavior of the SDK. Can be omitted.
+-   `options` **[InitializationOptions][160]?** Options to alter the runtime behavior of the SDK. Can be omitted. (optional, default `{}`)
 
-Returns **[Promise][75]&lt;void>** 
+Returns **[Promise][161]&lt;void>** 
 
 ### setLoadingProgress
 
 Updates the load progress of the game. The value will be shown at the
 loading screen.
 
-**Parameters**
+#### Parameters
 
--   `percentage` **[number][76]** Represents percentage of loading progress. It should
-    be between 0 and 100.
+-   `percentage` **[number][162]** Represents percentage of loading progress. It should
+    be between 0 and 100. (optional, default `0`)
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.setLoadingProgress(50); // The game is halfway loaded
@@ -111,10 +197,13 @@ Returns **void**
 
 ### startGameAsync
 
-Starts the game. Calling this method will turn off the loading screen once
-the initialization of SDK is done.
+Starts the game. Calling this method will turn off the loading screen as
+soon as these requirements are met:
 
-**Examples**
+-   ViberPlay.setLoadingProgress() is called with a number > 99
+-   ViberPlay.initializeAsync() is called and resolved
+
+#### Examples
 
 ```javascript
 ViberPlay.startGameAsync().then(function() {
@@ -122,7 +211,7 @@ ViberPlay.startGameAsync().then(function() {
 });
 ```
 
-Returns **[Promise][75]&lt;void>** 
+Returns **[Promise][161]&lt;void>** 
 
 ### updateAsync
 
@@ -132,11 +221,11 @@ the specified image and text message. And when people launch the game
 from this message, those game sessions will be able to read the specified
 data through `ViberPlay.getEntryPointData()`.
 
-**Parameters**
+#### Parameters
 
--   `payload` **[CustomUpdatePayload][77]** An object describes the update message.
+-   `payload` **[CustomUpdatePayload][163]** An object describes the update message.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.updateAsync({
@@ -159,17 +248,17 @@ ViberPlay.updateAsync({
 });
 ```
 
-Returns **[Promise][75]&lt;void>** 
+Returns **[Promise][161]&lt;void>** 
 
 ### shareAsync
 
 Share a message with the player's contact.
 
-**Parameters**
+#### Parameters
 
--   `payload` **[SharePayload][78]** An object describes the message to be shared.
+-   `payload` **[SharePayload][164]** An object describes the message to be shared.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.shareAsync({
@@ -182,7 +271,7 @@ ViberPlay.shareAsync({
 });
 ```
 
-Returns **[Promise][75]&lt;void>** 
+Returns **[Promise][161]&lt;void>** 
 
 ### quit
 
@@ -194,7 +283,7 @@ Returns **void**
 ### getLocale
 
 Locale code will be based on `navigator.language` in the WebView, format
-will be align with [BCP47][79].
+will be align with [BCP47][165].
 
 SDK will return the locale code as it is if it's one of the languages
 listed below:
@@ -223,7 +312,7 @@ listed below:
 
 For the rest, it will return `en_US` as default.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Game developers can also do l10n fallback like this
@@ -235,13 +324,13 @@ if (ruLangs.test(ViberPlay.getLocale())) {
 }
 ```
 
-Returns **[string][80]** 
+Returns **[string][166]** 
 
 ### getEntryPointData
 
 Get the entry point data bound to this message.
 
-Returns **[Object][81]** 
+Returns **[Object][167]** 
 
 ### onPause
 
@@ -259,11 +348,11 @@ used to populate payload of game_play webhook events.
 If called multiple times during a session, data specified in subsequent calls will be merged
 with existing data at the top level.
 
-**Parameters**
+#### Parameters
 
--   `sessionData` **[Object][81]** an arbitrary data object
+-   `sessionData` **[Object][167]** an arbitrary data object
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.setSessionData({
@@ -278,11 +367,11 @@ Returns **void**
 
 Get a leaderboard by its name
 
-**Parameters**
+#### Parameters
 
--   `name` **[string][80]** The name of the leaderboard
+-   `name` **[string][166]** The name of the leaderboard
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getLeaderboardAsync('some_leaderboard')
@@ -291,13 +380,13 @@ ViberPlay.getLeaderboardAsync('some_leaderboard')
   });
 ```
 
-Returns **[Promise][75]&lt;[Leaderboard][82]>** 
+Returns **[Promise][161]&lt;[Leaderboard][168]>** 
 
 ### subscribePlatformBotAsync
 
 (Experimental) (Viber only) Subscribe the platform bot.
 
-**Examples**
+#### Examples
 
 ```javascript
 if (ViberPlay.getMessengerPlatform() === 'VIBER') {
@@ -305,13 +394,13 @@ if (ViberPlay.getMessengerPlatform() === 'VIBER') {
 }
 ```
 
-Returns **[Promise][75]&lt;null>** 
+Returns **[Promise][161]&lt;null>** 
 
 ### getMessengerPlatform
 
 Get the current messenger platform
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getMessengerPlatform(); // 'VIBER'
@@ -323,11 +412,11 @@ Returns **MessengerPlatform**
 
 (Experimental) Get AdInstance of an interstitial ad placement
 
-**Parameters**
+#### Parameters
 
--   `placementId` **[string][80]** 
+-   `placementId` **[string][166]** 
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getInterstitialAdAsync('DUMMY_PLACEMENT_ID')
@@ -336,17 +425,17 @@ ViberPlay.getInterstitialAdAsync('DUMMY_PLACEMENT_ID')
   });
 ```
 
-Returns **[Promise][75]&lt;null>** 
+Returns **[Promise][161]&lt;InterstitialAdInstance>** 
 
 ### getRewardedVideoAdAsync
 
 (Experimental) Get AdInstance of a rewarded video ad placement
 
-**Parameters**
+#### Parameters
 
--   `placementId` **[string][80]** 
+-   `placementId` **[string][166]** 
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getRewardedVideoAdAsync('DUMMY_PLACEMENT_ID')
@@ -355,64 +444,18 @@ ViberPlay.getRewardedVideoAdAsync('DUMMY_PLACEMENT_ID')
   });
 ```
 
-Returns **[Promise][75]&lt;null>** 
-
-### getAdAsync
-
-(Experimental) Get AdInstance of an ad placement with optimized performance.
-Optimized performance is achieved by using different Ad formats and
-backfill strategies to give the best fill rate and then the best eCPM.
-Please be aware that this API is allowed to be used for rewarded usecase.
-This API is for Viber only.
-
-**Parameters**
-
--   `placementId` **[string][80]** 
-
-**Examples**
-
-```javascript
-ViberPlay.getAdAsync('DUMMY_PLACEMENT_ID')
-  .then((adInstance) => {
-    // do something
-  });
-```
-
-Returns **[Promise][75]&lt;null>** 
-
-### getRewardedAdAsync
-
-(Experimental) Get AdInstance of an rewarded ad placement with optimized performance.
-Optimized performance is achieved by using different Ad formats and
-backfill strategies to give the best fill rate and then the best eCPM.
-This API will only generate Ads allowed for rewarded usecase.
-This API is for Viber only.
-
-**Parameters**
-
--   `placementId` **[string][80]** 
-
-**Examples**
-
-```javascript
-ViberPlay.getRewardedAdAsync('DUMMY_PLACEMENT_ID')
-  .then((adInstance) => {
-    // do something
-  });
-```
-
-Returns **[Promise][75]&lt;null>** 
+Returns **[Promise][161]&lt;RewardedVideoAdInstance>** 
 
 ### switchGameAsync
 
 (Experimental) Request to switch to another game
 
-**Parameters**
+#### Parameters
 
--   `gameId` **[string][80]** the game ID of the target game
--   `data` **[Object][81]?** TODO the entry point data for the target game
+-   `gameId` **[string][166]** the game ID of the target game
+-   `data` **[Object][167]?** TODO the entry point data for the target game
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.switchGameAsync('arrQ8wIzzfBHsR0Cerroqns8ledhtug5', {
@@ -422,14 +465,14 @@ ViberPlay.switchGameAsync('arrQ8wIzzfBHsR0Cerroqns8ledhtug5', {
 });
 ```
 
-Returns **[Promise][75]&lt;null>** 
+Returns **[Promise][161]&lt;null>** 
 
 ### getTrafficSource
 
 (Experimental) (Viber only) Get traffic source related url params set
 on the game's wrapper.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Should be called after ViberPlay.initializeAsync() resolves
@@ -441,9 +484,9 @@ console.log(trafficSource['utm_source']); // 'viber'
 
 (Experimental) Get information about where the game is started.
 Details about available entry points can be found at
-[entry-points.md][83].
+[entry-points.md][169].
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getEntryPointAsync().then(console.log); // 'game_switch'
@@ -465,7 +508,7 @@ Check if the count of players in context is between given numbers
 
 Create context with player
 
-**Parameters**
+#### Parameters
 
 -   `playerId`  Player ID of the player
 
@@ -473,7 +516,7 @@ Create context with player
 
 Switch context by context id
 
-**Parameters**
+#### Parameters
 
 -   `playerId`  Context ID of the context
 
@@ -481,7 +524,7 @@ Switch context by context id
 
 Popup a friend dialog to establish context
 
-**Parameters**
+#### Parameters
 
 -   `payload`  An object describes the choose context
 
@@ -493,11 +536,11 @@ Get an array of ContextPlayer containing players in the same context
 
 Will get an object representing game data saved on the hosted platform.
 
-**Parameters**
+#### Parameters
 
 -   `keys`  An array of unique keys to retrieve data for.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player
@@ -519,7 +562,7 @@ will be merged into existing game data.
 Please be careful not to store a game data bigger than 1000 characters
 when stringified, which will cause the modification be rejected.
 
-**Parameters**
+#### Parameters
 
 -   `data`  An object containing a set of key-value pairs to be
     stored on the hosted platform. The object must contain only serializable
@@ -527,7 +570,7 @@ when stringified, which will cause the modification be rejected.
     to be rejected. Nullable value will be treated as removal of the key-value
     pair.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player
@@ -550,7 +593,7 @@ Will flush unsaved data to cloud storage
 
 Get the player's ID.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Should be called after ViberPlay.initializeAsync() resolves
@@ -563,7 +606,7 @@ Returns **any** Player's ID
 
 Get the player's name.
 
-**Examples**
+#### Examples
 
 ```javascript
 // Should be called after ViberPlay.initializeAsync() resolves
@@ -576,7 +619,7 @@ Returns **any** Player's name
 
 Get the player's photo.
 
-**Examples**
+#### Examples
 
 ```javascript
 var playerImage = new Image();
@@ -595,11 +638,11 @@ sent from the hosted platform or tampered.
 
 Please read `SignedPlayerInfo` for more information on how to use this.
 
-**Parameters**
+#### Parameters
 
 -   `payload`  An arbitary string to tag the signature
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
@@ -621,7 +664,7 @@ Returns **any** An object with encrypted player info
 This returns an array containing all contacts of the user.
 It doesn't filter users to those already playing this game.
 
-**Examples**
+#### Examples
 
 ```javascript
 var connectedPlayers = ViberPlay.player.getConnectedPlayersAsync()
@@ -645,7 +688,7 @@ the game's bot.
 Please note that this API is currently a stub that only resolves
 with true.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player.canSubscribeBotAsync()
@@ -662,7 +705,7 @@ API is called.
 Please note that this API can terminate the game's window and navigate
 user to the game's bot screen to start subscribing.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player.canSubscribeBotAsync()
@@ -678,13 +721,94 @@ ViberPlay.player.canSubscribeBotAsync()
 
 Returns **any** 
 
+### payments.onReady
+
+(Experimental)
+
+#### Examples
+
+```javascript
+ViberPlay.payments.onReady(function () {
+  console.log('Ready to receive payments requests')
+})
+```
+
+Returns **any** 
+
+### payments.getCatalogAsync
+
+(Experimental)
+
+#### Examples
+
+```javascript
+ViberPlay.payments.getCatalogAsync().then((catalog) => {
+  console.log(catalog)
+})
+```
+
+Returns **any** Array of products with pricing information
+
+### payments.purchaseAsync
+
+(Experimental)
+
+#### Parameters
+
+-   `config`  An object containing purchase configuration information
+
+#### Examples
+
+```javascript
+ViberPlay.payments.purchaseAsync({
+  productID: 'someProduct',
+  developerPayload: 'somePayload'
+}).then((purchase) => {
+  console.log(purchase)
+})
+```
+
+Returns **any** Purchase information
+
+### payments.getPurchasesAsync
+
+(Experimental)
+
+#### Examples
+
+```javascript
+ViberPlay.payments.getPurchasesAsync().then((purchases) => {
+  console.log(purchases);
+})
+```
+
+Returns **any** 
+
+### payments.consumePurchaseAsync
+
+(Experimental)
+
+#### Parameters
+
+-   `purchaseToken`  A string of purchase token used for consumption
+
+#### Examples
+
+```javascript
+ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
+  console.log('Purchase is consumed');
+})
+```
+
+Returns **any** 
+
 ## InitializationOptions
 
-Type: [Object][81]
+Type: [Object][167]
 
-**Properties**
+### Properties
 
--   `useLegacyLeaderboard` **[boolean][84]** if set to true the legacy leaderboard service will be used
+-   `useLegacyLeaderboard` **[boolean][170]** if set to true the legacy leaderboard service will be used
 
 ## SignedPlayerInfo
 
@@ -697,7 +821,7 @@ sent from the platform.
 
 Get the player's ID
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
@@ -706,7 +830,7 @@ ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
  });
 ```
 
-Returns **[string][80]** Player ID
+Returns **[string][166]** Player ID
 
 ### getSignature
 
@@ -731,7 +855,7 @@ On the game server, please validate this signature by the following steps:
 5.  You may also wish to validate the timestamp to see if the request was
     made recently.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
@@ -740,27 +864,17 @@ ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
  });
 ```
 
-Returns **[string][80]** Signature
-
-## ContextChoosePayload
-
-Type: [Object][81]
-
-**Properties**
-
--   `filters` **(`"NEW_CONTEXT_ONLY"` \| `"INCLUDE_EXISTING_CHALLENGES"` \| `"NEW_PLAYERS_ONLY"`)?** Filters
--   `maxSize` **[number][76]** Context maximum size for matching
--   `minSize` **[number][76]** Context minimum size for matching
+Returns **[string][166]** Signature
 
 ## ContextSizeResponse
 
-Type: [Object][81]
+Type: [Object][167]
 
-**Properties**
+### Properties
 
--   `answer` **[boolean][84]** Result
--   `minSize` **[number][76]** The minimum bound of the context size query
--   `maxSize` **[number][76]** The maximum bound of the context size query.
+-   `answer` **[boolean][170]** Result
+-   `minSize` **[number][162]** The minimum bound of the context size query
+-   `maxSize` **[number][162]** The maximum bound of the context size query.
 
 ## LeaderboardPlayer
 
@@ -777,7 +891,7 @@ Representing a leaderboard. Can be retrieved by calling
 
 Get the leaderboard's name.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getLeaderboardAsync('global_leaderboard')
@@ -793,14 +907,14 @@ ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
   });
 ```
 
-Returns **[string][80]** Leaderboard name
+Returns **[string][166]** Leaderboard name
 
 ### getContextID
 
 Get ID of the context which the leaderboard belongs to. Returns `null` if
 the leaderboard is not related to any context.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
@@ -809,13 +923,13 @@ ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
   });
 ```
 
-Returns **[string][80]?** Related context ID
+Returns **[string][166]?** Related context ID
 
 ### getEntryCountAsync
 
 Get total number of entries inside the leaderboard.
 
-**Examples**
+#### Examples
 
 ```javascript
 ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
@@ -826,7 +940,7 @@ ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
   });
 ```
 
-Returns **[Promise][75]&lt;[number][76]>** Total number of entries
+Returns **[Promise][161]&lt;[number][162]>** Total number of entries
 
 ### setScoreAsync
 
@@ -834,12 +948,12 @@ Submit score to the leaderboard and get the latest entry. A player can only
 have one entry. If there's already an old entry, it will be only updated to
 the a better score.
 
-**Parameters**
+#### Parameters
 
--   `score` **[number][76]** The new score
--   `extraData` **[string][80]?** A string payload can be attached to the entry as extra info
+-   `score` **[number][162]** The new score
+-   `extraData` **[string][166]?** A string payload can be attached to the entry as extra info (optional, default `null`)
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -848,13 +962,13 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[Promise][75]&lt;[LeaderboardEntry][85]>** Entry info
+Returns **[Promise][161]&lt;[LeaderboardEntry][171]>** Entry info
 
 ### getPlayerEntryAsync
 
 Get current player's entry. Returns `null` if there isn't one.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.getPlayerEntryAsync()
@@ -868,19 +982,19 @@ leaderboard.getPlayerEntryAsync()
   });
 ```
 
-Returns **[Promise][75]&lt;[LeaderboardEntry][85]?>** Entry info
+Returns **[Promise][161]&lt;[LeaderboardEntry][171]?>** Entry info
 
 ### getEntriesAsync
 
 Get a list of entries inside the leaderboard based on the count and rank
 offset specified
 
-**Parameters**
+#### Parameters
 
--   `count` **[number][76]** The number of maximum entries to be retruned
--   `offset` **[number][76]** The offset in the leaderborad (from the top) the entries to be returned
+-   `count` **[number][162]** The number of maximum entries to be retruned
+-   `offset` **[number][162]** The offset in the leaderborad (from the top) the entries to be returned
 
-**Examples**
+#### Examples
 
 ```javascript
 // Get top 10 entries
@@ -890,19 +1004,19 @@ leaderboard.getEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][75]&lt;[Array][86]&lt;[LeaderboardEntry][85]>>** Array of entry info
+Returns **[Promise][161]&lt;[Array][172]&lt;[LeaderboardEntry][171]>>** Array of entry info
 
 ### getConnectedPlayerEntriesAsync
 
 Get a list of connected player entries inside the leaderboard based on the count and rank
 offset specified
 
-**Parameters**
+#### Parameters
 
--   `count` **[number][76]** The number of maximum entries to be retruned
--   `offset` **[number][76]** The offset in the leaderborad (from the top) the entries to be returned
+-   `count` **[number][162]** The number of maximum entries to be retruned
+-   `offset` **[number][162]** The offset in the leaderborad (from the top) the entries to be returned
 
-**Examples**
+#### Examples
 
 ```javascript
 // Get top 10 friend entries
@@ -912,7 +1026,7 @@ leaderboard.getConnectedPlayerEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][75]&lt;[Array][86]&lt;[LeaderboardEntry][85]>>** Array of entry info
+Returns **[Promise][161]&lt;[Array][172]&lt;[LeaderboardEntry][171]>>** Array of entry info
 
 ## Player
 
@@ -922,37 +1036,50 @@ Representing a player.
 
 Get the player's ID.
 
-**Examples**
+#### Examples
 
 ```javascript
 player.getID(); // '5458282176661711'
 ```
 
-Returns **[string][80]** Player ID
+Returns **[string][166]** Player ID
 
 ### getName
 
 Get the player's name.
 
-**Examples**
+#### Examples
 
 ```javascript
 player.getName(); // 'Alpha Omega'
 ```
 
-Returns **[string][80]** Player name
+Returns **[string][166]** Player name
 
 ### getPhoto
 
 Get the player's photo.
 
-**Examples**
+#### Examples
 
 ```javascript
 player.getPhoto(); // A CORS supported URL to user's photo
 ```
 
-Returns **[string][80]** URL of player photo
+Returns **[string][166]** URL of player photo
+
+## Product
+
+Type: [Object][167]
+
+### Properties
+
+-   `title` **[string][166]** Title of the product
+-   `productID` **[string][166]** ID of the product
+-   `description` **[string][166]?** Text description of the product
+-   `imageURI` **[string][166]?** A URL to the product's image
+-   `price` **[string][166]** A localized string representing the product's pirce in the local currency, e.g. "$1"
+-   `priceCurrencyCode` **[string][166]** A string representing which currency is the price calculated in, following [ISO 4217][173]
 
 ## ConnectedPlayer
 
@@ -973,27 +1100,27 @@ To provide localized versions of your own call to action, pass an object
 with the default cta as the value of 'default' and another object mapping
 locale keys to translations as the value of 'localizations'.
 
-Type: [Object][81]
+Type: [Object][167]
 
-**Properties**
+### Properties
 
--   `default` **[string][80]** The text to be used if no suitable text is
+-   `default` **[string][166]** The text to be used if no suitable text is
     found.
--   `ja_JP` **[string][80]?** The text to be used for ja_JP locale.
--   `en_US` **[string][80]?** The text to be used for en_US locale.
+-   `ja_JP` **[string][166]?** The text to be used for ja_JP locale.
+-   `en_US` **[string][166]?** The text to be used for en_US locale.
 
 ## SharePayload
 
-Type: [Object][81]
+Type: [Object][167]
 
-**Properties**
+### Properties
 
 -   `intent` **(`"INVITE"` \| `"REQUEST"` \| `"CHALLENGE"` \| `"SHARE"`)** [TODO]
     Represents content to be shared by the user.
--   `image` **[string][80]** A string containing data URL of a base64
+-   `image` **[string][166]** A string containing data URL of a base64
     encoded image.
--   `text` **[string][80]** Text message of this share.
--   `data` **[Object][81]?** An object to be passed to any session launched
+-   `text` **[string][166]** Text message of this share.
+-   `data` **[Object][167]?** An object to be passed to any session launched
     from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
     Its size must be &lt;= 1000 chars when stringified.
 
@@ -1005,13 +1132,13 @@ Type: [Object][81]
 
 (Experimental) Get the ad's placement ID.
 
-**Examples**
+#### Examples
 
 ```javascript
 adInstance.getPlacementID(); // '5458282176661711'
 ```
 
-Returns **[string][80]** Placement ID
+Returns **[string][166]** Placement ID
 
 ### loadAsync
 
@@ -1020,28 +1147,32 @@ Notes: On Android, the interstitial ad will start autoplaying right
 after it's loaded. To give the best result, please start loading the
 interstitial ad right before you want to show it.
 
-**Examples**
+#### Examples
 
 ```javascript
 // after adInstance is created
 adInstance.loadAsync();
 ```
 
-Returns **[string][80]** 
+Returns **[string][166]** 
 
 ### showAsync
 
 (Experimental) Show the loaded ad to player. The returned promise will be only resolved
 when user closed the ad's overlay.
 
-**Examples**
+#### Examples
 
 ```javascript
 // after adInstance is loaded
 adInstance.showAsync();
 ```
 
-Returns **[Promise][75]&lt;void>** 
+Returns **[Promise][161]&lt;void>** 
+
+## ContextChooseFilter
+
+Type: (`"NEW_CONTEXT_ONLY"` \| `"INCLUDE_EXISTING_CHALLENGES"` \| `"NEW_PLAYERS_ONLY"` \| `"NEW_INVITATIONS_ONLY"`)
 
 ## LeaderboardEntry
 
@@ -1053,7 +1184,7 @@ only updated when a better score is submit by this player.
 
 Get the score of this entry.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1062,14 +1193,14 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[number][76]** Score
+Returns **[number][162]** Score
 
 ### getFormattedScore
 
 Get the formatted score of this entry. Format is based on the
 leaderboard's setting.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1078,14 +1209,14 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[string][80]** Formatted score
+Returns **[string][166]** Formatted score
 
 ### getTimestamp
 
 Get the timestamp of when the entry is updated or created for the last
 time.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1094,14 +1225,14 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[number][76]** Timestamp of last update or creation
+Returns **[number][162]** Timestamp of last update or creation
 
 ### getRank
 
 Get the rank of this player. It's calculated based on the entry's score
 and the leaderboard's sort setting.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1110,14 +1241,14 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[number][76]** Rank
+Returns **[number][162]** Rank
 
 ### getExtraData
 
 Get the extra data submit with the last update. Returns `null` if no
 extra data exists.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1126,13 +1257,13 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[string][80]?** Extra data appended with last update or creation
+Returns **[string][166]?** Extra data appended with last update or creation
 
 ### getPlayer
 
 Get the player's info of this entry.
 
-**Examples**
+#### Examples
 
 ```javascript
 leaderboard.setScoreAsync(100, 'Hello world')
@@ -1141,26 +1272,61 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[LeaderboardPlayer][87]** Player's info
+Returns **[LeaderboardPlayer][174]** Player's info
+
+## PurchaseConfig
+
+Type: [Object][167]
+
+### Properties
+
+-   `productID` **[string][166]** ID of the product
+-   `developerPayload` **[string][166]?** An optional payload can be assigned by game developer, which will be attached in the signed purchase request
+
+## Purchase
+
+Type: [Object][167]
+
+### Properties
+
+-   `productID` **[string][166]** ID of the product
+-   `developerPayload` **[string][166]?** An optional payload can be assigned by game developer, which will be attached in the signed purchase request
+
+## ContextChoosePayload
+
+Type: [Object][167]
+
+### Properties
+
+-   `filters` **[Array][172]&lt;[ContextChooseFilter][175]>** Provide an array of filters you'd like to apply to the friend list.
+    Please note that filter combinations are not supported at the moment of
+    writing. Only the first filter is respected, the later ones are simply just
+    ignored.
+-   `maxSize` **[number][162]** Context maximum size for matching
+-   `minSize` **[number][162]** Context minimum size for matching
+-   `hoursSinceInvitation` **[number][162]** Specify how long a friend should
+    be filtered out after the curent player sends him/her a message.
+    This parameter only applies when `NEW_INVITATIONS_ONLY` filter is used.
+    When not specified, will filter out any friend who has been sent a message.
 
 ## CustomUpdatePayload
 
-Type: [Object][81]
+Type: [Object][167]
 
-**Properties**
+### Properties
 
--   `action` **[string][80]** This should be 'CUSTOM'.
--   `template` **[string][80]** [TODO] ID of the template this custom
+-   `action` **[string][166]** This should be 'CUSTOM'.
+-   `template` **[string][166]** [TODO] ID of the template this custom
     update is using. Templates should be predefined in fbapp-config.json.
-    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][88]
+    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][176]
     for documentation about fbapp-config.json.
--   `cta` **([string][80]? | [LocalizableContent][89]?)** [TODO] An optional
+-   `cta` **([string][166]? | [LocalizableContent][177]?)** [TODO] An optional
     call-to-action button text. By default we will use a localized 'Play'
     as the button text.
--   `image` **[string][80]** A string containing data URL of a base64
+-   `image` **[string][166]** A string containing data URL of a base64
     encoded image.
--   `text` **([string][80] \| [LocalizableContent][89])** Text message of this update.
--   `data` **[Object][81]?** An object to be passed to any session launched
+-   `text` **([string][166] \| [LocalizableContent][177])** Text message of this update.
+-   `data` **[Object][167]?** An object to be passed to any session launched
     from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
     Its size must be &lt;= 1000 chars when stringified.
 -   `strategy` **(`"IMMEDIATE"` \| `"LAST"` \| `"IMMEDIATE_CLEAR"`)?** [TODO] Defines how the update should be delivered.
@@ -1176,180 +1342,360 @@ Type: [Object][81]
     notification is not always guaranteed, depending on user setting and
     platform policies.
 
+## SignedPurchaseRequest
+
+Type: [string][166]
+
 [1]: #viberplay
 
 [2]: #initializeasync
 
-[3]: #setloadingprogress
+[3]: #parameters
 
-[4]: #startgameasync
+[4]: #setloadingprogress
 
-[5]: #updateasync
+[5]: #parameters-1
 
-[6]: #shareasync
+[6]: #examples
 
-[7]: #quit
+[7]: #startgameasync
 
-[8]: #getlocale
+[8]: #examples-1
 
-[9]: #getentrypointdata
+[9]: #updateasync
 
-[10]: #onpause
+[10]: #parameters-2
 
-[11]: #setsessiondata
+[11]: #examples-2
 
-[12]: #getleaderboardasync
+[12]: #shareasync
 
-[13]: #subscribeplatformbotasync
+[13]: #parameters-3
 
-[14]: #getmessengerplatform
+[14]: #examples-3
 
-[15]: #getinterstitialadasync
+[15]: #quit
 
-[16]: #getrewardedvideoadasync
+[16]: #getlocale
 
-[17]: #getadasync
+[17]: #examples-4
 
-[18]: #getrewardedadasync
+[18]: #getentrypointdata
 
-[19]: #switchgameasync
+[19]: #onpause
 
-[20]: #gettrafficsource
+[20]: #setsessiondata
 
-[21]: #getentrypointasync
+[21]: #parameters-4
 
-[22]: #contextgetid
+[22]: #examples-5
 
-[23]: #contextgettype
+[23]: #getleaderboardasync
 
-[24]: #contextissizebetween
+[24]: #parameters-5
 
-[25]: #contextcreateasync
+[25]: #examples-6
 
-[26]: #contextswitchasync
+[26]: #subscribeplatformbotasync
 
-[27]: #contextchooseasync
+[27]: #examples-7
 
-[28]: #contextgetplayersasync
+[28]: #getmessengerplatform
 
-[29]: #playergetdataasync
+[29]: #examples-8
 
-[30]: #playersetdataasync
+[30]: #getinterstitialadasync
 
-[31]: #playerflushdataasync
+[31]: #parameters-6
 
-[32]: #playergetid
+[32]: #examples-9
 
-[33]: #playergetname
+[33]: #getrewardedvideoadasync
 
-[34]: #playergetphoto
+[34]: #parameters-7
 
-[35]: #playergetsignedplayerinfoasync
+[35]: #examples-10
 
-[36]: #playergetconnectedplayersasync
+[36]: #switchgameasync
 
-[37]: #playercansubscribebotasync
+[37]: #parameters-8
 
-[38]: #playersubscribebotasync
+[38]: #examples-11
 
-[39]: #initializationoptions
+[39]: #gettrafficsource
 
-[40]: #signedplayerinfo
+[40]: #examples-12
 
-[41]: #getplayerid
+[41]: #getentrypointasync
 
-[42]: #getsignature
+[42]: #examples-13
 
-[43]: #contextchoosepayload
+[43]: #contextgetid
 
-[44]: #contextsizeresponse
+[44]: #contextgettype
 
-[45]: #leaderboardplayer
+[45]: #contextissizebetween
 
-[46]: #leaderboard
+[46]: #contextcreateasync
 
-[47]: #getname
+[47]: #parameters-9
 
-[48]: #getcontextid
+[48]: #contextswitchasync
 
-[49]: #getentrycountasync
+[49]: #parameters-10
 
-[50]: #setscoreasync
+[50]: #contextchooseasync
 
-[51]: #getplayerentryasync
+[51]: #parameters-11
 
-[52]: #getentriesasync
+[52]: #contextgetplayersasync
 
-[53]: #getconnectedplayerentriesasync
+[53]: #playergetdataasync
 
-[54]: #player
+[54]: #parameters-12
 
-[55]: #getid
+[55]: #examples-14
 
-[56]: #getname-1
+[56]: #playersetdataasync
 
-[57]: #getphoto
+[57]: #parameters-13
 
-[58]: #connectedplayer
+[58]: #examples-15
 
-[59]: #contextplayer
+[59]: #playerflushdataasync
 
-[60]: #localizablecontent
+[60]: #playergetid
 
-[61]: #sharepayload
+[61]: #examples-16
 
-[62]: #adinstance
+[62]: #playergetname
 
-[63]: #getplacementid
+[63]: #examples-17
 
-[64]: #loadasync
+[64]: #playergetphoto
 
-[65]: #showasync
+[65]: #examples-18
 
-[66]: #leaderboardentry
+[66]: #playergetsignedplayerinfoasync
 
-[67]: #getscore
+[67]: #parameters-14
 
-[68]: #getformattedscore
+[68]: #examples-19
 
-[69]: #gettimestamp
+[69]: #playergetconnectedplayersasync
 
-[70]: #getrank
+[70]: #examples-20
 
-[71]: #getextradata
+[71]: #playercansubscribebotasync
 
-[72]: #getplayer
+[72]: #examples-21
 
-[73]: #customupdatepayload
+[73]: #playersubscribebotasync
 
-[74]: #initializationoptions
+[74]: #examples-22
 
-[75]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[75]: #paymentsonready
 
-[76]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[76]: #examples-23
 
-[77]: #customupdatepayload
+[77]: #paymentsgetcatalogasync
 
-[78]: #sharepayload
+[78]: #examples-24
 
-[79]: http://www.ietf.org/rfc/bcp/bcp47.txt
+[79]: #paymentspurchaseasync
 
-[80]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[80]: #parameters-15
 
-[81]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[81]: #examples-25
 
-[82]: #leaderboard
+[82]: #paymentsgetpurchasesasync
 
-[83]: ./entry-points.md
+[83]: #examples-26
 
-[84]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[84]: #paymentsconsumepurchaseasync
 
-[85]: #leaderboardentry
+[85]: #parameters-16
 
-[86]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[86]: #examples-27
 
-[87]: #leaderboardplayer
+[87]: #initializationoptions
 
-[88]: https://developers.facebook.com/docs/games/instant-games/bundle-config
+[88]: #properties
 
-[89]: #localizablecontent
+[89]: #signedplayerinfo
+
+[90]: #getplayerid
+
+[91]: #examples-28
+
+[92]: #getsignature
+
+[93]: #examples-29
+
+[94]: #contextsizeresponse
+
+[95]: #properties-1
+
+[96]: #leaderboardplayer
+
+[97]: #leaderboard
+
+[98]: #getname
+
+[99]: #examples-30
+
+[100]: #getcontextid
+
+[101]: #examples-31
+
+[102]: #getentrycountasync
+
+[103]: #examples-32
+
+[104]: #setscoreasync
+
+[105]: #parameters-17
+
+[106]: #examples-33
+
+[107]: #getplayerentryasync
+
+[108]: #examples-34
+
+[109]: #getentriesasync
+
+[110]: #parameters-18
+
+[111]: #examples-35
+
+[112]: #getconnectedplayerentriesasync
+
+[113]: #parameters-19
+
+[114]: #examples-36
+
+[115]: #player
+
+[116]: #getid
+
+[117]: #examples-37
+
+[118]: #getname-1
+
+[119]: #examples-38
+
+[120]: #getphoto
+
+[121]: #examples-39
+
+[122]: #product
+
+[123]: #properties-2
+
+[124]: #connectedplayer
+
+[125]: #contextplayer
+
+[126]: #localizablecontent
+
+[127]: #properties-3
+
+[128]: #sharepayload
+
+[129]: #properties-4
+
+[130]: #adinstance
+
+[131]: #getplacementid
+
+[132]: #examples-40
+
+[133]: #loadasync
+
+[134]: #examples-41
+
+[135]: #showasync
+
+[136]: #examples-42
+
+[137]: #contextchoosefilter
+
+[138]: #leaderboardentry
+
+[139]: #getscore
+
+[140]: #examples-43
+
+[141]: #getformattedscore
+
+[142]: #examples-44
+
+[143]: #gettimestamp
+
+[144]: #examples-45
+
+[145]: #getrank
+
+[146]: #examples-46
+
+[147]: #getextradata
+
+[148]: #examples-47
+
+[149]: #getplayer
+
+[150]: #examples-48
+
+[151]: #purchaseconfig
+
+[152]: #properties-5
+
+[153]: #purchase
+
+[154]: #properties-6
+
+[155]: #contextchoosepayload
+
+[156]: #properties-7
+
+[157]: #customupdatepayload
+
+[158]: #properties-8
+
+[159]: #signedpurchaserequest
+
+[160]: #initializationoptions
+
+[161]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+[162]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[163]: #customupdatepayload
+
+[164]: #sharepayload
+
+[165]: http://www.ietf.org/rfc/bcp/bcp47.txt
+
+[166]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[167]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[168]: #leaderboard
+
+[169]: ./entry-points.md
+
+[170]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[171]: #leaderboardentry
+
+[172]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[173]: https://en.wikipedia.org/wiki/ISO_4217
+
+[174]: #leaderboardplayer
+
+[175]: #contextchoosefilter
+
+[176]: https://developers.facebook.com/docs/games/instant-games/bundle-config
+
+[177]: #localizablecontent

@@ -100,13 +100,75 @@ console.error(new TypeError('ERROR'));
 <div class="section">
 <h2>initialize</h2>
 <script class="example-code" type="text/plain">
-ViberPlay.initializeAsync()
+ViberPlay.initializeAsync({
+  scrollTarget: '.wrapper'
+})
   .then(() => ViberPlay.setLoadingProgress(0))
   .then(() => ViberPlay.setLoadingProgress(10))
   .then(() => ViberPlay.setLoadingProgress(50))
   .then(() => ViberPlay.setLoadingProgress(100))
   .then(() => ViberPlay.startGameAsync())
   .then(() => console.log('Game is loaded and started'));
+</script>
+</div>
+
+<div class="section">
+<h2>iap (wip)</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.onReady(() => {
+  console.log('payments ready');
+});
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.getCatalogAsync().then((catalog) => {
+  console.log(catalog);
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.purchaseAsync({
+  productID: 'jp.rgames.kiki.purchase.gems_1',
+  developerPayload: 'somePayload'
+}).then((purchase) => {
+  console.log(purchase);
+
+  const verified = true; // should verify signature on game server
+
+  if (verified) {
+    return purchase;
+  } else {
+    throw new Error('Invalid purchase');
+  }
+}).then((purchase) => {
+  ViberPlay.payments.consumePurchaseAsync(purchase.purchaseToken)
+}).then(() => {
+  console.log('Purchase consumed');
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.purchaseAsync({
+  productID: 'jp.rgames.kiki.purchase.gems_1',
+  developerPayload: 'somePayload'
+}).then((purchase) => {
+  console.log(purchase);
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.getPurchasesAsync().then((purchases) => {
+  console.log(purchases);
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
+  console.log('Purchase consumed');
+}).catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.purchaseAsync({invalid: 'param'})
+  .catch(console.error);
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.payments.consumePurchaseAsync()
+  .catch(console.error);
 </script>
 </div>
 
@@ -143,60 +205,6 @@ if (ViberPlay.getMessengerPlatform() === 'VIBER') {
 <div class="section">
 <h2>ad viber (experimental)</h2>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
-
-  ViberPlay.getAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(ad) {
-      preloadedAd = ad;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('ad preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('ad shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
-
-  ViberPlay.getRewardedAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(rewardedAd) {
-      preloadedAd = rewardedAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('rewardedAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('rewardedAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
   if (ViberPlay.getMessengerPlatform() === 'VIBER') {
     window.preloadedAd = null;
 
@@ -215,6 +223,33 @@ if (ViberPlay.getMessengerPlatform() === 'VIBER') {
     })
     .then(function() {
       console.log('interstitialAd shown');
+    })
+    .catch(function(err){
+      console.error(err);
+    });
+} else {
+  console.log('This feature is not available outside Viber');
+}
+</script>
+<script class="example-code" type="text/plain">
+if (ViberPlay.getMessengerPlatform() === 'VIBER') {
+  window.preloadedAd = null;
+
+  ViberPlay.getRewardedVideoAdAsync(
+    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+  )
+    .then(function(rewardedVideoAd) {
+      preloadedAd = rewardedVideoAd;
+      return preloadedAd.loadAsync();
+    })
+    .then(function() {
+      console.log('rewardedVideoAd preloaded');
+    })
+    .then(function() {
+      preloadedAd.showAsync();
+    })
+    .then(function() {
+      console.log('rewardedVideoAd shown');
     })
     .catch(function(err){
       console.error(err);
@@ -308,6 +343,17 @@ console.log(window.l9dEntry.getRank());
 <script class="example-code" type="text/plain">
 console.log(window.l9dEntry.getExtraData());
 </script>
+<script class="example-code" type="text/plain">
+window.l9dEntries.forEach(entry => {
+  console.log(JSON.stringify({
+    score: entry.getScore(),
+    formattedScore: entry.getFormattedScore(),
+    timestamp: entry.getTimestamp(),
+    rank: entry.getRank(),
+    extraData: entry.getExtraData(),
+  }));
+});
+</script>
 </div>
 
 <div class="section">
@@ -319,6 +365,17 @@ console.log(JSON.stringify({
   name: player.getName(),
   photo: player.getPhoto(),
 }));
+</script>
+<script class="example-code" type="text/plain">
+window.l9dEntries.forEach(entry => {
+  const player = entry.getPlayer();
+
+  console.log(JSON.stringify({
+    id: player.getID(),
+    name: player.getName(),
+    photo: player.getPhoto(),
+  }));
+});
 </script>
 </div>
 
@@ -387,6 +444,10 @@ ViberPlay.context.chooseAsync({filters: ['NEW_PLAYERS_ONLY']})
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.context.chooseAsync({minSize: 3})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['NEW_INVITATIONS_ONLY'], hoursSinceInvitation: 24})
   .then(() => console.log(ViberPlay.context.getID()));
 </script>
 </div>
@@ -674,8 +735,10 @@ function testGameStart() {
     window.location.href
   );
   const initConfig = Object.assign(
-    {},
-    isSimulator && { platform: 'simulator' }
+    {
+      scrollTarget: '.wrapper'
+    },
+    isSimulator && { platform: 'simulator' },
   );
 
   Promise.resolve()
