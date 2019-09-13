@@ -17,6 +17,7 @@ import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
 import type { Product, Purchase, PurchaseConfig } from '../types/iap';
 import type { ShareResult } from '../types/share-result'
+import { lock } from '../utils/scroll-lock'
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -52,6 +53,11 @@ conn
   .catch(err => {});
 
 /**
+ * @private
+ */
+let isInitialized = false
+
+/**
  * Top level namespace wrapping the SDK's interfaces.
  * @namespace ViberPlay
  */
@@ -63,9 +69,15 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    * @param options Options to alter the runtime behavior of the SDK. Can be omitted.
    */
-  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> =>
-    // TODO: prevent run more than once
-    conn
+  initializeAsync: (options: ?InitializationOptions = {}): Promise<void> => {
+    // avoid being executed more than once
+    if (isInitialized) return Promise.resolve()
+
+    if (options.scrollTarget) {
+      lock(options.scrollTarget)
+    }
+
+    return conn
       .request('sgInitialize', {
         ...options,
         __sdk__: `${process.env.npm_package_name}@${
@@ -80,7 +92,8 @@ const viberPlaySdk = {
         state.entryPointData = entryPointData;
         state.trafficSource = trafficSource;
       })
-      .then(() => undefined),
+      .then(() => undefined)
+  },
 
   /**
    * Updates the load progress of the game. The value will be shown at the
@@ -628,7 +641,8 @@ const viberPlaySdk = {
                   ![
                     'NEW_CONTEXT_ONLY',
                     'INCLUDE_EXISTING_CHALLENGES',
-                    'NEW_PLAYERS_ONLY'
+                    'NEW_PLAYERS_ONLY',
+                    'NEW_INVITATIONS_ONLY'
                   ].includes(payload.filters[i])
                 ) {
                   const err = {
@@ -638,6 +652,14 @@ const viberPlaySdk = {
                   throw err;
                 }
               }
+            }
+
+            if (payload.hoursSinceInvitation && !Number.isInteger(payload.hoursSinceInvitation)) {
+              const err = {
+                code: 'INVALID_PARAM',
+                message: 'The hoursSinceInvitation is not integer'
+              };
+              throw err;
             }
 
             if (payload.minSize && !Number.isInteger(payload.minSize)) {

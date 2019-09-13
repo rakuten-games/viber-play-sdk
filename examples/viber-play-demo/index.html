@@ -16,7 +16,7 @@ document.write(
     'ipt src="' +
     (/localhost/.test(location.href)
       ? '../../lib/bundle.js'
-      : 'https://vbrpl.io/libs/viber-play-sdk/next/bundle.js') +
+      : 'https://vbrpl.io/libs/viber-play-sdk/1.1.1/bundle.js') +
     '"></scr' +
     'ipt>'
 );
@@ -100,7 +100,9 @@ console.error(new TypeError('ERROR'));
 <div class="section">
 <h2>initialize</h2>
 <script class="example-code" type="text/plain">
-ViberPlay.initializeAsync()
+ViberPlay.initializeAsync({
+  scrollTarget: '.wrapper'
+})
   .then(() => ViberPlay.setLoadingProgress(0))
   .then(() => ViberPlay.setLoadingProgress(10))
   .then(() => ViberPlay.setLoadingProgress(50))
@@ -444,6 +446,10 @@ ViberPlay.context.chooseAsync({filters: ['NEW_PLAYERS_ONLY']})
 ViberPlay.context.chooseAsync({minSize: 3})
   .then(() => console.log(ViberPlay.context.getID()));
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({filters: ['NEW_INVITATIONS_ONLY'], hoursSinceInvitation: 24})
+  .then(() => console.log(ViberPlay.context.getID()));
+</script>
 </div>
 
 <div class="section">
@@ -766,8 +772,10 @@ function testGameStart() {
     window.location.href
   );
   const initConfig = Object.assign(
-    {},
-    isSimulator && { platform: 'simulator' }
+    {
+      scrollTarget: '.wrapper'
+    },
+    isSimulator && { platform: 'simulator' },
   );
 
   Promise.resolve()
