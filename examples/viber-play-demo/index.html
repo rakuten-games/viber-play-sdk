@@ -16,7 +16,7 @@ document.write(
     'ipt src="' +
     (/localhost/.test(location.href)
       ? '../../lib/bundle.js'
-      : 'https://vbrpl.io/libs/viber-play-sdk/1.1.1/bundle.js') +
+      : 'https://vbrpl.io/libs/viber-play-sdk/next/bundle.js') +
     '"></scr' +
     'ipt>'
 );
@@ -583,6 +583,15 @@ ViberPlay.shareAsync({
   image: b64Img,
   text: 'This is share async test message',
   filters: ['NEW_PLAYERS_ONLY'],
+  data: {foo: 'bar'}
+}).then((res) => console.log(res));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.shareAsync({
+  intent: 'REQUEST',
+  image: b64Img,
+  text: 'This is share async test message',
+  filters: ['NEW_INVITATIONS_ONLY'],
   data: {foo: 'bar'}
 }).then((res) => console.log(res));
 </script>
