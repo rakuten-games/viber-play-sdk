@@ -214,7 +214,7 @@ const viberPlaySdk = {
    *   minShare: 3,
    *   data: { someData: '...' },
    * }).then(function(shareResult) {
-   *   console.log(shareResult); // {sharedNum: 3}
+   *   console.log(shareResult); // {sharedCount: 3}
    * });
    */
   shareAsync: (payload: SharePayload): Promise<ShareResult> => 
