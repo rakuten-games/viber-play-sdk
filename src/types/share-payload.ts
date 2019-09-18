@@ -1,6 +1,6 @@
 // @flow
 
-import type LocalizableContent from './localizable-content'
+import { LocalizableContent } from './localizable-content'
 
 /**
  * @typedef {Object} SharePayload
@@ -18,11 +18,11 @@ import type LocalizableContent from './localizable-content'
  * Optional customizable text field which can be used to describe the 
  * reward a user can get from sharing.
  */
-export type SharePayload = {
+export interface SharePayload {
   intent: 'INVITE' | 'REQUEST' | 'CHALLENGE' | 'SHARE',
   image: string,
   text: string | LocalizableContent,
-  data: ?Object,
+  data?: object,
   filters?: 'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY',
   minShare?: number,
   description?: string | LocalizableContent

@@ -1,6 +1,4 @@
-// @flow
-
-import type { LocalizableContent } from './localizable-content';
+import { LocalizableContent } from './localizable-content';
 
 /**
  * @typedef {Object} CustomUpdatePayload
@@ -34,12 +32,12 @@ import type { LocalizableContent } from './localizable-content';
  * notification is not always guaranteed, depending on user setting and
  * platform policies.
  */
-export type CustomUpdatePayload = {
+export interface CustomUpdatePayload {
   action: string,
-  cta: ?string | ?LocalizableContent,
+  cta?: string | LocalizableContent,
   image: string,
-  text: ?string | ?LocalizableContent,
-  data: ?Object,
-  strategy: ?('IMMEDIATE' | 'LAST' | 'IMMEDIATE_CLEAR'),
-  notification: ?('NO_PUSH' | 'PUSH'),
+  text: string | LocalizableContent,
+  data?: Object,
+  strategy?: 'IMMEDIATE' | 'LAST' | 'IMMEDIATE_CLEAR',
+  notification?: 'NO_PUSH' | 'PUSH',
 };

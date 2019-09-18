@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * @typedef {Object} ContextSizeResponse
  * @property {boolean} answer - Result
@@ -7,8 +5,8 @@
  * @property {number} maxSize - The maximum bound of the context size query.
  */
 
-export type ContextSizeResponse = {
+export interface ContextSizeResponse {
   answer: boolean,
-  minSize: ?number,
-  maxSize: ?number,
+  minSize?: number,
+  maxSize?: number,
 };

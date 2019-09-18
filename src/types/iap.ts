@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * @typedef {Object} Product
  * @property {string} title - Title of the product
@@ -9,11 +7,11 @@
  * @property {string} price - A localized string representing the product's pirce in the local currency, e.g. "$1"
  * @property {string} priceCurrencyCode - A string representing which currency is the price calculated in, following [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
  */
-export type Product = {
+export interface Product {
   title: string,
   productID: string,
-  description: ?string,
-  imageURI: ?string,
+  description?: string,
+  imageURI?: string,
   price: string,
   priceCurrencyCode: string
 };
@@ -23,9 +21,9 @@ export type Product = {
  * @property {string} productID - ID of the product
  * @property {string?} developerPayload - An optional payload can be assigned by game developer, which will be attached in the signed purchase request
  */
-export type PurchaseConfig = {
+export interface PurchaseConfig {
   productID: string,
-  developerPayload: ?string
+  developerPayload?: string
 };
 
 /**
@@ -33,8 +31,8 @@ export type PurchaseConfig = {
  * @property {string} productID - ID of the product
  * @property {string?} developerPayload - An optional payload can be assigned by game developer, which will be attached in the signed purchase request
  */
-export type Purchase = {
-  developerPayload: ?string,
+export interface Purchase {
+  developerPayload?: string,
   paymentID: string,
   productID: string,
   purchaseTime: string,

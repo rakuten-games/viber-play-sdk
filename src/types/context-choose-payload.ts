@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * @typedef {'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY'} ContextChooseFilter
  * Defines the filtering behavior
@@ -34,7 +32,7 @@ export type ContextChooseFilter =
  * This parameter only applies when `NEW_INVITATIONS_ONLY` filter is used.
  * When not specified, will filter out any friend who has been sent a message.
  */
-export type ContextChoosePayload = {
+export interface ContextChoosePayload {
   filters?: [ContextChooseFilter],
   maxSize?: number,
   minSize?: number,
