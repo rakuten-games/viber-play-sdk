@@ -16,6 +16,7 @@ import type { ContextChoosePayload } from '../types/context-choose-payload';
 import type { MessengerPlatform } from '../types/messenger-platform';
 import type { InitializationOptions } from '../types/initialization';
 import type { Product, Purchase, PurchaseConfig } from '../types/iap';
+import type { ShareResult } from '../types/share-result'
 import { lock } from '../utils/scroll-lock'
 
 /**
@@ -201,7 +202,7 @@ const viberPlaySdk = {
   },
 
   /**
-   * Share a message with the player's contact.
+   * Share message to selected users from player's contact.
    * @memberof ViberPlay
    * @param payload An object describes the message to be shared.
    * @example
@@ -209,13 +210,15 @@ const viberPlaySdk = {
    *   intent: 'REQUEST',
    *   image: base64Picture,
    *   text: 'Some text',
+   *   filters: 'NEW_CONTEXT_ONLY',
+   *   minShare: 3,
    *   data: { someData: '...' },
-   * }).then(function() {
-   *   // continue with the game.
+   * }).then(function(shareResult) {
+   *   console.log(shareResult); // {sharedCount: 3}
    * });
    */
-  shareAsync: (payload: SharePayload): Promise<void> =>
-    conn.request('sgShare', { ...payload }).then(() => undefined),
+  shareAsync: (payload: SharePayload): Promise<ShareResult> => 
+    conn.request('sgShare', { ...payload }),
 
   /**
    * Close the game webview.
