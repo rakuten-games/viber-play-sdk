@@ -16,7 +16,6 @@
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
   },
   "dependencies": {
-    "amplitude-js": "^5.2.2",
     "body-scroll-lock": "^2.6.4"
   },
   "devDependencies": {
