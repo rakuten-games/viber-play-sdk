@@ -1,4 +1,7 @@
-const getLocalizationString = (lang, payload) => {
+import { LocalizableContent } from '../types/localizable-content'
+
+// TODO: needs unit test or move into bridge
+const getLocalizationString = (lang: string, payload: LocalizableContent) => {
   const normalizedLang = lang.replace('-', '_');
 
   let text = payload.default;

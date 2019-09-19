@@ -1,7 +1,5 @@
-// @flow
-
 import Player from './player';
-import type { PlayerPayload } from './player';
+import { PlayerPayload } from '../types/player';
 
 export type ContextPlayerPayload = PlayerPayload;
 

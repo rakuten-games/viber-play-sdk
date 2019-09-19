@@ -1,15 +1,13 @@
-// @flow
-
 import LeaderboardPlayer from './leaderboard-player';
-import type { LeaderboardPlayerPayload } from './leaderboard-player';
+import { LeaderboardEntryPayload } from '../types/leaderboard';
 
-export type LeaderboardEntryPayload = {
-  score: number,
-  formattedScore: string,
-  timestamp: number,
-  rank: number,
-  extraData: ?string,
-  player: LeaderboardPlayerPayload,
+interface LeaderboardEntryRawData {
+  score: number;
+  formattedScore: string;
+  timestamp: number;
+  rank: number;
+  extraData: string | null;
+  player: LeaderboardPlayer;
 }
 
 /**
@@ -18,6 +16,8 @@ export type LeaderboardEntryPayload = {
  * only updated when a better score is submit by this player.
  */
 export default class LeaderboardEntry {
+  $leaderboardEntry: LeaderboardEntryRawData;
+
   /**
    * @hideconstructor
    */
@@ -28,17 +28,17 @@ export default class LeaderboardEntry {
       timestamp,
       rank,
       extraData,
-      player,
+      player
     } = payload;
 
-    this.$leaderboardEntry = {};
-
-    this.$leaderboardEntry.score = score;
-    this.$leaderboardEntry.formattedScore = formattedScore;
-    this.$leaderboardEntry.timestamp = timestamp;
-    this.$leaderboardEntry.rank = rank;
-    this.$leaderboardEntry.extraData = extraData;
-    this.$leaderboardEntry.player = new LeaderboardPlayer(player);
+    this.$leaderboardEntry = {
+      score,
+      formattedScore,
+      timestamp,
+      rank,
+      extraData,
+      player: new LeaderboardPlayer(player)
+    };
   }
 
   /**
@@ -106,7 +106,7 @@ export default class LeaderboardEntry {
    *     entry.getExtraData(); // 'Hello world'
    *   });
    */
-  getExtraData(): ?string {
+  getExtraData(): string | null {
     return this.$leaderboardEntry.extraData;
   }
 

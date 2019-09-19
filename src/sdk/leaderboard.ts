@@ -1,24 +1,30 @@
-// @flow
-
 import { getMessenger } from './messenger';
 import LeaderboardEntry from './leaderboard-entry';
+import { LeaderboardEntryPayload } from '../types/leaderboard';
 
 const conn = getMessenger();
+
+interface LeaderboardRawData {
+  name: string;
+  contextId: string | null;
+  id: number;
+}
 
 /**
  * Representing a leaderboard. Can be retrieved by calling
  * `ViberPlay.getLeaderboardAsync()`.
  */
 export default class Leaderboard {
+  $leaderboard: LeaderboardRawData;
   /**
    * @hideconstructor
    */
-  constructor(id: number, name: string, contextId: string) {
-    this.$leaderboard = {};
-    this.$leaderboard.name = name;
-    this.$leaderboard.contextId = contextId;
-
-    this.$leaderboard.id = id;
+  constructor(id: number, name: string, contextId: string | null) {
+    this.$leaderboard = {
+      name,
+      contextId,
+      id
+    };
   }
 
   /**
@@ -50,7 +56,7 @@ export default class Leaderboard {
    *     leaderboard.getContextId(); // '8183471902'
    *   });
    */
-  getContextID(): ?string {
+  getContextID(): string | null {
     return this.$leaderboard.contextId;
   }
 
@@ -67,8 +73,8 @@ export default class Leaderboard {
    */
   getEntryCountAsync(): Promise<number> {
     return conn.request('sgLeaderboardGetEntryCount', {
-      id: this.$leaderboard.id,
-    });
+      id: this.$leaderboard.id
+    }) as Promise<number>;
   }
 
   /**
@@ -84,12 +90,16 @@ export default class Leaderboard {
    *     entry.getScore(); // 100
    *   });
    */
-  setScoreAsync(score: number, extraData: ?string = null): Promise<LeaderboardEntry> {
-    return conn.request('sgLeaderboardSetScore', {
-      id: this.$leaderboard.id,
-      score,
-      extraData,
-    }).then(payload => new LeaderboardEntry(payload));
+  setScoreAsync(score: number, extraData?: string): Promise<LeaderboardEntry> {
+    return conn
+      .request('sgLeaderboardSetScore', {
+        id: this.$leaderboard.id,
+        score,
+        extraData
+      })
+      .then(
+        payload => new LeaderboardEntry(payload as LeaderboardEntryPayload)
+      );
   }
 
   /**
@@ -106,10 +116,15 @@ export default class Leaderboard {
    *     entry.getScore(); // 100
    *   });
    */
-  getPlayerEntryAsync(): Promise<?LeaderboardEntry> {
-    return conn.request('sgLeaderboardGetPlayerEntry', {
-      id: this.$leaderboard.id,
-    }).then(payload => payload && new LeaderboardEntry(payload));
+  getPlayerEntryAsync(): Promise<LeaderboardEntry | null> {
+    return conn
+      .request('sgLeaderboardGetPlayerEntry', {
+        id: this.$leaderboard.id
+      })
+      .then(payload => {
+        const p = payload as LeaderboardEntryPayload | null;
+        return p && new LeaderboardEntry(p);
+      });
   }
 
   /**
@@ -125,12 +140,18 @@ export default class Leaderboard {
    *     console.log(entries.length); // 10 if there're >= 10 entries
    *   });
    */
-  getEntriesAsync(count: number, offset: number): Promise<Array<LeaderboardEntry>> {
-    return conn.request('sgLeaderboardGetEntries', {
-      id: this.$leaderboard.id,
-      count,
-      offset,
-    }).then(payloads => payloads.map(payload => new LeaderboardEntry(payload)));
+  getEntriesAsync(count: number, offset: number): Promise<LeaderboardEntry[]> {
+    return conn
+      .request('sgLeaderboardGetEntries', {
+        id: this.$leaderboard.id,
+        count,
+        offset
+      })
+      .then(payloads => {
+        const ps = payloads as LeaderboardEntryPayload[];
+
+        return ps.map(payload => new LeaderboardEntry(payload));
+      });
   }
 
   /**
@@ -146,11 +167,19 @@ export default class Leaderboard {
    *     console.log(entries.length); // 10 if there're >= 10 friend entries
    *   });
    */
-  getConnectedPlayerEntriesAsync(count: number, offset: number): Promise<Array<LeaderboardEntry>> {
-    return conn.request('sgLeaderboardGetConnectPlayerEntries', {
-      id: this.$leaderboard.id,
-      count,
-      offset,
-    }).then(payloads => payloads.map(payload => new LeaderboardEntry(payload)));
+  getConnectedPlayerEntriesAsync(
+    count: number,
+    offset: number
+  ): Promise<LeaderboardEntry[]> {
+    return conn
+      .request('sgLeaderboardGetConnectPlayerEntries', {
+        id: this.$leaderboard.id,
+        count,
+        offset
+      })
+      .then(payloads => {
+        const ps = payloads as LeaderboardEntryPayload[];
+        return ps.map(payload => new LeaderboardEntry(payload));
+      });
   }
 }

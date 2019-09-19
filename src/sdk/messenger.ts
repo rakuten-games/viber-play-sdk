@@ -2,9 +2,30 @@ import { send, addListener } from '../mirror/post-message';
 
 const IS_IOS = /iPhone/.test(navigator.userAgent);
 
-let instance;
+let instance: Messenger;
+
+interface Request {
+  reject: (error: Error) => any;
+  resolve: (response: any) => any;
+}
+
+interface MessengerPayload {
+  data: {
+    command: string
+  }
+}
 
 export default class Messenger {
+  requests: {
+    [id: string]: Request;
+  };
+
+  target: Promise<{
+    postMessage: (message: any, targetOrigin: string) => void;
+  }>;
+
+  width?: number;
+
   constructor() {
     this.requests = {};
 
@@ -14,8 +35,8 @@ export default class Messenger {
 
     addListener(
       window,
-      request => {
-        const { command } = request.data;
+      (messengerPayload: MessengerPayload) => {
+        const { command } = messengerPayload.data;
 
         if (command === 'resize') {
           try {
@@ -33,7 +54,15 @@ export default class Messenger {
         }
         // currently, the game-wrapper does not make any requests to the game
       },
-      ({ id, error, response }) => {
+      ({
+        id,
+        error,
+        response
+      }: {
+        id: string;
+        error: Error;
+        response: any;
+      }) => {
         if (error) {
           this.requests[id].reject(error);
         } else {
@@ -44,7 +73,7 @@ export default class Messenger {
     );
   }
 
-  request(command, opts) {
+  request(command: string, opts?: object) {
     return new Promise((resolve, reject) => {
       this.target.then(source => {
         const id = send(source, {

@@ -1,25 +1,37 @@
-// @flow
 /* eslint-disable class-methods-use-this */
 import { getMessenger } from './messenger';
 
-export type AdInstancePayload = {
-  placementId: string
-};
+export interface AdInstancePayload {
+  placementId: string;
+}
 
 const AD_TYPE_INTERSTITIAL = 'AD_TYPE_INTERSTITIAL';
 const AD_TYPE_REWARDED_VIDEO = 'AD_TYPE_REWARDED_VIDEO';
 const conn = getMessenger();
 
+interface AdRowData {
+  placementId: string;
+  type?: 'AD_TYPE_INTERSTITIAL' | 'AD_TYPE_REWARDED_VIDEO';
+}
+
+interface IAdInstance {
+  getPlacementID(): string;
+  loadAsync(): Promise<void>;
+  showAsync(): Promise<void>;
+}
+
 /**
  * (Experimental) Representing an ad.
  */
-export default class AdInstance {
+export default class AdInstance implements IAdInstance {
+  $ad: AdRowData;
   /**
    * @hideconstructor
    */
   constructor(payload: AdInstancePayload) {
-    this.$ad = {};
-    this.$ad.placementId = payload.placementId;
+    this.$ad = {
+      placementId: payload.placementId
+    };
   }
 
   /**
@@ -28,7 +40,7 @@ export default class AdInstance {
    * @example
    * adInstance.getPlacementID(); // '5458282176661711'
    */
-  getPlacementID(): string {
+  getPlacementID() {
     return this.$ad.placementId;
   }
 
@@ -41,7 +53,7 @@ export default class AdInstance {
    * // after adInstance is created
    * adInstance.loadAsync();
    */
-  loadAsync(): string {
+  loadAsync() {
     return Promise.resolve();
   }
 
@@ -52,7 +64,7 @@ export default class AdInstance {
    * // after adInstance is loaded
    * adInstance.showAsync();
    */
-  showAsync(): Promise<void> {
+  showAsync() {
     return Promise.resolve();
   }
 }
@@ -63,18 +75,24 @@ export class InterstitialAdInstance extends AdInstance {
     this.$ad.type = AD_TYPE_INTERSTITIAL;
   }
 
-  loadAsync(): string {
-    return Promise.resolve().then(() =>
-      conn.request('sgLoadInterstitialAd', {
-        placementId: this.$ad.placementId,
-      }));
+  loadAsync() {
+    return Promise.resolve()
+      .then(() =>
+        conn.request('sgLoadInterstitialAd', {
+          placementId: this.$ad.placementId
+        })
+      )
+      .then(() => undefined);
   }
 
-  showAsync(): Promise<void> {
-    return Promise.resolve().then(() =>
-      conn.request('sgShowInterstitialAd', {
-        placementId: this.$ad.placementId,
-      }));
+  showAsync() {
+    return Promise.resolve()
+      .then(() =>
+        conn.request('sgShowInterstitialAd', {
+          placementId: this.$ad.placementId
+        })
+      )
+      .then(() => undefined);
   }
 }
 
@@ -84,19 +102,19 @@ export class RewardedVideoAdInstance extends AdInstance {
     this.$ad.type = AD_TYPE_REWARDED_VIDEO;
   }
 
-  loadAsync(): string {
+  loadAsync() {
     const adsNoFillErr = {
       code: 'ADS_NO_FILL',
-      message: 'Ads failed to be filled',
+      message: 'Ads failed to be filled'
     };
 
     return Promise.reject(adsNoFillErr);
   }
 
-  showAsync(): Promise<void> {
+  showAsync() {
     const adsNotLoadedErr = {
       code: 'ADS_NOT_LOADED',
-      message: 'Ads failed to be filled or loaded',
+      message: 'Ads failed to be filled or loaded'
     };
 
     return Promise.reject(adsNotLoadedErr);

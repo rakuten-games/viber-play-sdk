@@ -3,8 +3,8 @@ import isEmpty from 'lodash-es/isEmpty';
 import isPlainObject from 'lodash-es/isPlainObject';
 
 import { getMessenger } from './messenger';
-import ConnectedPlayer from './connected-player';
-import ContextPlayer from './context-player';
+import ConnectedPlayer, { ConnectedPlayerPayload } from './connected-player';
+import ContextPlayer, { ContextPlayerPayload } from './context-player';
 import Leaderboard from './leaderboard';
 import { InterstitialAdInstance, RewardedVideoAdInstance } from './ad-instance';
 import getLocalizationString from '../utils/get-localization-string';
@@ -19,14 +19,11 @@ import { lock } from '../utils/scroll-lock';
 
 type SignedPlayerInfo = string;
 
-// TODO: can Profile merge with Player?
-interface Profile {}
-
 interface Player {
   name: string | null;
   id: string | null;
   photo: string | null;
-  connectedPlayers: Player[];
+  connectedPlayers: ConnectedPlayer[];
 }
 
 interface PlayerData {
@@ -37,7 +34,7 @@ interface Context {
   id: string | null;
   type: 'SOLO' | 'THREAD';
   size: number;
-  connectedPlayers: Player[];
+  connectedPlayers: ContextPlayer[];
 }
 
 interface EntryPointData {}
@@ -755,7 +752,7 @@ const viberPlaySdk = {
      * @memberof ViberPlay
      * @method context.getPlayersAsync
      */
-    getPlayersAsync: (): Promise<Array<ContextPlayer>> =>
+    getPlayersAsync: (): Promise<ContextPlayer[]> =>
       Promise.resolve()
         .then(() => {
           if (!state.context.id) {
@@ -770,9 +767,9 @@ const viberPlaySdk = {
             contextId: state.context.id
           });
         })
-        .then(res => {
+        .then((res: { data: ContextPlayerPayload[] }) => {
           const players = res.data.map(
-            (profile: Profile) => new ContextPlayer(profile)
+            (playerPayload: ContextPlayerPayload) => new ContextPlayer(playerPayload)
           );
 
           state.context.connectedPlayers = players;

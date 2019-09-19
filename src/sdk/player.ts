@@ -1,25 +1,28 @@
-// @flow
+import { PlayerPayload } from '../types/player';
 
-export type PlayerPayload = {
+interface PlayerRawData {
   id: string,
   name: string,
   photo: string,
   hasPlayed: boolean,
-};
+}
 
 /**
  * Representing a player.
  */
 export default class Player {
+  $player: PlayerRawData;
+
   /**
    * @hideconstructor
    */
   constructor(payload: PlayerPayload) {
-    this.$player = {};
-    this.$player.id = payload.id;
-    this.$player.name = payload.name;
-    this.$player.photo = payload.photo;
-    this.$player.hasPlayed = payload.hasPlayed;
+    this.$player = {
+      id: payload.id,
+      name: payload.name,
+      photo: payload.photo,
+      hasPlayed: payload.hasPlayed,
+    }
   }
 
   /**
