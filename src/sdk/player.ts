@@ -1,16 +1,9 @@
-import { PlayerPayload } from '../types/player';
-
-interface PlayerRawData {
-  id: string,
-  name: string,
-  photo: string,
-  hasPlayed: boolean,
-}
+import { PlayerPayload, PlayerRawData, IPlayer } from '../types/player';
 
 /**
  * Representing a player.
  */
-export default class Player {
+export default class Player implements IPlayer {
   $player: PlayerRawData;
 
   /**
@@ -31,7 +24,7 @@ export default class Player {
    * @example
    * player.getID(); // '5458282176661711'
    */
-  getID(): string {
+  getID() {
     return this.$player.id;
   }
 
@@ -41,7 +34,7 @@ export default class Player {
    * @example
    * player.getName(); // 'Alpha Omega'
    */
-  getName(): string {
+  getName() {
     // in case of null name
     // ref: https://rakuten-games.slack.com/archives/D7VUJ9DTL/p1544506295001500
     return this.$player.name || '';
@@ -53,7 +46,7 @@ export default class Player {
    * @example
    * player.getPhoto(); // A CORS supported URL to user's photo
    */
-  getPhoto(): string {
+  getPhoto() {
     return this.$player.photo;
   }
 
@@ -63,7 +56,7 @@ export default class Player {
    * @example
    * player.hasPlayed();
    */
-  hasPlayed(): string {
+  hasPlayed(): boolean {
     if (this.$player.hasPlayed === undefined) {
       throw new TypeError()
     }

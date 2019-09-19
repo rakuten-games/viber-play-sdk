@@ -1,57 +1,53 @@
 /* eslint no-console: 0 class-methods-use-this: 0 */
 import isEmpty from 'lodash-es/isEmpty';
 import isPlainObject from 'lodash-es/isPlainObject';
-
 import { getMessenger } from './messenger';
-import ConnectedPlayer, { ConnectedPlayerPayload } from './connected-player';
-import ContextPlayer, { ContextPlayerPayload } from './context-player';
+import ConnectedPlayer from './connected-player';
+import ContextPlayer from './context-player';
 import Leaderboard from './leaderboard';
 import { InterstitialAdInstance, RewardedVideoAdInstance } from './ad-instance';
 import getLocalizationString from '../utils/get-localization-string';
+import { lock } from '../utils/scroll-lock';
 import { CustomUpdatePayload } from '../types/custom-update-payload';
 import { SharePayload } from '../types/share-payload';
-import { ContextSizeResponse } from '../types/context-size-response';
-import { ContextChoosePayload } from '../types/context-choose-payload';
+import { ContextChoosePayload, ContextSizeResponse } from '../types/context';
 import { InitializationOptions } from '../types/initialization';
 import { Product, Purchase, PurchaseConfig } from '../types/iap';
 import { ShareResult } from '../types/share-result';
-import { lock } from '../utils/scroll-lock';
+import { EntryPointData } from '../types/entry-point-data';
+import { TrafficSource } from '../types/traffic-source';
+import { PlayerData, ISignedPlayerInfo } from '../types/player';
+import { State } from '../types/state';
 
-type SignedPlayerInfo = string;
-
-interface Player {
-  name: string | null;
-  id: string | null;
-  photo: string | null;
-  connectedPlayers: ConnectedPlayer[];
-}
-
-interface PlayerData {
-  [key: string]: any;
-}
-
-interface Context {
-  id: string | null;
-  type: 'SOLO' | 'THREAD';
-  size: number;
-  connectedPlayers: ContextPlayer[];
-}
-
-interface EntryPointData {}
-
-interface TrafficSource {
-  ['utm_source']?: string;
-  ['r_entrypoint']?: string;
-}
-
-interface State {
-  gameId: string;
-  player: Player;
-  context: Context;
-  entryPointData: EntryPointData;
-  trafficSource: TrafficSource;
-  playerData: PlayerData;
-}
+import {
+  ReadyResponse,
+  InitializeResponse,
+  ShareResponse,
+  StartGameResponse,
+  GetLeaderboardResponse,
+  SwitchGameResponse,
+  ContextCreateContextResponse,
+  ContextSwitchContextResponse,
+  ContextChooseContextResponse,
+  ContextGetContextPlayersResponse,
+  PlayerGetConnectedPlayersResponse,
+  QuitResponse,
+  PlayerGetDataResponse,
+  PlayerSetDataResponse,
+  PlayerFlushDataResponse,
+  PlayerGetSignedInfoV4Response,
+  CanSubscribeBotResponse,
+  SubscribeBotResponse,
+  PaymentsGetCatalogResponse,
+  SetLoadingProgressResponse,
+  UpdateResponse,
+  SetSessionDataResponse,
+  SubscribePlatformBotResponse,
+  GetInterstitialAdResponse,
+  PaymentsPurchaseResponse,
+  PaymentsGetPurchasesResponse,
+  PaymentsConsumePurchaseResponse
+} from '../types/bridge';
 
 /**
  * Local state, this may be out of date, but provides synchronous cache for
@@ -64,7 +60,7 @@ const state: State = {
     name: null,
     id: null,
     photo: null,
-    connectedPlayers: [],
+    connectedPlayers: []
   },
   context: {
     id: null,
@@ -84,8 +80,8 @@ const state: State = {
 const conn = getMessenger();
 
 conn
-  .request('sgReady')
-  .then(({ gameId }: { gameId: string }) => {
+  .request<ReadyResponse>('sgReady')
+  .then(({ gameId }) => {
     state.gameId = gameId;
   })
   .catch(() => {});
@@ -116,7 +112,7 @@ const viberPlaySdk = {
     }
 
     return conn
-      .request('sgInitialize', {
+      .request<InitializeResponse>('sgInitialize', {
         ...options,
         __sdk__: `${process.env.npm_package_name}@${
           process.env.NODE_ENV === 'production'
@@ -124,24 +120,12 @@ const viberPlaySdk = {
             : 'next'
         }`
       })
-      .then(
-        ({
-          player,
-          context,
-          entryPointData,
-          trafficSource
-        }: {
-          player: Player;
-          context: Context;
-          entryPointData: EntryPointData;
-          trafficSource: TrafficSource;
-        }) => {
-          state.player = player;
-          state.context = context;
-          state.entryPointData = entryPointData;
-          state.trafficSource = trafficSource;
-        }
-      )
+      .then(({ player, context, entryPointData, trafficSource }) => {
+        state.player = player;
+        state.context = context;
+        state.entryPointData = entryPointData;
+        state.trafficSource = trafficSource;
+      })
       .then(() => undefined);
   },
 
@@ -155,7 +139,7 @@ const viberPlaySdk = {
    * ViberPlay.setLoadingProgress(50); // The game is halfway loaded
    */
   setLoadingProgress: (percentage: number = 0): void => {
-    conn.request('sgSetLoadingProgress', {
+    conn.request<SetLoadingProgressResponse>('sgSetLoadingProgress', {
       loadingProgress: Math.min(100, Math.max(Math.round(percentage), 0))
     });
   },
@@ -171,7 +155,8 @@ const viberPlaySdk = {
    *   myAwesomeGame.start();
    * });
    */
-  startGameAsync: (): Promise<void> => conn.request('sgStartGame'),
+  startGameAsync: (): Promise<void> =>
+    conn.request<StartGameResponse>('sgStartGame'),
 
   /**
    * Post an update to the corresponding context. If the game is played in
@@ -243,12 +228,12 @@ const viberPlaySdk = {
     }
 
     return conn
-      .request('sgUpdate', {
+      .request<UpdateResponse>('sgUpdate', {
         ...payload,
         text,
         cta
       })
-      .then(() => undefined);
+      .then(() => {});
   },
 
   /**
@@ -287,7 +272,7 @@ const viberPlaySdk = {
       }
     }
 
-    return conn.request('sgShare', { 
+    return conn.request<ShareResponse>('sgShare', { 
       ...payload,
       description
     })
@@ -299,7 +284,7 @@ const viberPlaySdk = {
    * @memberof ViberPlay
    */
   quit: (): void => {
-    conn.request('sgQuit');
+    conn.request<QuitResponse>('sgQuit');
   },
 
   /**
@@ -321,7 +306,7 @@ const viberPlaySdk = {
    * Get the entry point data bound to this message.
    * @memberof ViberPlay
    */
-  getEntryPointData: (): object => state.entryPointData || {},
+  getEntryPointData: (): EntryPointData => state.entryPointData || {},
 
   /**
    * [TODO]
@@ -377,7 +362,7 @@ const viberPlaySdk = {
       return;
     }
 
-    conn.request('sgSetSessionData', { sessionData });
+    conn.request<SetSessionDataResponse>('sgSetSessionData', { sessionData });
   },
 
   /**
@@ -413,7 +398,9 @@ const viberPlaySdk = {
           throw err;
         }
 
-        return conn.request('sgGetLeaderboard', { name });
+        return conn.request<GetLeaderboardResponse>('sgGetLeaderboard', {
+          name
+        });
       })
       .then(
         ({ id, name: returnedName, contextId }) =>
@@ -426,8 +413,10 @@ const viberPlaySdk = {
    * @example
    * ViberPlay.subscribePlatformBotAsync();
    */
-  subscribePlatformBotAsync: (): Promise<null> =>
-    conn.request('sgSubscribePlatformBot').then(() => null),
+  subscribePlatformBotAsync: (): Promise<void> =>
+    conn
+      .request<SubscribePlatformBotResponse>('sgSubscribePlatformBot')
+      .then(() => {}),
 
   /**
    * (Experimental) Get AdInstance of an interstitial ad placement
@@ -442,10 +431,10 @@ const viberPlaySdk = {
     placementId: string
   ): Promise<InterstitialAdInstance> =>
     conn
-      .request('sgGetInterstitialAd', {
+      .request<GetInterstitialAdResponse>('sgGetInterstitialAd', {
         placementId
       })
-      .then((res: any) => new InterstitialAdInstance(res)),
+      .then(res => new InterstitialAdInstance(res)),
 
   /**
    * (Experimental) Get AdInstance of a rewarded video ad placement
@@ -477,7 +466,7 @@ const viberPlaySdk = {
    *   // handling cases when failed to switch to the target game
    * });
    */
-  switchGameAsync: (gameId: string, data?: object): Promise<null> => {
+  switchGameAsync: (gameId: string, data?: object): Promise<void> => {
     /* eslint-disable prefer-promise-reject-errors */
     let serializedData;
 
@@ -499,7 +488,7 @@ const viberPlaySdk = {
       }
     }
 
-    return conn.request('sgSwitchGame', {
+    return conn.request<SwitchGameResponse>('sgSwitchGame', {
       gameId,
       data: serializedData
     });
@@ -515,7 +504,7 @@ const viberPlaySdk = {
    * const trafficSource = ViberPlay.getTrafficSource();
    * console.log(trafficSource['utm_source']); // 'viber'
    */
-  getTrafficSource: () => state.trafficSource,
+  getTrafficSource: (): TrafficSource => state.trafficSource,
 
   /**
    * (Experimental) Get information about where the game is started.
@@ -523,7 +512,7 @@ const viberPlaySdk = {
    * @example
    * ViberPlay.getEntryPointAsync().then(console.log); // 'game_switch'
    */
-  getEntryPointAsync: () =>
+  getEntryPointAsync: (): Promise<string> =>
     Promise.resolve(viberPlaySdk.getTrafficSource()).then(
       trafficSource => trafficSource['r_entrypoint'] || ''
     ),
@@ -606,14 +595,16 @@ const viberPlaySdk = {
             throw err;
           }
 
-          return conn.request('sgContextCreateContext', { playerId });
+          return conn.request<ContextCreateContextResponse>(
+            'sgContextCreateContext',
+            { playerId }
+          );
         })
         .then(({ id, type, size }) => {
           state.context.id = id;
           state.context.type = type;
           state.context.size = size;
-        })
-        .then(() => undefined),
+        }),
 
     /**
      * Switch context by context id
@@ -622,35 +613,34 @@ const viberPlaySdk = {
      * @method context.switchAsync
      */
     switchAsync: (contextId: string): Promise<void> =>
-      Promise.resolve()
-        .then(() => {
-          if (!contextId) {
-            const err = {
-              code: 'INVALID_PARAM',
-              message: 'The contextId is not set'
-            };
-            throw err;
-          }
+      Promise.resolve().then(() => {
+        if (!contextId) {
+          const err = {
+            code: 'INVALID_PARAM',
+            message: 'The contextId is not set'
+          };
+          throw err;
+        }
 
-          if (state.context.id === contextId) {
-            const err = {
-              code: 'SAME_CONTEXT',
-              message: 'Must specify a context other than the current one'
-            };
-            throw err;
-          }
+        if (state.context.id === contextId) {
+          const err = {
+            code: 'SAME_CONTEXT',
+            message: 'Must specify a context other than the current one'
+          };
+          throw err;
+        }
 
-          return conn
-            .request('sgContextSwitchContext', { contextId })
-            .then(({ id, type, size }: Context) => {
-              state.context.id = id;
-              state.context.type = type;
-              state.context.size = size;
-              state.context.connectedPlayers = [];
-            });
-        })
-        .then(() => undefined),
-
+        return conn
+          .request<ContextSwitchContextResponse>('sgContextSwitchContext', {
+            contextId
+          })
+          .then(({ id, type, size }) => {
+            state.context.id = id;
+            state.context.type = type;
+            state.context.size = size;
+            state.context.connectedPlayers = [];
+          });
+      }),
     /**
      * Popup a friend dialog to establish context
      * @memberof ViberPlay
@@ -658,94 +648,94 @@ const viberPlaySdk = {
      * @method context.chooseAsync
      */
     chooseAsync: (payload: ContextChoosePayload): Promise<void> =>
-      Promise.resolve()
-        .then(() => {
-          if (payload) {
-            if (payload.filters) {
-              for (let i = 0; i < payload.filters.length; i += 1) {
-                if (
-                  ![
-                    'NEW_CONTEXT_ONLY',
-                    'INCLUDE_EXISTING_CHALLENGES',
-                    'NEW_PLAYERS_ONLY',
-                    'NEW_INVITATIONS_ONLY'
-                  ].includes(payload.filters[i])
-                ) {
-                  const err = {
-                    code: 'INVALID_PARAM',
-                    message: 'Invalid filter'
-                  };
-                  throw err;
-                }
+      Promise.resolve().then(() => {
+        if (payload) {
+          if (payload.filters) {
+            for (let i = 0; i < payload.filters.length; i += 1) {
+              if (
+                ![
+                  'NEW_CONTEXT_ONLY',
+                  'INCLUDE_EXISTING_CHALLENGES',
+                  'NEW_PLAYERS_ONLY',
+                  'NEW_INVITATIONS_ONLY'
+                ].includes(payload.filters[i])
+              ) {
+                const err = {
+                  code: 'INVALID_PARAM',
+                  message: 'Invalid filter'
+                };
+                throw err;
               }
-            }
-
-            if (
-              payload.hoursSinceInvitation &&
-              !Number.isInteger(payload.hoursSinceInvitation)
-            ) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The hoursSinceInvitation is not integer'
-              };
-              throw err;
-            }
-
-            if (payload.minSize && !Number.isInteger(payload.minSize)) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The minSize is not integer'
-              };
-              throw err;
-            }
-
-            if (payload.maxSize && !Number.isInteger(payload.maxSize)) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The maxSize or maxSize is invalid'
-              };
-              throw err;
-            }
-
-            if (payload.minSize && payload.minSize < 2) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The minSize must be at least 2'
-              };
-              throw err;
-            }
-
-            if (payload.maxSize && payload.maxSize < 2) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The maxSize must be at least 2'
-              };
-              throw err;
-            }
-
-            if (
-              payload.maxSize &&
-              payload.minSize &&
-              payload.minSize > payload.maxSize
-            ) {
-              const err = {
-                code: 'INVALID_PARAM',
-                message: 'The minSize cannot be greater than maxSize'
-              };
-              throw err;
             }
           }
 
-          return conn
-            .request('sgContextChooseContext', { ...payload })
-            .then(({ id, type, size }: Context) => {
-              state.context.id = id;
-              state.context.type = type;
-              state.context.size = size;
-              state.context.connectedPlayers = [];
-            });
-        })
-        .then(() => undefined),
+          if (
+            payload.hoursSinceInvitation &&
+            !Number.isInteger(payload.hoursSinceInvitation)
+          ) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The hoursSinceInvitation is not integer'
+            };
+            throw err;
+          }
+
+          if (payload.minSize && !Number.isInteger(payload.minSize)) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The minSize is not integer'
+            };
+            throw err;
+          }
+
+          if (payload.maxSize && !Number.isInteger(payload.maxSize)) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The maxSize or maxSize is invalid'
+            };
+            throw err;
+          }
+
+          if (payload.minSize && payload.minSize < 2) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The minSize must be at least 2'
+            };
+            throw err;
+          }
+
+          if (payload.maxSize && payload.maxSize < 2) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The maxSize must be at least 2'
+            };
+            throw err;
+          }
+
+          if (
+            payload.maxSize &&
+            payload.minSize &&
+            payload.minSize > payload.maxSize
+          ) {
+            const err = {
+              code: 'INVALID_PARAM',
+              message: 'The minSize cannot be greater than maxSize'
+            };
+            throw err;
+          }
+        }
+
+        return conn
+          .request<ContextChooseContextResponse>('sgContextChooseContext', {
+            ...payload
+          })
+          .then(({ id, type, size }) => {
+            state.context.id = id;
+            state.context.type = type;
+            state.context.size = size;
+            state.context.connectedPlayers = [];
+          });
+      }),
 
     /**
      * Get an array of ContextPlayer containing players in the same context
@@ -763,13 +753,16 @@ const viberPlaySdk = {
             throw err;
           }
 
-          return conn.request('sgContextGetContextPlayers', {
-            contextId: state.context.id
-          });
+          return conn.request<ContextGetContextPlayersResponse>(
+            'sgContextGetContextPlayers',
+            {
+              contextId: state.context.id
+            }
+          );
         })
-        .then((res: { data: ContextPlayerPayload[] }) => {
+        .then(res => {
           const players = res.data.map(
-            (playerPayload: ContextPlayerPayload) => new ContextPlayer(playerPayload)
+            playerPayload => new ContextPlayer(playerPayload)
           );
 
           state.context.connectedPlayers = players;
@@ -793,21 +786,21 @@ const viberPlaySdk = {
      *     var items = data['items'];
      *   });
      */
-    getDataAsync: (keys: Array<string>): Promise<PlayerData> =>
+    getDataAsync: (keys: string[]): Promise<PlayerData> =>
       conn
-        .request('sgPlayerGetData')
-        .then(
-          (res: { data: PlayerData }): PlayerData => {
-            state.playerData = res.data;
-            return state.playerData;
-          }
-        )
-        .then(
-          (data: PlayerData): PlayerData =>
-            keys.reduce((acc: PlayerData, key) => {
+        .request<PlayerGetDataResponse>('sgPlayerGetData')
+        .then(res => {
+          state.playerData = res.data;
+          return state.playerData;
+        })
+        .then(data =>
+          keys.reduce(
+            (acc, key) => {
               acc[key] = data[key];
               return acc;
-            }, {})
+            },
+            {} as PlayerData
+          )
         ),
 
     /**
@@ -836,12 +829,10 @@ const viberPlaySdk = {
      */
     setDataAsync: (data: object): Promise<void> =>
       conn
-        .request('sgPlayerSetData', { data })
-        .then((res: { data: PlayerData }) => {
+        .request<PlayerSetDataResponse>('sgPlayerSetData', { data })
+        .then(res => {
           state.playerData = res.data;
           viberPlaySdk.player.flushDataAsync();
-
-          return undefined;
         }),
 
     /**
@@ -850,7 +841,7 @@ const viberPlaySdk = {
      * @method player.flushDataAsync
      */
     flushDataAsync: (): Promise<void> =>
-      conn.request('sgPlayerFlushData').then(() => undefined),
+      conn.request<PlayerFlushDataResponse>('sgPlayerFlushData'),
 
     /**
      * Get the player's ID. This should only be called after
@@ -909,13 +900,18 @@ const viberPlaySdk = {
      *      100);
      *  });
      */
-    getSignedPlayerInfoAsync: (payload?: string): Promise<SignedPlayerInfo> =>
+    getSignedPlayerInfoAsync: (payload?: string): Promise<ISignedPlayerInfo> =>
       conn
-        .request('sgPlayerGetSignedInfoV4', { payload })
-        .then((data: { signature: SignedPlayerInfo }) => ({
-          getPlayerID: () => viberPlaySdk.player.getID(),
-          getSignature: () => data.signature
-        })),
+        .request<PlayerGetSignedInfoV4Response>('sgPlayerGetSignedInfoV4', {
+          payload
+        })
+        .then(
+          res =>
+            ({
+              getPlayerID: () => viberPlaySdk.player.getID(),
+              getSignature: () => res.signature
+            } as ISignedPlayerInfo)
+        ),
 
     /**
      * This returns an array containing the friends of the user who has
@@ -936,12 +932,14 @@ const viberPlaySdk = {
      * // [{id: '123456789', name: 'foo'}, {id: '234567890', name: 'bar'}]
      */
     getConnectedPlayersAsync: ({ filter = 'INCLUDE_PLAYERS' } = {}): Promise<Array<ConnectedPlayer>> =>
-      conn.request('sgPlayerGetConnectedPlayers', { filter }).then((res: { data: Player[] }) => {
-        const players = res.data.map((profile: Profile) => new ConnectedPlayer(profile));
+      conn
+        .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { filter })
+        .then((res: { data: Player[] }) => {
+          const players = res.data.map((profile: Profile) => new ConnectedPlayer(profile));
 
-        state.player.connectedPlayers = players;
-        return state.player.connectedPlayers;
-      }),
+          state.player.connectedPlayers = players;
+          return state.player.connectedPlayers;
+        }),
 
     /**
      * (Experimental) Checks if the current user can subscribe
@@ -956,9 +954,7 @@ const viberPlaySdk = {
      *   .then((result) => console.log(result));
      */
     canSubscribeBotAsync: (): Promise<boolean> =>
-      conn.request('sgCanSubscribeBot').then((res: boolean) => {
-        return res;
-      }),
+      conn.request<CanSubscribeBotResponse>('sgCanSubscribeBot'),
 
     /**
      * (Experimental) Start the process to subscribe the game's bot. Game
@@ -980,7 +976,8 @@ const viberPlaySdk = {
      *   .then(() => console.log('ok'))
      *   .catch((err) => console.error(err));
      */
-    subscribeBotAsync: (): Promise<void> => conn.request('sgSubscribeBot')
+    subscribeBotAsync: (): Promise<void> =>
+      conn.request<SubscribeBotResponse>('sgSubscribeBot')
   },
 
   payments: {
@@ -994,8 +991,9 @@ const viberPlaySdk = {
      *   console.log('Ready to receive payments requests')
      * })
      */
-    onReady: (callback: () => any): void =>
-      conn.request('sgPaymentsOnReady').then(() => callback()),
+    onReady: (callback: () => any): void => {
+      conn.request('sgPaymentsOnReady').then(() => callback());
+    },
 
     /**
      * (Experimental)
@@ -1007,8 +1005,8 @@ const viberPlaySdk = {
      *   console.log(catalog)
      * })
      */
-    getCatalogAsync: (): Promise<Array<Product>> =>
-      conn.request('sgPaymentsGetCatalog'),
+    getCatalogAsync: (): Promise<Product[]> =>
+      conn.request<PaymentsGetCatalogResponse>('sgPaymentsGetCatalog'),
 
     /**
      * (Experimental)
@@ -1043,7 +1041,7 @@ const viberPlaySdk = {
         throw err;
       }
 
-      return conn.request('sgPaymentsPurchaseV2', {
+      return conn.request<PaymentsPurchaseResponse>('sgPaymentsPurchaseV2', {
         productId: config.productID,
         developerPayload: config.developerPayload
       });
@@ -1059,8 +1057,10 @@ const viberPlaySdk = {
      *   console.log(purchases);
      * })
      */
-    getPurchasesAsync: (): Promise<Array<Purchase>> => {
-      return conn.request('sgPaymentsGetPurchasesV2');
+    getPurchasesAsync: (): Promise<Purchase[]> => {
+      return conn.request<PaymentsGetPurchasesResponse>(
+        'sgPaymentsGetPurchasesV2'
+      );
     },
 
     /**
@@ -1084,9 +1084,12 @@ const viberPlaySdk = {
         throw err;
       }
 
-      return conn.request('sgPaymentsConsumePurchase', {
-        purchaseToken
-      });
+      return conn.request<PaymentsConsumePurchaseResponse>(
+        'sgPaymentsConsumePurchase',
+        {
+          purchaseToken
+        }
+      );
     }
   }
 };

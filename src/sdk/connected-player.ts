@@ -1,7 +1,4 @@
 import Player from './player';
-import { PlayerPayload } from '../types/player';
-
-export type ConnectedPlayerPayload = PlayerPayload;
 
 /**
  * Representing a connected player.

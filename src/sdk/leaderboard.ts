@@ -1,6 +1,12 @@
 import { getMessenger } from './messenger';
 import LeaderboardEntry from './leaderboard-entry';
-import { LeaderboardEntryPayload } from '../types/leaderboard';
+import {
+  LeaderboardGetPlayerEntryResponse,
+  LeaderboardGetEntryCountResponse,
+  LeaderboardSetScoreResponse,
+  LeaderboardGetEntriesResponse,
+  LeaderboardGetConnectPlayerEntriesResponse
+} from '../types/bridge';
 
 const conn = getMessenger();
 
@@ -72,9 +78,12 @@ export default class Leaderboard {
    *   });
    */
   getEntryCountAsync(): Promise<number> {
-    return conn.request('sgLeaderboardGetEntryCount', {
-      id: this.$leaderboard.id
-    }) as Promise<number>;
+    return conn.request<LeaderboardGetEntryCountResponse>(
+      'sgLeaderboardGetEntryCount',
+      {
+        id: this.$leaderboard.id
+      }
+    );
   }
 
   /**
@@ -92,14 +101,12 @@ export default class Leaderboard {
    */
   setScoreAsync(score: number, extraData?: string): Promise<LeaderboardEntry> {
     return conn
-      .request('sgLeaderboardSetScore', {
+      .request<LeaderboardSetScoreResponse>('sgLeaderboardSetScore', {
         id: this.$leaderboard.id,
         score,
         extraData
       })
-      .then(
-        payload => new LeaderboardEntry(payload as LeaderboardEntryPayload)
-      );
+      .then(payload => new LeaderboardEntry(payload));
   }
 
   /**
@@ -118,13 +125,13 @@ export default class Leaderboard {
    */
   getPlayerEntryAsync(): Promise<LeaderboardEntry | null> {
     return conn
-      .request('sgLeaderboardGetPlayerEntry', {
-        id: this.$leaderboard.id
-      })
-      .then(payload => {
-        const p = payload as LeaderboardEntryPayload | null;
-        return p && new LeaderboardEntry(p);
-      });
+      .request<LeaderboardGetPlayerEntryResponse>(
+        'sgLeaderboardGetPlayerEntry',
+        {
+          id: this.$leaderboard.id
+        }
+      )
+      .then(payload => payload && new LeaderboardEntry(payload));
   }
 
   /**
@@ -142,16 +149,12 @@ export default class Leaderboard {
    */
   getEntriesAsync(count: number, offset: number): Promise<LeaderboardEntry[]> {
     return conn
-      .request('sgLeaderboardGetEntries', {
+      .request<LeaderboardGetEntriesResponse>('sgLeaderboardGetEntries', {
         id: this.$leaderboard.id,
         count,
         offset
       })
-      .then(payloads => {
-        const ps = payloads as LeaderboardEntryPayload[];
-
-        return ps.map(payload => new LeaderboardEntry(payload));
-      });
+      .then(payloads => payloads.map(payload => new LeaderboardEntry(payload)));
   }
 
   /**
@@ -172,14 +175,14 @@ export default class Leaderboard {
     offset: number
   ): Promise<LeaderboardEntry[]> {
     return conn
-      .request('sgLeaderboardGetConnectPlayerEntries', {
-        id: this.$leaderboard.id,
-        count,
-        offset
-      })
-      .then(payloads => {
-        const ps = payloads as LeaderboardEntryPayload[];
-        return ps.map(payload => new LeaderboardEntry(payload));
-      });
+      .request<LeaderboardGetConnectPlayerEntriesResponse>(
+        'sgLeaderboardGetConnectPlayerEntries',
+        {
+          id: this.$leaderboard.id,
+          count,
+          offset
+        }
+      )
+      .then(payloads => payloads.map(payload => new LeaderboardEntry(payload)));
   }
 }

@@ -1,7 +1,9 @@
+import { IPlayer } from './player';
+
 /**
  * @typedef {'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY'} ContextChooseFilter
  * Defines the filtering behavior
- * 
+ *
  * `NEW_CONTEXT_ONLY` only enlists contexts that the current player
  * is in (e.g. created by a friend), but never participated in.
  * `INCLUDE_EXISTING_CHALLENGES` enlists contexts that the current
@@ -33,8 +35,28 @@ export type ContextChooseFilter =
  * When not specified, will filter out any friend who has been sent a message.
  */
 export interface ContextChoosePayload {
-  filters?: [ContextChooseFilter],
-  maxSize?: number,
-  minSize?: number,
-  hoursSinceInvitation?: number
-};
+  filters?: [ContextChooseFilter];
+  maxSize?: number;
+  minSize?: number;
+  hoursSinceInvitation?: number;
+}
+
+/**
+ * @typedef {Object} ContextSizeResponse
+ * @property {boolean} answer - Result
+ * @property {number} minSize - The minimum bound of the context size query
+ * @property {number} maxSize - The maximum bound of the context size query.
+ */
+
+export interface ContextSizeResponse {
+  answer: boolean;
+  minSize?: number;
+  maxSize?: number;
+}
+
+export interface CurrentContext {
+  id: string | null;
+  type: 'SOLO' | 'THREAD';
+  size: number;
+  connectedPlayers: IPlayer[];
+}

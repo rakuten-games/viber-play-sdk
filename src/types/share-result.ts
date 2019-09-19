@@ -4,5 +4,5 @@
  * It will be returned after `ViberPlay.shareAsync()`.
  */
 export interface ShareResult {
-  sharedCount: number
+  sharedCount: number;
 };

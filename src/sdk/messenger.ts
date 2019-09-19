@@ -73,7 +73,7 @@ export default class Messenger {
     );
   }
 
-  request(command: string, opts?: object) {
+  request<T>(command: string, opts?: object) {
     return new Promise((resolve, reject) => {
       this.target.then(source => {
         const id = send(source, {
@@ -83,7 +83,7 @@ export default class Messenger {
 
         this.requests[id] = { resolve, reject };
       });
-    });
+    }) as Promise<T>;
   }
 }
 
