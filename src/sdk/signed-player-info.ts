@@ -1,4 +1,4 @@
-// @flow
+import { ISignedPlayerInfo } from '../types/player';
 
 /**
  * Represents player info in a secure way, encrypted by the server side of
@@ -6,7 +6,10 @@
  * Game server can decrypt this info on to verify if this is data is really
  * sent from the platform.
  */
-export default class SignedPlayerInfo {
+export default class SignedPlayerInfo implements ISignedPlayerInfo {
+  private id: string;
+  private signature: string;
+
   /**
    * @hideconstructor
    */

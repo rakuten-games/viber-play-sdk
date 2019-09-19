@@ -16,7 +16,7 @@ interface LeaderboardEntryRawData {
  * only updated when a better score is submit by this player.
  */
 export default class LeaderboardEntry {
-  $leaderboardEntry: LeaderboardEntryRawData;
+  private $leaderboardEntry: LeaderboardEntryRawData;
 
   /**
    * @hideconstructor

@@ -21,7 +21,7 @@ interface LeaderboardRawData {
  * `ViberPlay.getLeaderboardAsync()`.
  */
 export default class Leaderboard {
-  $leaderboard: LeaderboardRawData;
+  private $leaderboard: LeaderboardRawData;
   /**
    * @hideconstructor
    */

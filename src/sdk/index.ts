@@ -6,6 +6,7 @@ import ConnectedPlayer from './connected-player';
 import ContextPlayer from './context-player';
 import Leaderboard from './leaderboard';
 import { InterstitialAdInstance, RewardedVideoAdInstance } from './ad-instance';
+import SignedPlayerInfo from './signed-player-info';
 import getLocalizationString from '../utils/get-localization-string';
 import { lock } from '../utils/scroll-lock';
 import { CustomUpdatePayload } from '../types/custom-update-payload';
@@ -16,7 +17,7 @@ import { Product, Purchase, PurchaseConfig } from '../types/iap';
 import { ShareResult } from '../types/share-result';
 import { EntryPointData } from '../types/entry-point-data';
 import { TrafficSource } from '../types/traffic-source';
-import { PlayerData, ISignedPlayerInfo } from '../types/player';
+import { PlayerData } from '../types/player';
 import { State } from '../types/state';
 
 import {
@@ -900,18 +901,22 @@ const viberPlaySdk = {
      *      100);
      *  });
      */
-    getSignedPlayerInfoAsync: (payload?: string): Promise<ISignedPlayerInfo> =>
-      conn
-        .request<PlayerGetSignedInfoV4Response>('sgPlayerGetSignedInfoV4', {
-          payload
-        })
-        .then(
-          res =>
-            ({
-              getPlayerID: () => viberPlaySdk.player.getID(),
-              getSignature: () => res.signature
-            } as ISignedPlayerInfo)
-        ),
+    getSignedPlayerInfoAsync: (payload?: string): Promise<SignedPlayerInfo> => {
+      const playerId = viberPlaySdk.player.getID();
+
+      if (playerId) {
+        return conn
+          .request<PlayerGetSignedInfoV4Response>('sgPlayerGetSignedInfoV4', {
+            payload
+          })
+          .then(res => new SignedPlayerInfo(playerId, res.signature));
+      }
+
+      return Promise.reject({
+        code: 'INVALID_PARAM',
+        message: 'Player info is not initialized yet. Please try again later.'
+      });
+    },
 
     /**
      * This returns an array containing the friends of the user who has

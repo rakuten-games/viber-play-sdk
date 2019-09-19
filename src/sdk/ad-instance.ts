@@ -24,7 +24,7 @@ interface IAdInstance {
  * (Experimental) Representing an ad.
  */
 export default class AdInstance implements IAdInstance {
-  $ad: AdRowData;
+  private $ad: AdRowData;
   /**
    * @hideconstructor
    */
