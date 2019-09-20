@@ -1,4 +1,4 @@
-import { send, addListener } from '../mirror/post-message';
+import { send, addListener, ISource, ReceivedResponse, ReceivedRequest } from '../utils/post-message';
 
 const IS_IOS = /iPhone/.test(navigator.userAgent);
 
@@ -9,20 +9,12 @@ interface Request {
   resolve: (response: any) => any;
 }
 
-interface MessengerPayload {
-  data: {
-    command: string
-  }
-}
-
 export default class Messenger {
   requests: {
     [id: string]: Request;
   };
 
-  target: Promise<{
-    postMessage: (message: any, targetOrigin: string) => void;
-  }>;
+  target: Promise<ISource>;
 
   width?: number;
 
@@ -30,13 +22,13 @@ export default class Messenger {
     this.requests = {};
 
     this.target = Promise.resolve({
-      postMessage: window.parent.postMessage.bind(window.parent)
+      postMessage: window.parent.postMessage.bind(window.parent),
     });
 
     addListener(
       window,
-      (messengerPayload: MessengerPayload) => {
-        const { command } = messengerPayload.data;
+      (receivedRequest: ReceivedRequest) => {
+        const { command } = receivedRequest.data;
 
         if (command === 'resize') {
           try {
@@ -58,11 +50,7 @@ export default class Messenger {
         id,
         error,
         response
-      }: {
-        id: string;
-        error: Error;
-        response: any;
-      }) => {
+      }: ReceivedResponse) => {
         if (error) {
           this.requests[id].reject(error);
         } else {

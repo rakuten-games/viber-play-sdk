@@ -4,7 +4,7 @@ import { PlayerPayload, PlayerRawData, IPlayer } from '../types/player';
  * Representing a player.
  */
 export default class Player implements IPlayer {
-  private $player: PlayerRawData;
+  protected $player: PlayerRawData;
 
   /**
    * @hideconstructor

@@ -97,7 +97,7 @@ let isInitialized = false;
  * @namespace ViberPlay
  */
 
-const viberPlaySdk = {
+const ViberPlay = {
   /**
    * Initialize the SDK for the game. In the background, SDK will try to
    * setup environment and retrieve data for later use in the game.
@@ -188,7 +188,7 @@ const viberPlaySdk = {
    * });
    */
   updateAsync: (payload: CustomUpdatePayload): Promise<void> => {
-    if (!viberPlaySdk.context.getID()) {
+    if (!ViberPlay.context.getID()) {
       return Promise.resolve();
     }
 
@@ -197,7 +197,7 @@ const viberPlaySdk = {
     if (typeof payload.text === 'string') {
       ({ text } = payload);
     } else if (typeof payload.text === 'object') {
-      const locale = viberPlaySdk.getLocale();
+      const locale = ViberPlay.getLocale();
       text = getLocalizationString(locale, payload.text);
 
       if (!text) {
@@ -215,7 +215,7 @@ const viberPlaySdk = {
     if (typeof payload.cta === 'string') {
       ({ cta } = payload);
     } else if (typeof payload.cta === 'object') {
-      const locale = viberPlaySdk.getLocale();
+      const locale = ViberPlay.getLocale();
       cta = getLocalizationString(locale, payload.cta);
 
       if (!cta) {
@@ -514,7 +514,7 @@ const viberPlaySdk = {
    * ViberPlay.getEntryPointAsync().then(console.log); // 'game_switch'
    */
   getEntryPointAsync: (): Promise<string> =>
-    Promise.resolve(viberPlaySdk.getTrafficSource()).then(
+    Promise.resolve(ViberPlay.getTrafficSource()).then(
       trafficSource => trafficSource['r_entrypoint'] || ''
     ),
 
@@ -587,7 +587,7 @@ const viberPlaySdk = {
             throw err;
           }
 
-          if (playerId === viberPlaySdk.player.getID()) {
+          if (playerId === ViberPlay.player.getID()) {
             const err = {
               code: 'INVALID_PARAM',
               message: 'can not use ID of the current player'
@@ -833,7 +833,7 @@ const viberPlaySdk = {
         .request<PlayerSetDataResponse>('sgPlayerSetData', { data })
         .then(res => {
           state.playerData = res.data;
-          viberPlaySdk.player.flushDataAsync();
+          ViberPlay.player.flushDataAsync();
         }),
 
     /**
@@ -902,7 +902,7 @@ const viberPlaySdk = {
      *  });
      */
     getSignedPlayerInfoAsync: (payload?: string): Promise<SignedPlayerInfo> => {
-      const playerId = viberPlaySdk.player.getID();
+      const playerId = ViberPlay.player.getID();
 
       if (playerId) {
         return conn
@@ -1056,7 +1056,7 @@ const viberPlaySdk = {
      * (Experimental)
      * @memberof ViberPlay
      * @method payments.getPurchasesAsync
-     * @returns
+     * @returns purchases
      * @example
      * ViberPlay.payments.getPurchasesAsync().then((purchases) => {
      *   console.log(purchases);
@@ -1099,4 +1099,4 @@ const viberPlaySdk = {
   }
 };
 
-export default viberPlaySdk;
+export default ViberPlay;

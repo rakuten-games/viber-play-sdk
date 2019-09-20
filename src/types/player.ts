@@ -1,3 +1,5 @@
+import ConnectedPlayer from "../sdk/connected-player";
+
 export interface PlayerPayload {
   id: string,
   name: string,
@@ -17,7 +19,6 @@ export interface PlayerRawData {
 }
 
 export interface IPlayer {
-  $player: PlayerRawData;
   getID(): string;
   getName(): string;
   getPhoto(): string;
@@ -27,7 +28,7 @@ export interface CurrentPlayer {
   name: string | null;
   id: string | null;
   photo: string | null;
-  connectedPlayers: IPlayer[];
+  connectedPlayers: ConnectedPlayer[];
 }
 
 export type SignedPlayerInfo = string;

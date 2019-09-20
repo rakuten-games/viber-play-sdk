@@ -1,4 +1,4 @@
-import { IPlayer } from './player';
+import ContextPlayer from '../sdk/context-player';
 
 /**
  * @typedef {'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY'} ContextChooseFilter
@@ -58,5 +58,5 @@ export interface CurrentContext {
   id: string | null;
   type: 'SOLO' | 'THREAD';
   size: number;
-  connectedPlayers: IPlayer[];
+  connectedPlayers: ContextPlayer[];
 }

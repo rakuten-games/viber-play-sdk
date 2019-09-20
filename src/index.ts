@@ -1,4 +1,3 @@
-declare interface ViberPlay {}
 declare var __webpack_public_path__: string;
 
 if (process.env.BABEL_ENV !== 'node') {
@@ -11,9 +10,3 @@ if (process.env.BABEL_ENV !== 'node') {
 }
 
 module.exports = require('./sdk').default;
-
-const globalObj: any = global;
-
-if (!globalObj.ViberPlay) {
-  globalObj.ViberPlay = module.exports;
-}

@@ -1,9 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { getMessenger } from './messenger';
-
-export interface AdInstancePayload {
-  placementId: string;
-}
+import { AdInstancePayload } from '../types/ad-instance';
 
 const AD_TYPE_INTERSTITIAL = 'AD_TYPE_INTERSTITIAL';
 const AD_TYPE_REWARDED_VIDEO = 'AD_TYPE_REWARDED_VIDEO';
@@ -24,7 +21,7 @@ interface IAdInstance {
  * (Experimental) Representing an ad.
  */
 export default class AdInstance implements IAdInstance {
-  private $ad: AdRowData;
+  protected $ad: AdRowData;
   /**
    * @hideconstructor
    */

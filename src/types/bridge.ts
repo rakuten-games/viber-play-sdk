@@ -9,6 +9,7 @@ import { EntryPointData } from './entry-point-data';
 import { TrafficSource } from './traffic-source';
 import { Product, Purchase } from './iap';
 import { LeaderboardEntryPayload } from './leaderboard';
+import { AdInstancePayload } from './ad-instance';
 
 export interface ReadyResponse {
   gameId: string;
@@ -30,9 +31,7 @@ export type SwitchGameResponse = void;
 export type QuitResponse = void;
 
 // ads
-export interface GetInterstitialAdResponse {
-  // TODO
-}
+export type GetInterstitialAdResponse = AdInstancePayload;
 
 // leaderboard
 export interface GetLeaderboardResponse {

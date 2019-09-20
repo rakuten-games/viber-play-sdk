@@ -1,52 +1,61 @@
-/* eslint-disable */
-// from rg-utils
-
-export const REQUEST_PREFIX = 'RGAMES-';
-export const REQUEST_PARSER = /^RGAMES-(\d+):(.*?)$/;
-export const RESPONSE_PREFIX = 'RGAMES-RES-';
-export const RESPONSE_PARSER = /^RGAMES-RES-(\d+):(.*?)$/;
+const REQUEST_PREFIX = 'RGAMES-';
+const REQUEST_PARSER = /^RGAMES-(\d+):(.*?)$/;
+const RESPONSE_PREFIX = 'RGAMES-RES-';
+const RESPONSE_PARSER = /^RGAMES-RES-(\d+):(.*?)$/;
 
 let uid = 0;
 
-export default class ReceivedRequest {
-  constructor(id, source, data) {
+export interface ISource {
+  postMessage: (message: any, targetOrigin: string) => void;
+}
+
+export class ReceivedRequest {
+  private id: number;
+  private source?: ISource;
+  private sourceFn?: () => ISource;
+
+  data: {
+    command: string;
+  };
+
+  constructor(id: number, source: ISource | (() => ISource), data: any) {
     this.id = id;
 
-    if (
-      typeof source === 'object' &&
-      typeof source.postMessage === 'function'
-    ) {
-      this._source = source;
-    } else if (typeof source === 'function') {
-      this._getSource = source;
+    if ('postMessage' in source) {
+      this.source = source;
+    } else {
+      this.sourceFn = source;
     }
 
     this.data = data;
   }
 
-  getSource() {
-    if (this._getSource) {
-      return this._getSource();
+  getSource(): ISource {
+    if (this.sourceFn) {
+      return this.sourceFn();
     }
 
-    return this._source;
+    if (this.source) {
+      return this.source;
+    }
+
+    throw new Error('No source is defined');
   }
 
-  respond(response) {
-    if (response && response.then) {
-      return response
-        .then(this.respond.bind(this))
-        .catch(this.error.bind(this));
+  respond(response: any | Promise<any>): void {
+    if (response && response instanceof Promise) {
+      response.then(this.respond.bind(this)).catch(this.error.bind(this));
+      return;
     }
 
     respond(this.getSource(), this.id, { response });
   }
 
-  error(error) {
+  error(error: any): void {
     respond(this.getSource(), this.id, { error });
   }
 
-  send(command, opts) {
+  send(command: string, opts: any): void {
     send(this.getSource(), {
       command,
       opts
@@ -54,9 +63,9 @@ export default class ReceivedRequest {
   }
 }
 
-const originWhitelist = [];
+const originWhitelist: RegExp[] = [];
 
-export function addToWhiteList(host) {
+function addToWhiteList(host: string) {
   originWhitelist.push(
     new RegExp(host.replace(/\./g, '\\.').replace(/\*/g, '.*?'))
   );
@@ -64,7 +73,7 @@ export function addToWhiteList(host) {
 
 ['vbrpl.io', 'rgames.jp'].map(addToWhiteList);
 
-function checkWhitelist(origin) {
+function checkWhitelist(origin: string) {
   for (const matcher of originWhitelist) {
     if (matcher.test(origin)) {
       return true;
@@ -74,14 +83,14 @@ function checkWhitelist(origin) {
   return false;
 }
 
-export function respond(source, id, response) {
+export function respond(source: ISource, id: number, response: any) {
   source.postMessage(
     `${RESPONSE_PREFIX + id}:${JSON.stringify(response)}`,
     '*'
   );
 }
 
-export function send(source, message) {
+export function send(source: ISource, message: any) {
   source.postMessage(
     `${REQUEST_PREFIX + ++uid}:${JSON.stringify(message)}`,
     '*'
@@ -89,13 +98,19 @@ export function send(source, message) {
   return uid;
 }
 
+export interface ReceivedResponse {
+  id: number;
+  error: any;
+  response: any;
+}
+
 export function addListener(
-  source,
-  onRequest,
-  onResponse,
-  perferredSourceSelector
+  source: Window,
+  onRequest: (req: ReceivedRequest) => any,
+  onResponse: (res: ReceivedResponse) => any,
+  perferredSourceSelector?: string
 ) {
-  source.addEventListener('message', event => {
+  source.addEventListener('message', (event: MessageEvent) => {
     if (
       (process.env.NODE_ENV === 'production' &&
         !checkWhitelist(event.origin)) ||
@@ -109,9 +124,14 @@ export function addListener(
     // lazyGetSource is enforced to work around a Safari issue to prevent
     // losing connection with game contentWindow when games trying to change
     // the window object (e.g. reload)
-    const lazyGetSource = (event, perferredSourceSelector) => () => {
+    const lazyGetSource = (
+      event: MessageEvent,
+      perferredSourceSelector?: string
+    ) => (): Window => {
       if (typeof perferredSourceSelector === 'string') {
-        const iframe = document.querySelector(perferredSourceSelector);
+        const iframe: HTMLIFrameElement | null = document.querySelector(
+          perferredSourceSelector
+        );
         if (
           iframe &&
           iframe.contentWindow &&
@@ -121,7 +141,7 @@ export function addListener(
         }
       }
 
-      return event.source;
+      return event.source as Window;
     };
 
     if (match && onRequest) {
@@ -141,7 +161,7 @@ export function addListener(
           id,
           error: !('response' in data) && (data.error || data),
           response: data.response
-        });
+        } as ReceivedResponse);
       }
     }
   });
