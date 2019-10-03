@@ -1,16 +1,23 @@
 /* eslint-disable class-methods-use-this */
 import { getMessenger } from './messenger';
-import { AdInstancePayload } from '../types/ad-instance';
+import { AdInstancePayload, AdType } from '../types/ad-instance';
 
-const AD_TYPE_INTERSTITIAL = 'AD_TYPE_INTERSTITIAL';
-const AD_TYPE_REWARDED_VIDEO = 'AD_TYPE_REWARDED_VIDEO';
+/**
+ * @internal
+ */
 const conn = getMessenger();
 
+/**
+ * @internal
+ */
 interface AdRowData {
   placementId: string;
-  type?: 'AD_TYPE_INTERSTITIAL' | 'AD_TYPE_REWARDED_VIDEO';
+  type?: AdType;
 }
 
+/**
+ * @internal
+ */
 interface IAdInstance {
   getPlacementID(): string;
   loadAsync(): Promise<void>;
@@ -18,7 +25,7 @@ interface IAdInstance {
 }
 
 /**
- * (Experimental) Representing an ad.
+ * @internal
  */
 export default class AdInstance implements IAdInstance {
   protected $ad: AdRowData;
@@ -69,7 +76,7 @@ export default class AdInstance implements IAdInstance {
 export class InterstitialAdInstance extends AdInstance {
   constructor(payload: AdInstancePayload) {
     super(payload);
-    this.$ad.type = AD_TYPE_INTERSTITIAL;
+    this.$ad.type = AdType.AD_TYPE_INTERSTITIAL;
   }
 
   loadAsync() {
@@ -96,7 +103,7 @@ export class InterstitialAdInstance extends AdInstance {
 export class RewardedVideoAdInstance extends AdInstance {
   constructor(payload: AdInstancePayload) {
     super(payload);
-    this.$ad.type = AD_TYPE_REWARDED_VIDEO;
+    this.$ad.type = AdType.AD_TYPE_REWARDED_VIDEO;
   }
 
   loadAsync() {
