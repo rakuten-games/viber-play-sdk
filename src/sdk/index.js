@@ -1004,7 +1004,7 @@ const viberPlaySdk = {
         throw err;
       }
 
-      return conn.request('sgPaymentsPurchase', {
+      return conn.request('sgPaymentsPurchaseV2', {
         productId: config.productID,
         developerPayload: config.developerPayload
       });
@@ -1021,7 +1021,7 @@ const viberPlaySdk = {
      * })
      */
     getPurchasesAsync: (): Promise<Array<Purchase>> => {
-      return conn.request('sgPaymentsGetPurchases');
+      return conn.request('sgPaymentsGetPurchasesV2');
     },
 
     /**
