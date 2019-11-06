@@ -88,9 +88,9 @@
     -   [payments.consumePurchaseAsync][84]
         -   [Parameters][85]
         -   [Examples][86]
--   [InitializationOptions][87]
+-   [ShareResult][87]
     -   [Properties][88]
--   [ShareResult][89]
+-   [InitializationOptions][89]
     -   [Properties][90]
 -   [SignedPlayerInfo][91]
     -   [getPlayerID][92]
@@ -127,8 +127,8 @@
         -   [Examples][123]
 -   [Product][124]
     -   [Properties][125]
--   [ConnectedPlayer][126]
--   [ContextPlayer][127]
+-   [ContextPlayer][126]
+-   [ConnectedPlayer][127]
 -   [LocalizableContent][128]
     -   [Properties][129]
 -   [AdInstance][130]
@@ -806,15 +806,6 @@ ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
 
 Returns **any** 
 
-## InitializationOptions
-
-Type: [Object][170]
-
-### Properties
-
--   `useLegacyLeaderboard` **[boolean][173]** If set to true the legacy leaderboard service will be used.
--   `scrollTarget` **([string][169] \| [Element][174])** ? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
-
 ## ShareResult
 
 Type: [Object][170]
@@ -823,6 +814,15 @@ Type: [Object][170]
 
 -   `sharedCount` **[number][164]** Number of player user has sent share events.
     It will be returned after `ViberPlay.shareAsync()`.
+
+## InitializationOptions
+
+Type: [Object][170]
+
+### Properties
+
+-   `useLegacyLeaderboard` **[boolean][173]** If set to true the legacy leaderboard service will be used.
+-   `scrollTarget` **([string][169] \| [Element][174])** ? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
 
 ## SignedPlayerInfo
 
@@ -1095,17 +1095,17 @@ Type: [Object][170]
 -   `price` **[string][169]** A localized string representing the product's pirce in the local currency, e.g. "$1"
 -   `priceCurrencyCode` **[string][169]** A string representing which currency is the price calculated in, following [ISO 4217][177]
 
-## ConnectedPlayer
-
-**Extends Player**
-
-Representing a connected player.
-
 ## ContextPlayer
 
 **Extends Player**
 
 Representing a context player.
+
+## ConnectedPlayer
+
+**Extends Player**
+
+Representing a connected player.
 
 ## LocalizableContent
 
@@ -1534,11 +1534,11 @@ Type: [string][169]
 
 [86]: #examples-27
 
-[87]: #initializationoptions
+[87]: #shareresult
 
 [88]: #properties
 
-[89]: #shareresult
+[89]: #initializationoptions
 
 [90]: #properties-1
 
@@ -1612,9 +1612,9 @@ Type: [string][169]
 
 [125]: #properties-3
 
-[126]: #connectedplayer
+[126]: #contextplayer
 
-[127]: #contextplayer
+[127]: #connectedplayer
 
 [128]: #localizablecontent
 
