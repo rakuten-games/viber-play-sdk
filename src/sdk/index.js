@@ -879,8 +879,8 @@ const viberPlaySdk = {
       })),
 
     /**
-     * This returns an array containing all contacts of the user.
-     * It doesn't filter users to those already playing this game.
+     * This returns an array containing the friends of the user who has
+     * played the current game before.
      * @memberof ViberPlay
      * @method player.getConnectedPlayersAsync
      * @returns Array of connected players
