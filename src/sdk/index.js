@@ -896,8 +896,8 @@ const viberPlaySdk = {
      *   });
      * // [{id: '123456789', name: 'foo'}, {id: '234567890', name: 'bar'}]
      */
-    getConnectedPlayersAsync: (): Promise<Array<ConnectedPlayer>> =>
-      conn.request('sgPlayerGetConnectedPlayers').then(res => {
+    getConnectedPlayersAsync: ({ filter = 'INCLUDE_PLAYERS' } = {}): Promise<Array<ConnectedPlayer>> =>
+      conn.request('sgPlayerGetConnectedPlayers', { filter }).then(res => {
         const players = res.data.map(profile => new ConnectedPlayer(profile));
 
         state.player.connectedPlayers = players;

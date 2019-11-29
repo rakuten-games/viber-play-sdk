@@ -3,7 +3,8 @@
 export type PlayerPayload = {
   id: string,
   name: string,
-  photo: string
+  photo: string,
+  hasPlayed: boolean,
 };
 
 /**
@@ -18,6 +19,7 @@ export default class Player {
     this.$player.id = payload.id;
     this.$player.name = payload.name;
     this.$player.photo = payload.photo;
+    this.$player.hasPlayed = payload.hasPlayed;
   }
 
   /**
@@ -50,5 +52,19 @@ export default class Player {
    */
   getPhoto(): string {
     return this.$player.photo;
+  }
+
+  /**
+   * (Experimental) Get the player's playing status.
+   * @returns A boolean value showing if the player has played the game before
+   * @example
+   * player.hasPlayed();
+   */
+  hasPlayed(): string {
+    if (this.$player.hasPlayed === undefined) {
+      throw new TypeError()
+    }
+
+    return this.$player.hasPlayed;
   }
 }
