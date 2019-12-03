@@ -372,6 +372,7 @@ console.log(JSON.stringify({
   id: player.getID(),
   name: player.getName(),
   photo: player.getPhoto(),
+  hasPlayed: player.hasPlayed(),
 }));
 </script>
 <script class="example-code" type="text/plain">
@@ -382,6 +383,7 @@ window.l9dEntries.forEach(entry => {
     id: player.getID(),
     name: player.getName(),
     photo: player.getPhoto(),
+    hasPlayed: player.hasPlayed(),
   }));
 });
 </script>
@@ -404,7 +406,7 @@ console.log(ViberPlay.context.isSizeBetween(null, null));
 <script class="example-code" type="text/plain">
 ViberPlay.context.getPlayersAsync()
   .then((players) => console.log(JSON.stringify(players.map(player =>
-    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()})))));
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
 </script>
 </div>
 
@@ -629,6 +631,9 @@ console.log(ViberPlay.player.getName());
 <script class="example-code" type="text/plain">
 console.log(ViberPlay.player.getPhoto());
 </script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.player.hasPlayed());
+</script>
 </div>
 
 <div class="section">
@@ -662,7 +667,22 @@ ViberPlay.player.flushDataAsync()
 <script class="example-code" type="text/plain">
 ViberPlay.player.getConnectedPlayersAsync()
   .then((players) => console.log(JSON.stringify(players.map(player =>
-    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()})))));
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.player.getConnectedPlayersAsync({filter: 'ALL'})
+    .then((players) => console.log(JSON.stringify(players.map(player =>
+      ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.player.getConnectedPlayersAsync({filter: 'INCLUDE_PLAYERS'})
+    .then((players) => console.log(JSON.stringify(players.map(player =>
+      ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.player.getConnectedPlayersAsync({filter: 'INCLUDE_NON_PLAYERS'})
+    .then((players) => console.log(JSON.stringify(players.map(player =>
+      ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
 </script>
 </div>
 
