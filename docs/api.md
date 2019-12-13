@@ -272,7 +272,7 @@ ViberPlay.shareAsync({
   filters: 'NEW_CONTEXT_ONLY',
   minShare: 3,
   data: { someData: '...' },
-  viberShareTitle: 'Win 100 gems for every friend who joins from your invite.',
+  description: 'Win 100 gems for every friend who joins from your invite.',
 }).then(function(shareResult) {
   console.log(shareResult); // {sharedCount: 3}
 });
