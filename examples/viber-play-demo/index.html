@@ -614,6 +614,39 @@ ViberPlay.shareAsync({
   data: {foo: 'bar'}
 }).then((res) => console.log(res));
 </script>
+<script class="example-code" type="text/plain">
+  ViberPlay.shareAsync({
+    intent: 'REQUEST',
+    image: b64Img,
+    text: 'Some share async test message',
+    data: {foo: 'bar'},
+    description: 'Some description'
+  }).then((res) => console.log(res));
+  </script>
+<script class="example-code" type="text/plain">
+  ViberPlay.shareAsync({
+    intent: 'REQUEST',
+    image: b64Img,
+    minShare: 3,
+    text: {
+      default: 'This is share async test message in l10n fallback',
+      localizations: {
+        ja_JP: 'This is share async test message in ja_JP',
+        en_US: 'This is share async test message in en_US',
+        ru_RU: 'This is share async test message in ru_RU',
+      },
+    },
+    data: {foo: 'bar'},
+    description: {
+      default: 'Description in l10n fallback',
+      localizations: {
+        ja_JP: 'Description in ja_JP',
+        en_US: 'Description in en_US',
+        ru_RU: 'Description in ru_RU',
+      },
+    }
+  }).then((res) => console.log(res));
+  </script>
 
 <script class="example-code" type="text/plain">
 console.log(JSON.stringify(ViberPlay.getEntryPointData()));
