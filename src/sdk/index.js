@@ -213,12 +213,35 @@ const viberPlaySdk = {
    *   filters: 'NEW_CONTEXT_ONLY',
    *   minShare: 3,
    *   data: { someData: '...' },
+   *   description: 'Win 100 gems for every friend who joins from your invite.',
    * }).then(function(shareResult) {
    *   console.log(shareResult); // {sharedCount: 3}
    * });
    */
-  shareAsync: (payload: SharePayload): Promise<ShareResult> => 
-    conn.request('sgShare', { ...payload }),
+  shareAsync: (payload: SharePayload): Promise<ShareResult> => {
+    let description = '';
+
+    if (typeof payload.description === 'string') {
+      ({ description } = payload);
+    } else if (typeof payload.description === 'object') {
+      const locale = viberPlaySdk.getLocale();
+      description = getLocalizationString(locale, payload.description);
+
+      if (!description) {
+        const err = {
+          code: 'INVALID_PARAM',
+          message: 'No matched localization on description'
+        };
+
+        throw err;
+      }
+    }
+
+    return conn.request('sgShare', { 
+      ...payload,
+      description
+    })
+  },
 
   /**
    * Close the game webview.
