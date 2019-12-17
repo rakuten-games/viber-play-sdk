@@ -255,37 +255,8 @@ const viberPlaySdk = {
   /**
    * Locale code will be based on `navigator.language` in the WebView, format
    * will be align with [BCP47](http://www.ietf.org/rfc/bcp/bcp47.txt).
-   *
-   * SDK will return the locale code as it is if it's one of the languages
-   * listed below:
-   *
-   * - ab
-   * - av
-   * - az
-   * - ba
-   * - be
-   * - ce
-   * - cv
-   * - ka
-   * - kk
-   * - ky
-   * - tg
-   * - tk
-   * - tt
-   * - uk
-   * - uz
-   * - ru
-   * - hy
-   * - ja
-   * - en
-   * - es
-   * - fr
-   *
-   * For the rest, it will return `en_US` as default.
    * @memberof ViberPlay
    * @example
-   * // Game developers can also do l10n fallback like this
-   *
    * const ruLangs = /^(ru|ab|hy|av|az|ba|be|ce|cv|ka|kk|ky|tg|tk|tt|uk|uz)/i;
    *
    * if (ruLangs.test(ViberPlay.getLocale())) {
@@ -293,18 +264,7 @@ const viberPlaySdk = {
    * }
    */
   getLocale: (): string => {
-    const lang = navigator.language;
-
-    const ruLangs = /^(ru|ab|hy|av|az|ba|be|ce|cv|ka|kk|ky|tg|tk|tt|uk|uz)/i;
-
-    switch (true) {
-      case /^(en|es|fr|ja)/i.test(lang):
-        return lang;
-      case ruLangs.test(lang):
-        return lang;
-      default:
-        return 'en_US';
-    }
+    return navigator.language;
   },
 
   /**
