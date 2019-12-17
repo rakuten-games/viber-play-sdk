@@ -292,38 +292,9 @@ Returns **void**
 Locale code will be based on `navigator.language` in the WebView, format
 will be align with [BCP47][170].
 
-SDK will return the locale code as it is if it's one of the languages
-listed below:
-
--   ab
--   av
--   az
--   ba
--   be
--   ce
--   cv
--   ka
--   kk
--   ky
--   tg
--   tk
--   tt
--   uk
--   uz
--   ru
--   hy
--   ja
--   en
--   es
--   fr
-
-For the rest, it will return `en_US` as default.
-
 #### Examples
 
 ```javascript
-// Game developers can also do l10n fallback like this
-
 const ruLangs = /^(ru|ab|hy|av|az|ba|be|ce|cv|ka|kk|ky|tg|tk|tt|uk|uz)/i;
 
 if (ruLangs.test(ViberPlay.getLocale())) {
