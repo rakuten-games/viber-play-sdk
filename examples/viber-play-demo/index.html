@@ -476,7 +476,7 @@ ViberPlay.updateAsync({
     },
   },
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: {
     default: 'This is update async test message in l10n fallback',
     localizations: {
@@ -496,7 +496,7 @@ ViberPlay.updateAsync({
     default: 'Play in l10n fallback',
   },
   template: 'play_turn',
-  image: oversizedImg,
+  image: createImg(1201, 1200),
   text: {
     default: 'This message should not be seen. The attached image is oversized.',
   },
@@ -509,7 +509,7 @@ ViberPlay.updateAsync({
   action: 'CUSTOM',
   cta: 'Play',
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is IMMEDIATE update async test message',
   data: {foo: 'bar'},
   strategy: 'IMMEDIATE',
@@ -520,7 +520,7 @@ ViberPlay.updateAsync({
   action: 'CUSTOM',
   cta: 'Play',
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is a LAST update async test message to be cancelled',
   data: {foo: 'bar'},
   strategy: 'LAST',
@@ -530,7 +530,7 @@ ViberPlay.updateAsync({
   action: 'CUSTOM',
   cta: 'Play',
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is LAST update async test message',
   data: {foo: 'bar'},
   strategy: 'LAST',
@@ -541,7 +541,7 @@ ViberPlay.updateAsync({
   action: 'CUSTOM',
   cta: 'Play',
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is a LAST update async test message to be cancelled',
   data: {foo: 'bar'},
   strategy: 'LAST',
@@ -551,7 +551,7 @@ ViberPlay.updateAsync({
   action: 'CUSTOM',
   cta: 'Play',
   template: 'play_turn',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is IMMEDIATE_CLEAR update async test message',
   data: {foo: 'bar'},
   strategy: 'IMMEDIATE_CLEAR',
@@ -564,7 +564,7 @@ ViberPlay.updateAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is share async test message',
   data: {foo: 'bar'}
 }).then((res) => console.log(res));
@@ -572,7 +572,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is share async test message',
   filters: ['NEW_CONTEXT_ONLY'],
   data: {foo: 'bar'}
@@ -581,7 +581,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is share async test message',
   filters: ['INCLUDE_EXISTING_CHALLENGES'],
   data: {foo: 'bar'}
@@ -590,7 +590,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is share async test message',
   filters: ['NEW_PLAYERS_ONLY'],
   data: {foo: 'bar'}
@@ -599,7 +599,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   text: 'This is share async test message',
   filters: ['NEW_INVITATIONS_ONLY'],
   data: {foo: 'bar'}
@@ -608,7 +608,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
 ViberPlay.shareAsync({
   intent: 'REQUEST',
-  image: b64Img,
+  image: createImg(1200, 1200),
   minShare: 3,
   text: 'This is share async test message',
   data: {foo: 'bar'}
@@ -617,7 +617,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
   ViberPlay.shareAsync({
     intent: 'REQUEST',
-    image: b64Img,
+    image: createImg(1200, 1200),
     text: 'Some share async test message',
     data: {foo: 'bar'},
     description: 'Some description'
@@ -626,7 +626,7 @@ ViberPlay.shareAsync({
 <script class="example-code" type="text/plain">
   ViberPlay.shareAsync({
     intent: 'REQUEST',
-    image: b64Img,
+    image: createImg(1200, 1200),
     minShare: 3,
     text: {
       default: 'This is share async test message in l10n fallback',
@@ -821,7 +821,7 @@ function createImg(width, height) {
   var ctx = canvas.getContext('2d');
 
   ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = '#fff';
+  ctx.fillStyle = `hsl(${Math.floor(Math.random() * 360)}deg,20%,50%)`;
   ctx.font = `${width/16}px sans-serif`;
   ctx.textAlign = 'center';
   ctx.textAlign = 'middle';
@@ -829,9 +829,6 @@ function createImg(width, height) {
 
   return canvas.toDataURL();
 }
-
-var b64Img = createImg(1200, 1200);
-var oversizedImg = createImg(1201, 1200);
 
 function wait(duration) {
   return () => new Promise(resolve => setTimeout(resolve, duration));
