@@ -11,7 +11,9 @@
     "prebuild": "rm -rf lib",
     "build": "webpack -p",
     "build:node": "BABEL_ENV=node npm run build",
-    "document": "documentation build src --shallow -f md -o docs/api.md --config documentation.yaml",
+    "document": "yarn run document:md && yarn run document:website",
+    "document:md": "documentation build src --shallow -f md -o docs/api.md --config documentation.yaml",
+    "document:website": "echo \"---\nid: sdk1\ntitle: API Reference\n---\" > website/docs/sdk1.md && documentation build src --shallow -f md --config documentation.yaml | tee -a website/docs/sdk1.md > /dev/null",
     "deploy": "./scripts/deploy.sh",
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
   },

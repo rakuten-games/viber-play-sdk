@@ -475,8 +475,6 @@ const viberPlaySdk = {
 
   /**
    * (Experimental) Get information about where the game is started.
-   * Details about available entry points can be found at
-   * [entry-points.md](./entry-points.md).
    * @memberof ViberPlay
    * @example
    * ViberPlay.getEntryPointAsync().then(console.log); // 'game_switch'

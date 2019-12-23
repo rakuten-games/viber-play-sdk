@@ -461,8 +461,6 @@ console.log(trafficSource['utm_source']); // 'viber'
 ### getEntryPointAsync
 
 (Experimental) Get information about where the game is started.
-Details about available entry points can be found at
-[entry-points.md][174].
 
 #### Examples
 
@@ -795,8 +793,8 @@ Type: [Object][172]
 
 ### Properties
 
--   `useLegacyLeaderboard` **[boolean][175]** If set to true the legacy leaderboard service will be used.
--   `scrollTarget` **([string][171] \| [Element][176])** ? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
+-   `useLegacyLeaderboard` **[boolean][174]** If set to true the legacy leaderboard service will be used.
+-   `scrollTarget` **([string][171] \| [Element][175])** ? - By default, scrolling will be locked in game frame to prevent unexpected behavior (e.g. scroll while flicking). If scrolling is needed, set an element (or its selector) here, then the element (including its children) will be scrollable. If scrolling lock needs to be disabled, set `document.body` here.
 
 ## SignedPlayerInfo
 
@@ -860,7 +858,7 @@ Type: [Object][172]
 
 ### Properties
 
--   `answer` **[boolean][175]** Result
+-   `answer` **[boolean][174]** Result
 -   `minSize` **[number][166]** The minimum bound of the context size query
 -   `maxSize` **[number][166]** The maximum bound of the context size query.
 
@@ -950,7 +948,7 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[Promise][165]&lt;[LeaderboardEntry][177]>** Entry info
+Returns **[Promise][165]&lt;[LeaderboardEntry][176]>** Entry info
 
 ### getPlayerEntryAsync
 
@@ -970,7 +968,7 @@ leaderboard.getPlayerEntryAsync()
   });
 ```
 
-Returns **[Promise][165]&lt;[LeaderboardEntry][177]?>** Entry info
+Returns **[Promise][165]&lt;[LeaderboardEntry][176]?>** Entry info
 
 ### getEntriesAsync
 
@@ -992,7 +990,7 @@ leaderboard.getEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][165]&lt;[Array][178]&lt;[LeaderboardEntry][177]>>** Array of entry info
+Returns **[Promise][165]&lt;[Array][177]&lt;[LeaderboardEntry][176]>>** Array of entry info
 
 ### getConnectedPlayerEntriesAsync
 
@@ -1014,7 +1012,7 @@ leaderboard.getConnectedPlayerEntriesAsync(10, 0)
   });
 ```
 
-Returns **[Promise][165]&lt;[Array][178]&lt;[LeaderboardEntry][177]>>** Array of entry info
+Returns **[Promise][165]&lt;[Array][177]&lt;[LeaderboardEntry][176]>>** Array of entry info
 
 ## Product
 
@@ -1027,7 +1025,7 @@ Type: [Object][172]
 -   `description` **[string][171]?** Text description of the product
 -   `imageURI` **[string][171]?** A URL to the product's image
 -   `price` **[string][171]** A localized string representing the product's pirce in the local currency, e.g. "$1"
--   `priceCurrencyCode` **[string][171]** A string representing which currency is the price calculated in, following [ISO 4217][179]
+-   `priceCurrencyCode` **[string][171]** A string representing which currency is the price calculated in, following [ISO 4217][178]
 
 ## ContextPlayer
 
@@ -1257,7 +1255,7 @@ leaderboard.setScoreAsync(100, 'Hello world')
   });
 ```
 
-Returns **[LeaderboardPlayer][180]** Player's info
+Returns **[LeaderboardPlayer][179]** Player's info
 
 ## SharePayload
 
@@ -1269,13 +1267,13 @@ Type: [Object][172]
     Represents content to be shared by the user.
 -   `image` **[string][171]** A string containing data URL of a base64
     encoded image.
--   `text` **([string][171] \| [LocalizableContent][181])** Text message of this share.
+-   `text` **([string][171] \| [LocalizableContent][180])** Text message of this share.
 -   `data` **[Object][172]?** An object to be passed to any session launched
     from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
     Its size must be &lt;= 1000 chars when stringified.
 -   `filters` **(`"NEW_CONTEXT_ONLY"` \| `"INCLUDE_EXISTING_CHALLENGES"` \| `"NEW_PLAYERS_ONLY"` \| `"NEW_INVITATIONS_ONLY"`)?** Filters
 -   `minShare` **[number][166]** Minimum selected players to share
--   `description` **([string][171] \| [LocalizableContent][181])** Optional customizable text field which can be used to describe the 
+-   `description` **([string][171] \| [LocalizableContent][180])** Optional customizable text field which can be used to describe the 
     reward a user can get from sharing.
 
 ## PurchaseConfig
@@ -1302,7 +1300,7 @@ Type: [Object][172]
 
 ### Properties
 
--   `filters` **[Array][178]&lt;[ContextChooseFilter][182]>** Provide an array of filters you'd like to apply to the friend list.
+-   `filters` **[Array][177]&lt;[ContextChooseFilter][181]>** Provide an array of filters you'd like to apply to the friend list.
     Please note that filter combinations are not supported at the moment of
     writing. Only the first filter is respected, the later ones are simply just
     ignored.
@@ -1322,14 +1320,14 @@ Type: [Object][172]
 -   `action` **[string][171]** This should be 'CUSTOM'.
 -   `template` **[string][171]** [TODO] ID of the template this custom
     update is using. Templates should be predefined in fbapp-config.json.
-    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][183]
+    See the [Bundle Config documentation][https://developers.facebook.com/docs/games/instant-games/bundle-config][182]
     for documentation about fbapp-config.json.
--   `cta` **([string][171]? | [LocalizableContent][181]?)** [TODO] An optional
+-   `cta` **([string][171]? | [LocalizableContent][180]?)** [TODO] An optional
     call-to-action button text. By default we will use a localized 'Play'
     as the button text.
 -   `image` **[string][171]** A string containing data URL of a base64
     encoded image.
--   `text` **([string][171] \| [LocalizableContent][181])** Text message of this update.
+-   `text` **([string][171] \| [LocalizableContent][180])** Text message of this update.
 -   `data` **[Object][172]?** An object to be passed to any session launched
     from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
     Its size must be &lt;= 1000 chars when stringified.
@@ -1696,22 +1694,20 @@ Type: [string][171]
 
 [173]: #leaderboard
 
-[174]: ./entry-points.md
+[174]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[175]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[175]: https://developer.mozilla.org/docs/Web/API/Element
 
-[176]: https://developer.mozilla.org/docs/Web/API/Element
+[176]: #leaderboardentry
 
-[177]: #leaderboardentry
+[177]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[178]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[178]: https://en.wikipedia.org/wiki/ISO_4217
 
-[179]: https://en.wikipedia.org/wiki/ISO_4217
+[179]: #leaderboardplayer
 
-[180]: #leaderboardplayer
+[180]: #localizablecontent
 
-[181]: #localizablecontent
+[181]: #contextchoosefilter
 
-[182]: #contextchoosefilter
-
-[183]: https://developers.facebook.com/docs/games/instant-games/bundle-config
+[182]: https://developers.facebook.com/docs/games/instant-games/bundle-config
