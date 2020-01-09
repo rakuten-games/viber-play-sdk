@@ -390,6 +390,13 @@ window.l9dEntries.forEach(entry => {
 </div>
 
 <div class="section">
+<h2>entry point data</h2>
+<script class="example-code" type="text/plain">
+console.log(JSON.stringify(ViberPlay.getEntryPointData()));
+</script>
+</div>
+
+<div class="section">
 <h2>context</h2>
 <script class="example-code" type="text/plain">
 console.log(ViberPlay.context.getID());
@@ -524,17 +531,17 @@ ViberPlay.updateAsync({
   text: 'This is a LAST update async test message to be cancelled',
   data: {foo: 'bar'},
   strategy: 'LAST',
-}).then(() => console.log('ok'));
-
-ViberPlay.updateAsync({
-  action: 'CUSTOM',
-  cta: 'Play',
-  template: 'play_turn',
-  image: createImg(1200, 1200),
-  text: 'This is LAST update async test message',
-  data: {foo: 'bar'},
-  strategy: 'LAST',
-}).then(() => console.log('ok'));
+}).then(() =>
+  ViberPlay.updateAsync({
+    action: 'CUSTOM',
+    cta: 'Play',
+    template: 'play_turn',
+    image: createImg(1200, 1200),
+    text: 'This is LAST update async test message',
+    data: {foo: 'bar'},
+    strategy: 'LAST',
+  })
+).then(() => console.log('ok'));
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.updateAsync({
@@ -545,17 +552,17 @@ ViberPlay.updateAsync({
   text: 'This is a LAST update async test message to be cancelled',
   data: {foo: 'bar'},
   strategy: 'LAST',
-}).then(() => console.log('ok'));
-
-ViberPlay.updateAsync({
-  action: 'CUSTOM',
-  cta: 'Play',
-  template: 'play_turn',
-  image: createImg(1200, 1200),
-  text: 'This is IMMEDIATE_CLEAR update async test message',
-  data: {foo: 'bar'},
-  strategy: 'IMMEDIATE_CLEAR',
-}).then(() => console.log('ok'));
+}).then(() =>
+  ViberPlay.updateAsync({
+    action: 'CUSTOM',
+    cta: 'Play',
+    template: 'play_turn',
+    image: createImg(1200, 1200),
+    text: 'This is IMMEDIATE_CLEAR update async test message',
+    data: {foo: 'bar'},
+    strategy: 'IMMEDIATE_CLEAR',
+  })
+).then(() => console.log('ok'));
 </script>
 </div>
 
@@ -616,40 +623,36 @@ ViberPlay.shareAsync({
 </script>
 <script class="example-code" type="text/plain">
   ViberPlay.shareAsync({
-    intent: 'REQUEST',
-    image: createImg(1200, 1200),
-    text: 'Some share async test message',
-    data: {foo: 'bar'},
-    description: 'Some description'
-  }).then((res) => console.log(res));
-  </script>
+  intent: 'REQUEST',
+  image: createImg(1200, 1200),
+  text: 'Some share async test message',
+  data: {foo: 'bar'},
+  description: 'Some description'
+}).then((res) => console.log(res));
+</script>
 <script class="example-code" type="text/plain">
-  ViberPlay.shareAsync({
-    intent: 'REQUEST',
-    image: createImg(1200, 1200),
-    minShare: 3,
-    text: {
-      default: 'This is share async test message in l10n fallback',
-      localizations: {
-        ja_JP: 'This is share async test message in ja_JP',
-        en_US: 'This is share async test message in en_US',
-        ru_RU: 'This is share async test message in ru_RU',
-      },
+ViberPlay.shareAsync({
+  intent: 'REQUEST',
+  image: createImg(1200, 1200),
+  minShare: 3,
+  text: {
+    default: 'This is share async test message in l10n fallback',
+    localizations: {
+      ja_JP: 'This is share async test message in ja_JP',
+      en_US: 'This is share async test message in en_US',
+      ru_RU: 'This is share async test message in ru_RU',
     },
-    data: {foo: 'bar'},
-    description: {
-      default: 'Description in l10n fallback',
-      localizations: {
-        ja_JP: 'Description in ja_JP',
-        en_US: 'Description in en_US',
-        ru_RU: 'Description in ru_RU',
-      },
-    }
-  }).then((res) => console.log(res));
-  </script>
-
-<script class="example-code" type="text/plain">
-console.log(JSON.stringify(ViberPlay.getEntryPointData()));
+  },
+  data: {foo: 'bar'},
+  description: {
+    default: 'Description in l10n fallback',
+    localizations: {
+      ja_JP: 'Description in ja_JP',
+      en_US: 'Description in en_US',
+      ru_RU: 'Description in ru_RU',
+    },
+  }
+}).then((res) => console.log(res));
 </script>
 </div>
 

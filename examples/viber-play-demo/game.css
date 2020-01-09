@@ -24,6 +24,7 @@ body {
 h2 {
   margin: 0;
   font-size: 120%;
+  line-height: 30px;
 }
 
 .to-toc {
@@ -32,6 +33,7 @@ h2 {
 
 .to-sec {
   display: block;
+  line-height: 30px;
 }
 
 /* for code-example */
@@ -42,4 +44,8 @@ h2 {
 
 .compiled-example-code {
   margin: 1em 0;
+}
+
+.compiled-example-code button {
+  height: 30px;
 }
