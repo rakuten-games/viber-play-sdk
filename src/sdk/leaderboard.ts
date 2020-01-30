@@ -10,6 +10,9 @@ import {
 
 const conn = getMessenger();
 
+/**
+ * @hidden
+ */
 interface LeaderboardRawData {
   name: string;
   contextId: string | null;

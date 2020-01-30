@@ -1,6 +1,7 @@
 import { LocalizableContent } from '../types/localizable-content'
 
 // TODO: needs unit test or move into bridge
+/** @hidden */
 const getLocalizationString = (lang: string, payload: LocalizableContent) => {
   const normalizedLang = lang.replace('-', '_');
 

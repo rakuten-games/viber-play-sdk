@@ -40,7 +40,4 @@ export interface Purchase {
   signedRequest: SignedPurchaseRequest
 };
 
-/**
- * @typedef {string} SignedPurchaseRequest
- */
 export type SignedPurchaseRequest = string;

@@ -1,6 +1,7 @@
 import LeaderboardPlayer from './leaderboard-player';
 import { LeaderboardEntryPayload } from '../types/leaderboard';
 
+/** @hidden */
 interface LeaderboardEntryRawData {
   score: number;
   formattedScore: string;

@@ -13,6 +13,7 @@ function getElement(selector: string | Element): Element {
   return defaultElement || document.createElement('div');
 }
 
+/** @hidden */
 export function lock(selector: string | Element): void {
   const target = getElement(selector);
   if (target === document.body) return;

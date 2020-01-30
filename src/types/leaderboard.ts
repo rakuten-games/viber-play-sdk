@@ -1,5 +1,6 @@
 import { PlayerPayload } from './player';
 
+/** @hidden */
 export interface LeaderboardEntryPayload {
   score: number;
   formattedScore: string;
@@ -9,4 +10,5 @@ export interface LeaderboardEntryPayload {
   player: LeaderboardPlayerPayload;
 }
 
+/** @hidden */
 export type LeaderboardPlayerPayload = PlayerPayload;

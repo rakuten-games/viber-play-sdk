@@ -9,7 +9,7 @@ interface Request {
   resolve: (response: any) => any;
 }
 
-export default class Messenger {
+class Messenger {
   requests: {
     [id: string]: Request;
   };
@@ -75,6 +75,7 @@ export default class Messenger {
   }
 }
 
+/** @hidden */
 export const getMessenger = () => {
   if (!instance) {
     instance = new Messenger();

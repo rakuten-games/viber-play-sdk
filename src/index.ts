@@ -52,7 +52,7 @@ import {
 /**
  * Local state, this may be out of date, but provides synchronous cache for
  * best guesses and storage for options.
- * @internal
+ * @hidden
  */
 const state: State = {
   gameId: '',
@@ -75,7 +75,7 @@ const state: State = {
 
 /**
  * The Messenger instance that sends/receives messages between game wrapper.
- * @internal
+ * @hidden
  */
 const conn = getMessenger();
 
@@ -88,14 +88,14 @@ conn
 
 /**
  * Flag to prevent double execution of initialization.
- * @internal
+ * @hidden
  */
 let isInitialized = false;
 
 /**
  * Top level namespace wrapping the SDK.
  */
-const ViberPlay = {
+export const ViberPlay = {
   /**
    * Initialize the SDK for the game. In the background, SDK will try to
    * setup environment and retrieve data for later use in the game.

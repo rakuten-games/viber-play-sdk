@@ -2,33 +2,25 @@
 import { getMessenger } from './messenger';
 import { AdInstancePayload, AdType } from '../types/ad-instance';
 
-/**
- * @internal
- */
+/** @hidden */
 const conn = getMessenger();
 
-/**
- * @internal
- */
-interface AdRowData {
+/** @hidden */
+interface AdRawData {
   placementId: string;
   type?: AdType;
 }
 
-/**
- * @internal
- */
+/** @hidden */
 interface IAdInstance {
   getPlacementID(): string;
   loadAsync(): Promise<void>;
   showAsync(): Promise<void>;
 }
 
-/**
- * @internal
- */
+/** @hidden */
 export default class AdInstance implements IAdInstance {
-  protected $ad: AdRowData;
+  protected $ad: AdRawData;
   /**
    * @hideconstructor
    */

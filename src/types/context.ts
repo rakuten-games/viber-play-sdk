@@ -1,7 +1,6 @@
 import ContextPlayer from '../sdk/context-player';
 
 /**
- * @typedef {'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY'} ContextChooseFilter
  * Defines the filtering behavior
  *
  * `NEW_CONTEXT_ONLY` only enlists contexts that the current player

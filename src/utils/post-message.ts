@@ -5,10 +5,12 @@ const RESPONSE_PARSER = /^RGAMES-RES-(\d+):(.*?)$/;
 
 let uid = 0;
 
+/** @hidden */
 export interface ISource {
   postMessage: (message: any, targetOrigin: string) => void;
 }
 
+/** @hidden */
 export class ReceivedRequest {
   private id: number;
   private source?: ISource;
@@ -83,6 +85,7 @@ function checkWhitelist(origin: string) {
   return false;
 }
 
+/** @hidden */
 export function respond(source: ISource, id: number, response: any) {
   source.postMessage(
     `${RESPONSE_PREFIX + id}:${JSON.stringify(response)}`,
@@ -90,6 +93,7 @@ export function respond(source: ISource, id: number, response: any) {
   );
 }
 
+/** @hidden */
 export function send(source: ISource, message: any) {
   source.postMessage(
     `${REQUEST_PREFIX + ++uid}:${JSON.stringify(message)}`,
@@ -98,12 +102,14 @@ export function send(source: ISource, message: any) {
   return uid;
 }
 
+/** @hidden */
 export interface ReceivedResponse {
   id: number;
   error: any;
   response: any;
 }
 
+/** @hidden */
 export function addListener(
   source: Window,
   onRequest: (req: ReceivedRequest) => any,
