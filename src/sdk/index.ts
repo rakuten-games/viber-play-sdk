@@ -31,8 +31,19 @@ import * as _context from './context'
 import * as _player from './player'
 import * as _payments from './payments'
 
+/**
+ * `ViberPlay.context` namespace contains context related APIs
+ */
 export const context = _context
+
+/**
+ * `ViberPlay.player` namespace contains player related APIs
+ */
 export const player = _player
+
+/**
+ * `ViberPlay.payments` namespace contains payment related APIs
+ */
 export const payments = _payments
 
 /**

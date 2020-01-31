@@ -7,6 +7,9 @@ import {
 
 import * as _ViberPlay from './sdk';
 
+/**
+ * `ViberPlay` stands for the namespace containing all APIs of the Viber Play SDK.
+ */
 const ViberPlay = _ViberPlay
 
 conn
