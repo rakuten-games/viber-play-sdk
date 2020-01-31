@@ -1,7 +1,7 @@
 /// <reference path="index.ts" />
 
-import state from './state';
-import conn from './conn';
+import conn from './utils/conn';
+import state from './sdk/state';
 
 import ContextPlayer from './sdk/context-player';
 import { ContextChoosePayload, ContextSizeResponse } from './types/context';
@@ -27,7 +27,7 @@ namespace ViberPlay {
      * Get type of context
      * @method context.getType
      */
-    function getType (): 'SOLO' | 'THREAD' {
+    export function getType (): 'SOLO' | 'THREAD' {
       return state.context.type;
     }
   
@@ -35,7 +35,7 @@ namespace ViberPlay {
      * Check if the count of players in context is between given numbers
      * @method context.isSizeBetween
      */
-    function isSizeBetween (
+    export function isSizeBetween (
       minSize?: number,
       maxSize?: number
     ): ContextSizeResponse | null {
@@ -71,7 +71,7 @@ namespace ViberPlay {
      * @param playerId - Player ID of the player
      * @method context.createAsync
      */
-    function createAsync (playerId: string): Promise<void> {
+    export function createAsync (playerId: string): Promise<void> {
       return Promise.resolve()
         .then(() => {
           if (!playerId) {
@@ -83,7 +83,7 @@ namespace ViberPlay {
             throw err;
           }
   
-          if (playerId === ViberPlay.player.getID()) {
+          if (playerId === state.player.id) {
             const err = {
               code: 'INVALID_PARAM',
               message: 'can not use ID of the current player'
@@ -109,7 +109,7 @@ namespace ViberPlay {
      * @param contextId - Context ID of the context
      * @method context.switchAsync
      */
-    function switchAsync (contextId: string): Promise<void> {
+    export function switchAsync (contextId: string): Promise<void> {
       return Promise.resolve().then(() => {
         if (!contextId) {
           const err = {
@@ -145,7 +145,7 @@ namespace ViberPlay {
      * @param payload An object describes the choose context
      * @method context.chooseAsync
      */
-    function chooseAsync (payload: ContextChoosePayload): Promise<void> { 
+    export function chooseAsync (payload: ContextChoosePayload): Promise<void> { 
       return Promise.resolve().then(() => {
         if (payload) {
           if (payload.filters) {
@@ -240,7 +240,7 @@ namespace ViberPlay {
      * Get an array of ContextPlayer containing players in the same context
      * @method context.getPlayersAsync
      */
-    function getPlayersAsync (): Promise<ContextPlayer[]> {
+    export function getPlayersAsync (): Promise<ContextPlayer[]> {
       return Promise.resolve()
         .then(() => {
           if (!state.context.id) {

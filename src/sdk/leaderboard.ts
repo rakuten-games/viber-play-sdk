@@ -1,4 +1,4 @@
-import { getMessenger } from './messenger';
+import conn from '../utils/conn';
 import LeaderboardEntry from './leaderboard-entry';
 import {
   LeaderboardGetPlayerEntryResponse,
@@ -7,8 +7,6 @@ import {
   LeaderboardGetEntriesResponse,
   LeaderboardGetConnectPlayerEntriesResponse
 } from '../types/bridge';
-
-const conn = getMessenger();
 
 /**
  * @hidden

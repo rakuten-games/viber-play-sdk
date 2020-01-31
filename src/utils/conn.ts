@@ -1,14 +1,15 @@
-import { send, addListener, ISource, ReceivedResponse, ReceivedRequest } from '../utils/post-message';
+import { send, addListener, ISource, ReceivedResponse, ReceivedRequest } from './post-message';
 
+/** @hidden */
 const IS_IOS = /iPhone/.test(navigator.userAgent);
 
-let instance: Messenger;
-
+/** @hidden */
 interface Request {
   reject: (error: Error) => any;
   resolve: (response: any) => any;
 }
 
+/** @hidden */
 export class Messenger {
   requests: {
     [id: string]: Request;
@@ -76,10 +77,6 @@ export class Messenger {
 }
 
 /** @hidden */
-export const getMessenger = () => {
-  if (!instance) {
-    instance = new Messenger();
-  }
+const instance = new Messenger();
 
-  return instance;
-};
+export default instance;

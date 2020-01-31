@@ -1,9 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import { getMessenger } from './messenger';
+import conn from '../utils/conn';
 import { AdInstancePayload, AdType } from '../types/ad-instance';
-
-/** @hidden */
-const conn = getMessenger();
 
 /** @hidden */
 interface AdRawData {
