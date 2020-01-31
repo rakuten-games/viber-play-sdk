@@ -1,14 +1,14 @@
-import { PlayerPayload } from './player';
+import { PlayerRawData } from './player';
 
 /** @hidden */
-export interface LeaderboardEntryPayload {
+export interface LeaderboardEntryRawData {
   score: number;
   formattedScore: string;
   timestamp: number;
   rank: number;
   extraData: string | null;
-  player: LeaderboardPlayerPayload;
+  player: LeaderboardPlayerRawData;
 }
 
 /** @hidden */
-export type LeaderboardPlayerPayload = PlayerPayload;
+export type LeaderboardPlayerRawData = PlayerRawData;

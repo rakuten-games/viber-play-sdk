@@ -1,13 +1,5 @@
 import ConnectedPlayer from "../models/connected-player";
 
-/** @hidden */
-export interface PlayerPayload {
-  id: string,
-  name: string,
-  photo: string,
-  hasPlayed: boolean,
-};
-
 export interface PlayerData {
   [key: string]: any;
 }

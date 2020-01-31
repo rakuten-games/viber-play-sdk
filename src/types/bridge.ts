@@ -1,6 +1,6 @@
 import {
   CurrentPlayer,
-  PlayerPayload,
+  PlayerRawData,
   PlayerData,
   SignedPlayerInfo
 } from './player';
@@ -8,8 +8,8 @@ import { CurrentContext } from './context';
 import { EntryPointData } from './entry-point-data';
 import { TrafficSource } from './traffic-source';
 import { Product, Purchase } from './iap';
-import { LeaderboardEntryPayload } from './leaderboard';
-import { AdInstancePayload } from './ad-instance';
+import { LeaderboardEntryRawData } from './leaderboard';
+import { AdInstanceRawData } from './ad-instance';
 
 /** @hidden */
 export interface ReadyResponse {
@@ -38,7 +38,7 @@ export type QuitResponse = void;
 
 // ads
 /** @hidden */
-export type GetInterstitialAdResponse = AdInstancePayload;
+export type GetInterstitialAdResponse = AdInstanceRawData;
 
 // leaderboard
 /** @hidden */
@@ -52,16 +52,16 @@ export interface GetLeaderboardResponse {
 export type LeaderboardGetEntryCountResponse = number;
 
 /** @hidden */
-export type LeaderboardSetScoreResponse = LeaderboardEntryPayload;
+export type LeaderboardSetScoreResponse = LeaderboardEntryRawData;
 
 /** @hidden */
-export type LeaderboardGetPlayerEntryResponse = LeaderboardEntryPayload | null;
+export type LeaderboardGetPlayerEntryResponse = LeaderboardEntryRawData | null;
 
 /** @hidden */
-export type LeaderboardGetEntriesResponse = LeaderboardEntryPayload[];
+export type LeaderboardGetEntriesResponse = LeaderboardEntryRawData[];
 
 /** @hidden */
-export type LeaderboardGetConnectPlayerEntriesResponse = LeaderboardEntryPayload[];
+export type LeaderboardGetConnectPlayerEntriesResponse = LeaderboardEntryRawData[];
 
 // message
 /** @hidden */
@@ -78,7 +78,7 @@ export type PlayerFlushDataResponse = void;
 
 /** @hidden */
 export interface PlayerGetConnectedPlayersResponse {
-  data: PlayerPayload[];
+  data: PlayerRawData[];
 }
 
 /** @hidden */
@@ -111,7 +111,7 @@ export type ContextChooseContextResponse = ContextCreateContextResponse;
 
 /** @hidden */
 export interface ContextGetContextPlayersResponse {
-  data: PlayerPayload[];
+  data: PlayerRawData[];
 }
 
 // bot

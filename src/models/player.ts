@@ -1,4 +1,4 @@
-import { PlayerPayload, PlayerRawData, IPlayer } from '../types/player';
+import { PlayerRawData, IPlayer } from '../types/player';
 
 /**
  * Representing a player.
@@ -9,7 +9,7 @@ export default class Player implements IPlayer {
   /**
    * @hideconstructor
    */
-  constructor(payload: PlayerPayload) {
+  constructor(payload: PlayerRawData) {
     this.$player = {
       id: payload.id,
       name: payload.name,

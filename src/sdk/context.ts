@@ -249,7 +249,7 @@ export function getPlayersAsync (): Promise<ContextPlayer[]> {
     })
     .then(res => {
       const players = res.data.map(
-        playerPayload => new ContextPlayer(playerPayload)
+        player => new ContextPlayer(player)
       );
 
       state.context.connectedPlayers = players;

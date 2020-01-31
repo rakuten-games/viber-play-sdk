@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import conn from '../utils/conn';
-import { AdInstancePayload, AdType } from '../types/ad-instance';
+import { AdInstanceRawData, AdType } from '../types/ad-instance';
 
 /** @hidden */
 interface AdRawData {
@@ -21,7 +21,7 @@ export default class AdInstance implements IAdInstance {
   /**
    * @hideconstructor
    */
-  constructor(payload: AdInstancePayload) {
+  constructor(payload: AdInstanceRawData) {
     this.$ad = {
       placementId: payload.placementId
     };
@@ -63,7 +63,7 @@ export default class AdInstance implements IAdInstance {
 }
 
 export class InterstitialAdInstance extends AdInstance {
-  constructor(payload: AdInstancePayload) {
+  constructor(payload: AdInstanceRawData) {
     super(payload);
     this.$ad.type = AdType.AD_TYPE_INTERSTITIAL;
   }
@@ -90,7 +90,7 @@ export class InterstitialAdInstance extends AdInstance {
 }
 
 export class RewardedVideoAdInstance extends AdInstance {
-  constructor(payload: AdInstancePayload) {
+  constructor(payload: AdInstanceRawData) {
     super(payload);
     this.$ad.type = AdType.AD_TYPE_REWARDED_VIDEO;
   }

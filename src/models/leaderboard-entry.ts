@@ -1,15 +1,5 @@
 import LeaderboardPlayer from './leaderboard-player';
-import { LeaderboardEntryPayload } from '../types/leaderboard';
-
-/** @hidden */
-interface LeaderboardEntryRawData {
-  score: number;
-  formattedScore: string;
-  timestamp: number;
-  rank: number;
-  extraData: string | null;
-  player: LeaderboardPlayer;
-}
+import { LeaderboardEntryRawData } from '../types/leaderboard';
 
 /**
  * Represent a leaderboard entry. An entry is created when a player submit score
@@ -22,7 +12,7 @@ export default class LeaderboardEntry {
   /**
    * @hideconstructor
    */
-  constructor(payload: LeaderboardEntryPayload) {
+  constructor(payload: LeaderboardEntryRawData) {
     const {
       score,
       formattedScore,
@@ -38,7 +28,7 @@ export default class LeaderboardEntry {
       timestamp,
       rank,
       extraData,
-      player: new LeaderboardPlayer(player)
+      player,
     };
   }
 
@@ -121,6 +111,6 @@ export default class LeaderboardEntry {
    *   });
    */
   getPlayer(): LeaderboardPlayer {
-    return this.$leaderboardEntry.player;
+    return new LeaderboardPlayer(this.$leaderboardEntry.player);
   }
 }

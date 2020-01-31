@@ -3,7 +3,7 @@ import state from '../utils/state';
 
 import ConnectedPlayer from '../models/connected-player';
 import SignedPlayerInfo from '../models/signed-player-info';
-import { PlayerData, PlayerPayload } from '../types/player';
+import { PlayerData, PlayerRawData } from '../types/player';
 import {
   PlayerGetConnectedPlayersResponse,
   PlayerGetDataResponse,
@@ -174,8 +174,8 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
 export function getConnectedPlayersAsync ({ filter = 'INCLUDE_PLAYERS' } = {}): Promise<Array<ConnectedPlayer>> {
   return conn
   .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { filter })
-  .then((res: { data: PlayerPayload[] }) => {
-    const players = res.data.map((profile: PlayerPayload) => new ConnectedPlayer(profile));
+  .then((res: { data: PlayerRawData[] }) => {
+    const players = res.data.map((profile: PlayerRawData) => new ConnectedPlayer(profile));
 
     state.player.connectedPlayers = players;
     return state.player.connectedPlayers;

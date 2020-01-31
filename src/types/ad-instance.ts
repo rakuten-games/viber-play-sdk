@@ -4,6 +4,6 @@ export enum AdType {
 };
 
 /** @hidden */
-export interface AdInstancePayload {
+export interface AdInstanceRawData {
   placementId: string;
 }
