@@ -12,7 +12,7 @@
     "build": "webpack -p",
     "build:node": "BABEL_ENV=node npm run build",
     "document": "yarn run document:md && yarn run document:website",
-    "document:md": "documentation build src --shallow -f md -o docs/api.md --config documentation.yaml",
+    "document:md": "typedoc",
     "document:website": "echo \"---\nid: sdk1\ntitle: API Reference\n---\" > website/docs/sdk1.md && documentation build src --shallow -f md --config documentation.yaml >> website/docs/sdk1.md",
     "deploy": "./scripts/deploy.sh",
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
@@ -34,7 +34,6 @@
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "babel-plugin-dynamic-import-node": "^2.2.0",
-    "documentation": "^12.1.1",
     "dotenv-cli": "^2.0.1",
     "dotenv-webpack": "^1.7.0",
     "eslint": "^6.1.0",

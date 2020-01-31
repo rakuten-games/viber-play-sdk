@@ -4,7 +4,6 @@
   "theme": "docusaurus",
   "out": "docs",
   "readme": "none",
-  "excludeNotExported": true,
   "excludePrivate": true,
   "excludeProtected": true
 }

@@ -9,7 +9,7 @@ interface Request {
   resolve: (response: any) => any;
 }
 
-class Messenger {
+export class Messenger {
   requests: {
     [id: string]: Request;
   };
