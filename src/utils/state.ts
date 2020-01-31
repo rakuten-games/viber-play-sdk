@@ -3,7 +3,8 @@ import { CurrentContext } from '../types/context';
 import { EntryPointData } from '../types/entry-point-data';
 import { TrafficSource } from '../types/traffic-source';
 
-export interface State {
+/** @hidden */
+interface State {
   gameId: string;
   player: CurrentPlayer;
   context: CurrentContext;

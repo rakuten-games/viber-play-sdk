@@ -1,7 +1,9 @@
 import { disableBodyScroll } from 'body-scroll-lock';
 
+/** @hidden */
 let defaultElement: Element;
 
+/** @hidden */
 function getElement(selector: string | Element): Element {
   if (typeof selector === 'string') {
     const el = document.querySelector(selector);

@@ -1,6 +1,6 @@
 {
   "inputFiles": ["./src"],
-  "mode": "file",
+  "mode": "modules",
   "theme": "docusaurus",
   "out": "docs",
   "readme": "none",

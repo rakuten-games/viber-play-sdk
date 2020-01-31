@@ -2,7 +2,7 @@
   "name": "viber-play-sdk",
   "version": "1.5.1",
   "description": "",
-  "main": "lib/bundle.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "start": "webpack -w --progress",
@@ -45,6 +45,7 @@
     "http-server": "^0.11.1",
     "lodash-es": "^4.17.5",
     "style-loader": "^0.23.1",
+    "ts-loader": "^6.2.1",
     "typedoc": "^0.15.0",
     "typedoc-plugin-markdown": "^2.2.16",
     "typescript": "^3.2.2",

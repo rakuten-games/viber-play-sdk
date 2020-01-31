@@ -1,4 +1,4 @@
-import ConnectedPlayer from "../sdk/connected-player";
+import ConnectedPlayer from "../models/connected-player";
 
 /** @hidden */
 export interface PlayerPayload {

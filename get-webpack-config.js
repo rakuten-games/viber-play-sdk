@@ -4,27 +4,13 @@ const Dotenv = require('dotenv-webpack');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
-const resolve = {
-  extensions: ['.js', '.ts']
-};
-
 const rules = [
   {
-    test: /\.(js|ts)$/,
+    test: /\.(ts|js)$/,
     exclude: /node_modules\//,
     use: [
-      'babel-loader'
-      // {
-      //   loader: 'eslint-loader',
-      //   options: {
-      //     quiet: true,
-      //   },
-      // },
+      'ts-loader'
     ]
-  },
-  {
-    test: /\.css$/,
-    use: ['style-loader', 'css-loader']
   }
 ];
 
@@ -44,9 +30,12 @@ const getWebpackConfig = () => ({
       commonjs: 'viber-play-sdk'
     },
     jsonpFunction: 'ViberPlayJsonp',
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    libraryExport: 'default'
   },
-  resolve,
+  resolve: {
+    extensions: ['.ts', '.js']
+  },
   module: {
     rules
   },

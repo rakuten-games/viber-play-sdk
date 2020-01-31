@@ -1,4 +1,4 @@
-import ContextPlayer from '../sdk/context-player';
+import ContextPlayer from '../models/context-player';
 
 /**
  * Defines the filtering behavior

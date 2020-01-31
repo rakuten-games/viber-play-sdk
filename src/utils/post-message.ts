@@ -1,8 +1,16 @@
+/** @hidden */
 const REQUEST_PREFIX = 'RGAMES-';
+
+/** @hidden */
 const REQUEST_PARSER = /^RGAMES-(\d+):(.*?)$/;
+
+/** @hidden */
 const RESPONSE_PREFIX = 'RGAMES-RES-';
+
+/** @hidden */
 const RESPONSE_PARSER = /^RGAMES-RES-(\d+):(.*?)$/;
 
+/** @hidden */
 let uid = 0;
 
 /** @hidden */
@@ -65,8 +73,10 @@ export class ReceivedRequest {
   }
 }
 
+/** @hidden */
 const originWhitelist: RegExp[] = [];
 
+/** @hidden */
 function addToWhiteList(host: string) {
   originWhitelist.push(
     new RegExp(host.replace(/\./g, '\\.').replace(/\*/g, '.*?'))
@@ -75,6 +85,7 @@ function addToWhiteList(host: string) {
 
 ['vbrpl.io', 'rgames.jp'].map(addToWhiteList);
 
+/** @hidden */
 function checkWhitelist(origin: string) {
   for (const matcher of originWhitelist) {
     if (matcher.test(origin)) {
