@@ -119,9 +119,9 @@ export function getPhoto (): string | null {
 }
 
 /**
- * Get a `SignedPlayerInfo` object with custom payload and a signature.
+ * Get a [[SignedPlayerInfo]] object with custom payload and a signature.
  * This can be useful for game server to validate if the user's identity and its payload is really sent from the game or tampered.
- * Please read more on the `SignedPlayerInfo` for more information.
+ * Please read more on [[SignedPlayerInfo]] for more information.
  * @param payload - An arbitary string to be signed
  * @returns An object containing signed player info and custom payload
  * @example
