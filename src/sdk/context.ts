@@ -12,7 +12,15 @@ import {
 
 
 /**
- * Get id of context
+ * Get ID of context
+ * @example
+ * ```
+ * // In SOLO context
+ * ViberPlay.context.getID(); // null
+ * 
+ * // In THREAD context
+ * ViberPlay.context.getID(); // a 16 char alphanumeric string
+ * ```
  */
 export function getID (): string | null {
   return state.context.id;
@@ -20,6 +28,11 @@ export function getID (): string | null {
 
 /**
  * Get type of context
+ * @example
+ * ```
+ * // In SOLO context
+ * ViberPlay.context.getType(); // 'SOLO'
+ * ```
  */
 export function getType (): 'SOLO' | 'THREAD' {
   return state.context.type;
@@ -27,6 +40,14 @@ export function getType (): 'SOLO' | 'THREAD' {
 
 /**
  * Check if the count of players in context is between given numbers
+ * @param minSize - The minimum boundry of the check
+ * @param maxSize - The maximum boundry of the check
+ * @example
+ * ```
+ * // In a THREAD context containing 2 players
+ * const result = ViberPlay.context.isSizeBetween(2, 3);
+ * console.log(result.answer); // true
+ * ```
  */
 export function isSizeBetween (
   minSize?: number,
@@ -60,8 +81,14 @@ export function isSizeBetween (
 }
 
 /**
- * Create context with player
- * @param playerId - Player ID of the player
+ * Create a context with an opponent player
+ * @param playerId - Player ID of the opponent player
+ * @example
+ * ```
+ * ViberPlay.context.createAsync('SOMEPLAYER123456').then(() => {
+ *   console.log(ViberPlay.context.getID()); // 'SOMECONTEXT1234567'
+ * });
+ * ```
  */
 export function createAsync (playerId: string): Promise<void> {
   return Promise.resolve()
@@ -97,8 +124,14 @@ export function createAsync (playerId: string): Promise<void> {
 }
 
 /**
- * Switch context by context id
+ * Switch context by using a known context ID.
  * @param contextId - Context ID of the context
+ * @example
+ * ```
+ * ViberPlay.context.switchAsync('SOMECONTEXT1234567').then(() => {
+ *   console.log(ViberPlay.context.getID()); // 'SOMECONTEXT1234567'
+ * });
+ * ```
  */
 export function switchAsync (contextId: string): Promise<void> {
   return Promise.resolve().then(() => {
@@ -132,8 +165,14 @@ export function switchAsync (contextId: string): Promise<void> {
 }
 
 /**
- * Popup a friend dialog to establish context
- * @param payload An object describes the choose context
+ * Will popup a UI to interactively choose a friend and create a context
+ * @param payload Additional parameters for the UI
+ * @example
+ * ```
+ * ViberPlay.context.chooseAsync().then(() => {
+ *   console.log(ViberPlay.context.getID()); // 'SOMECONTEXT1234567'
+ * });
+ * ```
  */
 export function chooseAsync (payload: ContextChoosePayload): Promise<void> { 
   return Promise.resolve().then(() => {
@@ -227,7 +266,13 @@ export function chooseAsync (payload: ContextChoosePayload): Promise<void> {
 }
 
 /**
- * Get an array of ContextPlayer containing players in the same context
+ * Get players in current context
+ * @example
+ * ```
+ * ViberPlay.context.getPlayersAsync().then(players => {
+ *   console.log(player.length); // 2
+ * });
+ * ```
  */
 export function getPlayersAsync (): Promise<ContextPlayer[]> {
   return Promise.resolve()
