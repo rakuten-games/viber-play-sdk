@@ -21,7 +21,7 @@ export interface SharePayload {
    * An array of filters to be applied to the friend list.
    * (Please note that filter combinations are not supported. Only the first filter is respected, the later ones are simply just ignored.)
    */
-  filters?: ContextFilter, // TODO: check
+  filters?: ContextFilter[],
   /**
    * Specify how long a friend should be filtered out after the curent player sends him/her a message.
    * This parameter only applies when `NEW_INVITATIONS_ONLY` filter is used.
