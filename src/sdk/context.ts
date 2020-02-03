@@ -165,7 +165,7 @@ export function switchAsync (contextId: string): Promise<void> {
 }
 
 /**
- * Will display a UI to interactively choose a friend and create a context
+ * Display a UI to interactively choose a friend and create a context
  * @param payload Additional parameters for the UI
  * @example
  * ```
