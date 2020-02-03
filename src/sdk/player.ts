@@ -15,17 +15,16 @@ import {
 } from '../types/bridge';
 
 /**
- * Will get an object representing game data saved on the hosted platform.
+ * Get game data from platform storage.
  * @param keys - An array of unique keys to retrieve data for.
  * @returns Latest snapshot of game data
  * @example
  * ViberPlay.player
  *   .getDataAsync(['hp', 'items'])
  *   .then(function(data) {
- *     console.log('data is loaded');
- *     var hp = data['hp'];
- *     var items = data['items'];
- *   });
+ *     console.log(data['hp']) // 100
+ *     console.log(data['items']) // {potion: 3, gold: 20}
+ *   })
  */
 export function getDataAsync (keys: string[]): Promise<PlayerData> {
   return conn
@@ -46,26 +45,26 @@ export function getDataAsync (keys: string[]): Promise<PlayerData> {
 }
 
 /**
- * Will send update of game data to the hosted platform's server. The update
- * will be merged into existing game data.
- *
- * Please be careful not to store a game data bigger than 1000 characters
- * when stringified, which will cause the modification be rejected.
- * @param data - An object containing a set of key-value pairs to be
- * stored on the hosted platform. The object must contain only serializable
- * values - any non-serializable values will cause the entire modification
- * to be rejected. Nullable value will be treated as removal of the key-value
- * pair.
- * @returns Latest snapshot of game data
+ * Update game data to platform storage. The update will be merged into existing game data.
+ * Please be careful not to store a game data bigger than 1000 characters when stringified,
+ * which will cause the modification be rejected.
+ * @param data - An object containing a set of key-value pairs.
+ * The object must contain only serializable values.
+ * Nullable value will be treated as removal of the key-value pair.
  * @example
+ * ```
  * ViberPlay.player
  *  .setDataAsync({
- *    items: ['item1', 'item2', 'item3'],
- *    hp: 123,
+ *    items: {
+ *      potion: 4,
+ *      gold: 20,
+ *    },
+ *    hp: 99,
  *  })
  *  .then(function() {
- *    console.log('data is set');
- *  });
+ *    console.log('data is set')
+ *  })
+ * ```
  */
 export function setDataAsync (data: object): Promise<void> {
   return conn
@@ -77,66 +76,66 @@ export function setDataAsync (data: object): Promise<void> {
 }
 
 /**
- * Will flush unsaved data to cloud storage
+ * Will flush any unsaved data to platform storage
  */
 export function flushDataAsync (): Promise<void> {
   return conn.request<PlayerFlushDataResponse>('sgPlayerFlushData');
 }
 
 /**
- * Get the player's ID. This should only be called after
- * `ViberPlay.initializeAsync()` resolves, or it will return null.
+ * Get the player's ID.
  * @returns Player's ID
  * @example
- * var playerID = ViberPlay.player.getID();
+ * ViberPlay.player.getID() // 'SOMEPLAYER123456'
  */
 export function getID (): string | null {
   return state.player.id;
 }
 
 /**
- * Get the player's name. This should only be called after
- * `ViberPlay.initializeAsync()` resolves, or it will return null.
+ * Get the player's name.
  * @returns Player's name
  * @example
- * var playerName = ViberPlay.player.getName();
+ * ```
+ * ViberPlay.player.getName(); // 'John Smith'
+ * ```
  */
 export function getName (): string | null {
   return state.player.name;
 }
 
 /**
- * Get the player's photo. This should only be called after
- * `ViberPlay.initializeAsync()` resolves, or it will return null.
+ * Get the player's photo.
  * @returns URL of player photo
  * @example
- * var playerImage = new Image();
- * playerImage.crossOrigin = 'anonymous';
- * playerImage.src = ViberPlay.player.getPhoto();
+ * ```
+ * const playerImage = new Image()
+ * playerImage.crossOrigin = 'anonymous'
+ * playerImage.src = ViberPlay.player.getPhoto()
+ * ```
  */
 export function getPhoto (): string | null {
   return state.player.photo;
 }
 
 /**
- * Get a `SignedPlayerInfo` object with encrypted player's info. This can
- * be useful for game server to detect if the user's identity is really
- * sent from the hosted platform or tampered.
- *
- * Please read `SignedPlayerInfo` for more information on how to use this.
- * @param payload - An arbitary string to tag the signature
- * @returns An object with encrypted player info
+ * Get a `SignedPlayerInfo` object with custom payload and a signature.
+ * This can be useful for game server to validate if the user's identity and its payload is really sent from the game or tampered.
+ * Please read more on the `SignedPlayerInfo` for more information.
+ * @param payload - An arbitary string to be signed
+ * @returns An object containing signed player info and custom payload
  * @example
- * ViberPlay.player.getSignedPlayerInfoAsync('some_metadata')
- *  .then(function (result) {
- *    // The verification of the ID and signature should happen on
- *    // server side.
+ * ```
+ * ViberPlay.player.getSignedPlayerInfoAsync('{"type":"GAIN_COINS","amount":100}')
+ *  .then(result => {
+ *    // Send to server for validation and further processing
  *    sendToGameServer(
- *      result.getPlayerID(), // same value as ViberPlay.player.getID()
+ *      result.getPlayerID(),
  *      result.getSignature(),
- *      'GAIN_COINS',
- *      100);
- *  });
+ *      '{"type":"GAIN_COINS","amount":100}',
+ *    )
+ *  })
+ * ```
  */
 export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlayerInfo> {
   const playerId = getID();
@@ -156,20 +155,21 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
 }
 
 /**
- * This returns an array containing the friends of the user who has
- * played the current game before.
+ * This returns an array containing the friends of the user who has played the current game before.
  * @returns Array of connected players
  * @example
- * var connectedPlayers = ViberPlay.player.getConnectedPlayersAsync()
- *   .then(function(players) {
- *     console.log(players.map(function(player) {
+ * ```
+ * ViberPlay.player.getConnectedPlayersAsync()
+ *   .then(players => {
+ *     console.log(players.map(player => {
  *       return {
  *         id: player.getID(),
  *         name: player.getName(),
  *       }
- *     }));
- *   });
- * // [{id: '123456789', name: 'foo'}, {id: '234567890', name: 'bar'}]
+ *     }))
+ *     // [{id: 'SOMEPLAYER123456', name: 'John'}, {id: 'SOMEPLAYER654321', name: 'Jack'}]
+ *   })
+ * ```
  */
 export function getConnectedPlayersAsync ({ filter = 'INCLUDE_PLAYERS' } = {}): Promise<Array<ConnectedPlayer>> {
   return conn
@@ -183,27 +183,27 @@ export function getConnectedPlayersAsync ({ filter = 'INCLUDE_PLAYERS' } = {}): 
 }
 
 /**
- * (Experimental) Checks if the current user can subscribe
- * the game's bot.
- * Please note that this API is currently a stub that only resolves
- * with true.
- * @returns Resolves with true if user can subscribe bot
+ * Checks if the current user can subscribe the game's bot.
+ * Not supported.
+ * @category Experimental
+ * @returns Whether the user can subscribe bot
  * @example
+ * ```
  * ViberPlay.player.canSubscribeBotAsync()
- *   .then((result) => console.log(result));
+ *   .then((result) => console.log(result)) // true
+ * ```
  */
 export function canSubscribeBotAsync (): Promise<boolean> {
   return conn.request<CanSubscribeBotResponse>('sgCanSubscribeBot');
 }
 
 /**
- * (Experimental) Start the process to subscribe the game's bot. Game
- * must check with ViberPlay.player.canSubscribeBotAsync() before this
- * API is called.
- * Please note that this API can terminate the game's window and navigate
- * user to the game's bot screen to start subscribing.
- * @returns
+ * Start the process to subscribe the game's bot. 
+ * Developer must check with ViberPlay.player.canSubscribeBotAsync() before this API is called.
+ * Not supported.
+ * @category Experimental
  * @example
+ * ```
  * ViberPlay.player.canSubscribeBotAsync()
  *   .then((result) => {
  *     if (!result) {
@@ -212,7 +212,8 @@ export function canSubscribeBotAsync (): Promise<boolean> {
  *     return ViberPlay.player.subscribeBotAsync();
  *   }))
  *   .then(() => console.log('ok'))
- *   .catch((err) => console.error(err));
+ *   .catch(e => console.error(e))
+ * ```
  */
 export function subscribeBotAsync (): Promise<void> {
   return conn.request<SubscribeBotResponse>('sgSubscribeBot');

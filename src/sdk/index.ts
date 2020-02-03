@@ -23,7 +23,6 @@ import {
   SetLoadingProgressResponse,
   UpdateResponse,
   SetSessionDataResponse,
-  SubscribePlatformBotResponse,
   GetInterstitialAdResponse
 } from '../types/bridge';
 

@@ -124,9 +124,6 @@ export type CanSubscribeBotResponse = boolean;
 /** @hidden */
 export type SubscribeBotResponse = void;
 
-/** @hidden */
-export type SubscribePlatformBotResponse = void;
-
 // payments
 /** @hidden */
 export type PaymentsGetCatalogResponse = Product[];
