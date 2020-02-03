@@ -18,7 +18,7 @@ export interface SharePayload {
    */
   data?: object,
   /**
-   * Provide an array of filters you'd like to apply to the friend list.
+   * An array of filters to be applied to the friend list.
    * (Please note that filter combinations are not supported. Only the first filter is respected, the later ones are simply just ignored.)
    */
   filters?: ContextFilter, // TODO: check
