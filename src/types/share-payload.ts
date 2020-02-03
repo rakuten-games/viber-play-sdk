@@ -1,29 +1,40 @@
-// @flow
-
 import { LocalizableContent } from './localizable-content'
+import { ContextFilter } from './context'
 
-/**
- * @typedef {Object} SharePayload
- * @property {'INVITE' | 'REQUEST' | 'CHALLENGE' | 'SHARE'} intent - [TODO]
- * Represents content to be shared by the user.
- * @property {string} image - A string containing data URL of a base64
- * encoded image.
- * @property {string | LocalizableContent} text - Text message of this share.
- * @property {Object?} data - An object to be passed to any session launched
- * from this update. It can be accessed from `ViberPlay.getEntryPointData()`.
- * Its size must be <= 1000 chars when stringified.
- * @property {'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY'} [filters] - Filters
- * @property {number} minShare - Minimum selected players to share
- * @property {string | LocalizableContent} description -
- * Optional customizable text field which can be used to describe the 
- * reward a user can get from sharing.
- */
 export interface SharePayload {
+  /** 
+   * Message format to be used.
+   * There's no visible difference among the available options.
+   */
   intent: 'INVITE' | 'REQUEST' | 'CHALLENGE' | 'SHARE',
+  /** A string containing data URL of a base64 encoded image. */
   image: string,
+  /** Text of the message body. */
   text: string | LocalizableContent,
+  /**
+   * Object passed to any session launched from this update message.
+   * It can be accessed from `ViberPlay.getEntryPointData()`.
+   * Its size must be <=1000 chars when stringified.
+   */
   data?: object,
-  filters?: 'NEW_CONTEXT_ONLY' | 'INCLUDE_EXISTING_CHALLENGES' | 'NEW_PLAYERS_ONLY' | 'NEW_INVITATIONS_ONLY',
+  /**
+   * Provide an array of filters you'd like to apply to the friend list.
+   * (Please note that filter combinations are not supported. Only the first filter is respected, the later ones are simply just ignored.)
+   */
+  filters?: ContextFilter, // TODO: check
+  /**
+   * Specify how long a friend should be filtered out after the curent player sends him/her a message.
+   * This parameter only applies when `NEW_INVITATIONS_ONLY` filter is used.
+   * When not specified, it will filter out any friend who has been sent a message.
+   */
+  hoursSinceInvitation?: number,
+  /**
+   * Defining the minimum number of players to be selected to start sharing.
+   */
   minShare?: number,
-  description?: string | LocalizableContent
+  /** 
+   * Optional customizable text field in the share UI.
+   * This can be used to describe the incentive a user can get from sharing.
+   */
+  description?: string | LocalizableContent,
 };

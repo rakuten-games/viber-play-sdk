@@ -1,8 +1,7 @@
 import {
   CurrentPlayer,
   PlayerRawData,
-  PlayerData,
-  SignedPlayerInfo
+  PlayerData
 } from './player';
 import { CurrentContext } from './context';
 import { EntryPointData } from './entry-point-data';
@@ -10,6 +9,7 @@ import { TrafficSource } from './traffic-source';
 import { Product, Purchase } from './iap';
 import { LeaderboardEntryRawData } from './leaderboard';
 import { AdInstanceRawData } from './ad-instance';
+import { Signature } from './signature';
 
 /** @hidden */
 export interface ReadyResponse {
@@ -93,7 +93,7 @@ export interface PlayerSetDataResponse {
 
 /** @hidden */
 export interface PlayerGetSignedInfoV4Response {
-  signature: SignedPlayerInfo;
+  signature: Signature;
 }
 
 // context

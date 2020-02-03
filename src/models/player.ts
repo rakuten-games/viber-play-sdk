@@ -1,9 +1,9 @@
-import { PlayerRawData, IPlayer } from '../types/player';
+import { PlayerRawData } from '../types/player';
 
 /**
  * Representing a player.
  */
-export default class Player implements IPlayer {
+export default class Player {
   protected $player: PlayerRawData;
 
   /**

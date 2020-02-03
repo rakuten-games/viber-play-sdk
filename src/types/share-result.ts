@@ -1,8 +1,4 @@
-/**
- * @typedef {Object} ShareResult
- * @property {number} sharedCount - Number of player user has sent share events.
- * It will be returned after `ViberPlay.shareAsync()`.
- */
 export interface ShareResult {
+  /** The number of players who are sent the share message. */
   sharedCount: number;
 };

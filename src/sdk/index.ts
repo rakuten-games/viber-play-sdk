@@ -47,7 +47,7 @@ export const player = _player
 export const payments = _payments
 
 /**
- * Flag to prevent double execution of initialization.
+ * To prevent dupe initialization.
  * @hidden
  */
 let isInitialized = false;
@@ -55,7 +55,8 @@ let isInitialized = false;
 /**
  * Initialize the SDK for the game. In the background, SDK will try to
  * setup environment and retrieve data for later use in the game.
- * We recommend calling this API in the game ASAP to shorten the loading wait.
+ * We recommend calling this API in the game ASAP to shorten the total loading
+ * wait time for players.
  * @param options Extra options to alter the runtime behavior of the SDK.
  */
 export function initializeAsync (options: InitializationOptions = {}): Promise<void> {
