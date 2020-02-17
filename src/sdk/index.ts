@@ -117,6 +117,7 @@ export function startGameAsync (): Promise<void> {
  * If the game is played in a messenger chat thread, this will post a message into the thread with the specified image and text message and custom data payload.
  * @param payload An object describes the update message
  * @example
+ * ```
  * ViberPlay.updateAsync({
  *   action: 'CUSTOM',
  *   cta: 'Play',
@@ -135,6 +136,7 @@ export function startGameAsync (): Promise<void> {
  *   // After the update is posted, closes the game.
  *   ViberPlay.quit()
  * })
+ * ```
  */
 export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
   if (!state.context.id) {
@@ -192,6 +194,7 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
  * And additional parameters can be used to fine-tune the experience.
  * @param payload An object describes the message to be shared.
  * @example
+ * ```
  * ViberPlay.shareAsync({
  *   intent: 'REQUEST',
  *   image: base64Picture,
@@ -203,6 +206,7 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
  * }).then(shareResult => {
  *   console.log(shareResult) // {sharedCount: 3}
  * })
+ * ```
  */
 export function shareAsync (payload: SharePayload): Promise<ShareResult> {
   let description = '';
@@ -326,10 +330,12 @@ export function setSessionData (sessionData: object): void {
  * Get a leaderboard by its name
  * @param name - The name of the leaderboard
  * @example
+ * ```
  * ViberPlay.getLeaderboardAsync('some_leaderboard')
  *   .then(leaderboard => {
  *     console.log(leaderboard.getName()) // 'some_leaderboard'
  *   })
+ * ```
  */
 export function getLeaderboardAsync (name: string): Promise<Leaderboard> {
   return Promise.resolve()

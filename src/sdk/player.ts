@@ -19,12 +19,14 @@ import {
  * @param keys - An array of unique keys to retrieve data for.
  * @returns Latest snapshot of game data
  * @example
+ * ```
  * ViberPlay.player
  *   .getDataAsync(['hp', 'items'])
  *   .then(function(data) {
  *     console.log(data['hp']) // 100
  *     console.log(data['items']) // {potion: 3, gold: 20}
  *   })
+ * ```
  */
 export function getDataAsync (keys: string[]): Promise<PlayerData> {
   return conn
@@ -86,7 +88,9 @@ export function flushDataAsync (): Promise<void> {
  * Get the player's ID.
  * @returns Player's ID
  * @example
+ * ```
  * ViberPlay.player.getID() // 'SOMEPLAYER123456'
+ * ```
  */
 export function getID (): string | null {
   return state.player.id;
@@ -97,7 +101,7 @@ export function getID (): string | null {
  * @returns Player's name
  * @example
  * ```
- * ViberPlay.player.getName(); // 'John Smith'
+ * ViberPlay.player.getName() // 'John Smith'
  * ```
  */
 export function getName (): string | null {
@@ -207,9 +211,9 @@ export function canSubscribeBotAsync (): Promise<boolean> {
  * ViberPlay.player.canSubscribeBotAsync()
  *   .then((result) => {
  *     if (!result) {
- *       throw new Error('CAN_NOT_SUBSCRIBE');
+ *       throw new Error('CAN_NOT_SUBSCRIBE')
  *     }
- *     return ViberPlay.player.subscribeBotAsync();
+ *     return ViberPlay.player.subscribeBotAsync()
  *   }))
  *   .then(() => console.log('ok'))
  *   .catch(e => console.error(e))

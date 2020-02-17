@@ -47,12 +47,14 @@ export function getCatalogAsync (): Promise<Product[]> {
  * @param config - An object containing purchase configuration information
  * @returns Purchase information
  * @example
+ * ```
  * ViberPlay.payments.purchaseAsync({
  *   productID: 'someProduct',
  *   developerPayload: 'somePayload'
  * }).then((purchase) => {
  *   console.log(purchase)
  * })
+ * ```
  */
 export function purchaseAsync (config: PurchaseConfig): Promise<Purchase> {
   if (typeof config !== 'object') {

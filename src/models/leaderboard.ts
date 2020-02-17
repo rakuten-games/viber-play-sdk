@@ -38,16 +38,17 @@ export default class Leaderboard {
    * Get the leaderboard's name.
    * @returns Leaderboard name
    * @example
+   * ```
    * ViberPlay.getLeaderboardAsync('global_leaderboard')
    *   .then((leaderboard) => {
-   *     leaderboard.getName(); // 'global_leaderboard'
-   *   });
-   *
-   * @example
+   *     leaderboard.getName() // 'global_leaderboard'
+   *   })
+   * 
    * ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
    *   .then((leaderboard) => {
-   *     leaderboard.getName(); // 'context_leaderboard.8183471902'
-   *   });
+   *     leaderboard.getName() // 'context_leaderboard.8183471902'
+   *   })
+   * ```
    */
   getName(): string {
     return this.$leaderboard.name;
@@ -58,10 +59,12 @@ export default class Leaderboard {
    * the leaderboard is not related to any context.
    * @returns Related context ID
    * @example
+   * ```
    * ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
    *   .then((leaderboard) => {
-   *     leaderboard.getContextId(); // '8183471902'
-   *   });
+   *     leaderboard.getContextId() // '8183471902'
+   *   })
+   * ```
    */
   getContextID(): string | null {
     return this.$leaderboard.contextId;
@@ -71,12 +74,14 @@ export default class Leaderboard {
    * Get total number of entries inside the leaderboard.
    * @returns Total number of entries
    * @example
+   * ```
    * ViberPlay.getLeaderboardAsync('context_leaderboard.8183471902')
    *   .then((leaderboard) => {
    *     leaderboard.getEntryCountAsync().then((count) => {
-   *       console.log('count: ', count); // count: 2
-   *     });
-   *   });
+   *       console.log('count: ', count) // count: 2
+   *     })
+   *   })
+   * ```
    */
   getEntryCountAsync(): Promise<number> {
     return conn.request<LeaderboardGetEntryCountResponse>(
@@ -95,10 +100,12 @@ export default class Leaderboard {
    * @param extraData - A string payload can be attached to the entry as extra info
    * @returns Entry info
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getScore(); // 100
-   *   });
+   *     entry.getScore() // 100
+   *   })
+   * ```
    */
   setScoreAsync(score: number, extraData?: string): Promise<LeaderboardEntry> {
     return conn
@@ -114,15 +121,17 @@ export default class Leaderboard {
    * Get current player's entry. Returns `null` if there isn't one.
    * @returns Entry info
    * @example
+   * ```
    * leaderboard.getPlayerEntryAsync()
    *   .then((entry) => {
    *     if (!entry) {
-   *       console.log('No player entry found');
-   *       return;
+   *       console.log('No player entry found')
+   *       return
    *     }
    *
-   *     entry.getScore(); // 100
-   *   });
+   *     entry.getScore() // 100
+   *   })
+   * ```
    */
   getPlayerEntryAsync(): Promise<LeaderboardEntry | null> {
     return conn
@@ -142,11 +151,13 @@ export default class Leaderboard {
    * @param offset - The offset in the leaderborad (from the top) the entries to be returned
    * @returns Array of entry info
    * @example
+   * ```
    * // Get top 10 entries
    * leaderboard.getEntriesAsync(10, 0)
    *   .then((entries) => {
-   *     console.log(entries.length); // 10 if there're >= 10 entries
-   *   });
+   *     console.log(entries.length) // 10 if there're >= 10 entries
+   *   })
+   * ```
    */
   getEntriesAsync(count: number, offset: number): Promise<LeaderboardEntry[]> {
     return conn
@@ -165,11 +176,13 @@ export default class Leaderboard {
    * @param offset - The offset in the leaderborad (from the top) the entries to be returned
    * @returns Array of entry info
    * @example
+   * ```
    * // Get top 10 friend entries
    * leaderboard.getConnectedPlayerEntriesAsync(10, 0)
    *   .then((entries) => {
-   *     console.log(entries.length); // 10 if there're >= 10 friend entries
-   *   });
+   *     console.log(entries.length) // 10 if there're >= 10 friend entries
+   *   })
+   * ```
    */
   getConnectedPlayerEntriesAsync(
     count: number,

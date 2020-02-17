@@ -31,7 +31,9 @@ export default class AdInstance implements IAdInstance {
    * (Experimental) Get the ad's placement ID.
    * @returns Placement ID
    * @example
-   * adInstance.getPlacementID(); // '5458282176661711'
+   * ```
+   * adInstance.getPlacementID() // '5458282176661711'
+   * ```
    */
   getPlacementID() {
     return this.$ad.placementId;
@@ -43,8 +45,10 @@ export default class AdInstance implements IAdInstance {
    * after it's loaded. To give the best result, please start loading the
    * interstitial ad right before you want to show it.
    * @example
+   * ```
    * // after adInstance is created
    * adInstance.loadAsync();
+   * ```
    */
   loadAsync() {
     return Promise.resolve();
@@ -54,8 +58,10 @@ export default class AdInstance implements IAdInstance {
    * (Experimental) Show the loaded ad to player. The returned promise will be only resolved
    * when user closed the ad's overlay.
    * @example
+   * ```
    * // after adInstance is loaded
    * adInstance.showAsync();
+   * ```
    */
   showAsync() {
     return Promise.resolve();
