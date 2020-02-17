@@ -24,7 +24,7 @@ interface LeaderboardRawData {
 export default class Leaderboard {
   private $leaderboard: LeaderboardRawData;
   /**
-   * @hideconstructor
+   * @hidden
    */
   constructor(id: number, name: string, contextId: string | null) {
     this.$leaderboard = {

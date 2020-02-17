@@ -19,7 +19,7 @@ interface IAdInstance {
 export default class AdInstance implements IAdInstance {
   protected $ad: AdRawData;
   /**
-   * @hideconstructor
+   * @hidden
    */
   constructor(payload: AdInstanceRawData) {
     this.$ad = {
@@ -69,6 +69,9 @@ export default class AdInstance implements IAdInstance {
 }
 
 export class InterstitialAdInstance extends AdInstance {
+  /**
+   * @hidden
+   */
   constructor(payload: AdInstanceRawData) {
     super(payload);
     this.$ad.type = AdType.AD_TYPE_INTERSTITIAL;
@@ -96,6 +99,9 @@ export class InterstitialAdInstance extends AdInstance {
 }
 
 export class RewardedVideoAdInstance extends AdInstance {
+  /**
+   * @hidden
+   */
   constructor(payload: AdInstanceRawData) {
     super(payload);
     this.$ad.type = AdType.AD_TYPE_REWARDED_VIDEO;

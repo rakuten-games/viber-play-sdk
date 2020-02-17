@@ -7,7 +7,7 @@ export default class Player {
   protected $player: PlayerRawData;
 
   /**
-   * @hideconstructor
+   * @hidden
    */
   constructor(payload: PlayerRawData) {
     this.$player = {

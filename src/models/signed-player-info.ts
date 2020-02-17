@@ -11,7 +11,7 @@ export default class SignedPlayerInfo {
   private signature: string;
 
   /**
-   * @hideconstructor
+   * @hidden
    */
   constructor(id: string, signature: string) {
     this.id = id;
