@@ -1,10 +1,12 @@
 {
   "inputFiles": ["./src"],
+  "exclude": ["./src/utils/*.ts"],
   "mode": "modules",
   "theme": "docusaurus",
   "out": "docs",
   "readme": "none",
   "excludePrivate": true,
   "excludeProtected": true,
-  "namedAnchors": true
+  "namedAnchors": true,
+  "hideBreadcrumbs": true
 }
