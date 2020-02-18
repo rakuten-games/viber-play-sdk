@@ -23,7 +23,6 @@ import {
   SetLoadingProgressResponse,
   UpdateResponse,
   SetSessionDataResponse,
-  SubscribePlatformBotResponse,
   GetInterstitialAdResponse
 } from '../types/bridge';
 
@@ -47,16 +46,16 @@ export const player = _player
 export const payments = _payments
 
 /**
- * Flag to prevent double execution of initialization.
+ * To prevent dupe initialization.
  * @hidden
  */
 let isInitialized = false;
 
 /**
- * Initialize the SDK for the game. In the background, SDK will try to
- * setup environment and retrieve data for later use in the game.
- * We recommend calling this API in the game ASAP to shorten the loading wait.
- * @param options Extra options to alter the runtime behavior of the SDK.
+ * Initialize the SDK for the game.
+ * In the background, SDK will try to setup environment and retrieve data for later use in the game.
+ * We recommend calling this API in the game ASAP to shorten the total loading wait time for players.
+ * @param options - Extra options to alter the runtime behavior of the SDK.
  */
 export function initializeAsync (options: InitializationOptions = {}): Promise<void> {
   if (isInitialized) return Promise.resolve();
@@ -84,12 +83,13 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
 }
 
 /**
- * Updates the load progress of the game. The value will be shown at the
- * loading screen.
- * @param percentage Represents percentage of loading progress. It should
- * be between 0 and 100.
+ * Updates the load progress of the game.
+ * The value will be shown at the loading screen.
+ * @param percentage Represents percentage of loading progress. It should be between 0 and 100.
  * @example
- * ViberPlay.setLoadingProgress(50); // The game is halfway loaded
+ * ```
+ * ViberPlay.setLoadingProgress(50) // The game is halfway loaded
+ * ```
  */
 export function setLoadingProgress (percentage: number = 0): void {
   conn.request<SetLoadingProgressResponse>('sgSetLoadingProgress', {
@@ -98,30 +98,29 @@ export function setLoadingProgress (percentage: number = 0): void {
 }
 
 /**
- * Starts the game. Calling this method will turn off the loading screen as
- * soon as these requirements are met:
+ * Starts the game. Calling this method will turn off the loading screen as soon as these requirements are met:
  * - ViberPlay.setLoadingProgress() is called with a number > 99
  * - ViberPlay.initializeAsync() is called and resolved
  * @example
- * ViberPlay.startGameAsync().then(function() {
- *   myAwesomeGame.start();
- * });
+ * ```
+ * ViberPlay.startGameAsync().then(() => {
+ *   myAwesomeGame.start()
+ * })
+ * ```
  */
 export function startGameAsync (): Promise<void> {
   return conn.request<StartGameResponse>('sgStartGame')
 }
 
 /**
- * Post an update to the corresponding context. If the game is played in
- * a messenger chat thread, this will post a message into the thread with
- * the specified image and text message. And when people launch the game
- * from this message, those game sessions will be able to read the specified
- * data through `ViberPlay.getEntryPointData()`.
- * @param payload An object describes the update message.
+ * Post an update to the corresponding context. 
+ * If the game is played in a messenger chat thread, this will post a message into the thread with the specified image and text message and custom data payload.
+ * @param payload An object describes the update message
  * @example
+ * ```
  * ViberPlay.updateAsync({
  *   action: 'CUSTOM',
- *   cta: 'Call to action text',
+ *   cta: 'Play',
  *   image: base64Picture,
  *   text: {
  *     default: 'Some text',
@@ -133,10 +132,11 @@ export function startGameAsync (): Promise<void> {
  *   data: { someData: '...' },
  *   strategy: 'IMMEDIATE',
  *   notification: 'NO_PUSH',
- * }).then(function() {
+ * }).then(() => {
  *   // After the update is posted, closes the game.
- *   ViberPlay.quit();
- * });
+ *   ViberPlay.quit()
+ * })
+ * ```
  */
 export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
   if (!state.context.id) {
@@ -189,20 +189,24 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
 }
 
 /**
- * Share message to selected users from player's contact.
+ * Share messages to the player's friends.
+ * This will display an interactive UI for the user to choose who to share.
+ * And additional parameters can be used to fine-tune the experience.
  * @param payload An object describes the message to be shared.
  * @example
+ * ```
  * ViberPlay.shareAsync({
  *   intent: 'REQUEST',
  *   image: base64Picture,
  *   text: 'Some text',
- *   filters: 'NEW_CONTEXT_ONLY',
+ *   filters: ['NEW_CONTEXT_ONLY'],
  *   minShare: 3,
  *   data: { someData: '...' },
  *   description: 'Win 100 gems for every friend who joins from your invite.',
- * }).then(function(shareResult) {
- *   console.log(shareResult); // {sharedCount: 3}
- * });
+ * }).then(shareResult => {
+ *   console.log(shareResult) // {sharedCount: 3}
+ * })
+ * ```
  */
 export function shareAsync (payload: SharePayload): Promise<ShareResult> {
   let description = '';
@@ -231,56 +235,63 @@ export function shareAsync (payload: SharePayload): Promise<ShareResult> {
 
 /**
  * Close the game webview.
- * [TODO] Currently not working in Viber.`
  */
 export function quit (): void {
   conn.request<QuitResponse>('sgQuit');
 }
 
 /**
- * Locale code will be based on `navigator.language` in the WebView, format
- * will be align with [BCP47](http://www.ietf.org/rfc/bcp/bcp47.txt).
+ * Get the current player's locale information. 
+ * Locale code will be based on `navigator.language` in the WebView, format will be align with [BCP47](http://www.ietf.org/rfc/bcp/bcp47.txt).
  * @example
- * const ruLangs = /^(ru|ab|hy|av|az|ba|be|ce|cv|ka|kk|ky|tg|tk|tt|uk|uz)/i;
- *
- * if (ruLangs.test(ViberPlay.getLocale())) {
- *   loadRuL10n();
- * }
+ * ```
+ * ViberPlay.getLocale() // 'ru-RU'
+ * ```
  */
 export function getLocale (): string {
   return navigator.language;
 }
 
 /**
- * Get the entry point data bound to this message.
+ * Get the entry point data bound to the entry point.
+ * @example
+ * ```
+ * // Should be called after ViberPlay.initializeAsync() resolves
+ * ViberPlay.getEntryPointData() // { from: 'prequel-game' }
+ * ```
  */
 export function getEntryPointData (): EntryPointData {
   return state.entryPointData || {}
 }
 
 /**
- * [TODO]
+ * Set a callback which will be invoked when game is paused due to native changes.
+ * Not supported.
  */
 export function onPause (): void {
   return
 }
 
 /**
- * (Experimental) Update data associated with the current game session.
- *
- * Session data is persistent only within the current game session and is
- * used to populate payload of game_play webhook events.
- *
- * If called multiple times during a session, data specified in subsequent calls will be merged
- * with existing data at the top level.
- *
+ * Update data associated with the current game session.
+ * Session data is persistent only within the current game session, and is used to populate payload of game_play webhook events.
+ * If called multiple times during a session, data specified in subsequent calls will be merged with existing data at the top level.
+ * @category Experimental
  * @param sessionData - an arbitrary data object
  * @example
- *
+ *```
  * ViberPlay.setSessionData({
  *   "high-score": 1000,
  *   "current-stage": "stage1",
  * })
+ * 
+ * ViberPlay.setSessionData({
+ *   "current-stage": "stage2",
+ * })
+ * 
+ * ViberPlay.quit()
+ * // {"high-score":1000,"current-stage":"stage2"} will be sent with the game_play webhook event
+ * ```
  */
 export function setSessionData (sessionData: object): void {
   let serializedString;
@@ -319,10 +330,12 @@ export function setSessionData (sessionData: object): void {
  * Get a leaderboard by its name
  * @param name - The name of the leaderboard
  * @example
+ * ```
  * ViberPlay.getLeaderboardAsync('some_leaderboard')
  *   .then(leaderboard => {
- *     console.log(leaderboard.getName()); // 'some_leaderboard'
- *   });
+ *     console.log(leaderboard.getName()) // 'some_leaderboard'
+ *   })
+ * ```
  */
 export function getLeaderboardAsync (name: string): Promise<Leaderboard> {
   return Promise.resolve()
@@ -358,23 +371,15 @@ export function getLeaderboardAsync (name: string): Promise<Leaderboard> {
 }
 
 /**
- * (Experimental) Subscribe the platform bot.
+ * Get AdInstance of an interstitial ad placement. Not supported.
+ * @category Experimental
  * @example
- * ViberPlay.subscribePlatformBotAsync();
- */
-export function subscribePlatformBotAsync (): Promise<void> {
-  return conn
-    .request<SubscribePlatformBotResponse>('sgSubscribePlatformBot')
-    .then(() => {})
-}
-
-/**
- * (Experimental) Get AdInstance of an interstitial ad placement
- * @example
+ * ```
  * ViberPlay.getInterstitialAdAsync('DUMMY_PLACEMENT_ID')
- *   .then((adInstance) => {
+ *   .then(adInstance => {
  *     // do something
- *   });
+ *   })
+ * ```
  */
 export function getInterstitialAdAsync (
   placementId: string
@@ -387,12 +392,15 @@ export function getInterstitialAdAsync (
 }
 
 /**
- * (Experimental) Get AdInstance of a rewarded video ad placement
+ * Get AdInstance of a rewarded video ad placement. Not supported
+ * @category Experimental
  * @example
+ * ```
  * ViberPlay.getRewardedVideoAdAsync('DUMMY_PLACEMENT_ID')
- *   .then((adInstance) => {
+ *   .then(adInstance => {
  *     // do something
- *   });
+ *   })
+ * ```
  */
 export function getRewardedVideoAdAsync (
   placementId: string
@@ -405,15 +413,18 @@ export function getRewardedVideoAdAsync (
 }
 
 /**
- * (Experimental) Request to switch to another game
+ * Request to switch to another game
+ * @category Experimental
  * @param gameId - the game ID of the target game
- * @param data - TODO the entry point data for the target game
+ * @param data - the entry point data for the target game, not supported
  * @example
- * ViberPlay.switchGameAsync('arrQ8wIzzfBHsR0Cerroqns8ledhtug5', {
+ * ```
+ * ViberPlay.switchGameAsync('SOMEGAMEID', {
  *   from: 'prequel-game'
- * }).catch((e) => {
+ * }).catch(e => {
  *   // handling cases when failed to switch to the target game
- * });
+ * })
+ * ```
  */
 export function switchGameAsync (gameId: string, data?: object): Promise<void> {
   /* eslint-disable prefer-promise-reject-errors */
@@ -445,21 +456,31 @@ export function switchGameAsync (gameId: string, data?: object): Promise<void> {
 }
 
 /**
- * (Experimental) Get traffic source related url params set
- * on the game's wrapper.
+ * Get traffic source info.
+ * This unveals the the URL parameters attached to the game's URL.
+ * @category Experimental
  * @example
+ * ```
  * // Should be called after ViberPlay.initializeAsync() resolves
- * const trafficSource = ViberPlay.getTrafficSource();
- * console.log(trafficSource['utm_source']); // 'viber'
+ * const trafficSource = ViberPlay.getTrafficSource()
+ * console.log(trafficSource['r_entrypoint']) // 'share'
+ * ```
  */
 export function getTrafficSource (): TrafficSource {
   return state.trafficSource
 }
 
 /**
- * (Experimental) Get information about where the game is started.
+ * Get information about where the game is started.
+ * Details can be found at: <https://docs.viberplay.io/guide-analytics/index.html#how-to-get-information-about-entry-point>
+ * @category Experimental
  * @example
- * ViberPlay.getEntryPointAsync().then(console.log); // 'game_switch'
+ * ```
+ * // Should be called after ViberPlay.initializeAsync() resolves
+ * ViberPlay.getEntryPointAsync().then(entryPoint => {
+ *   console.log(entryPoint) // 'game_switch'
+ * })
+ * ```
  */
 export function getEntryPointAsync (): Promise<string> {
   return Promise.resolve(getTrafficSource()).then(

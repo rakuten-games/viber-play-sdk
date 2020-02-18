@@ -1,13 +1,13 @@
-import { PlayerRawData, IPlayer } from '../types/player';
+import { PlayerRawData } from '../types/player';
 
 /**
  * Representing a player.
  */
-export default class Player implements IPlayer {
+export default class Player {
   protected $player: PlayerRawData;
 
   /**
-   * @hideconstructor
+   * @hidden
    */
   constructor(payload: PlayerRawData) {
     this.$player = {
@@ -22,9 +22,11 @@ export default class Player implements IPlayer {
    * Get the player's ID.
    * @returns Player ID
    * @example
+   * ```
    * player.getID(); // '5458282176661711'
+   * ```
    */
-  getID() {
+  getID(): string {
     return this.$player.id;
   }
 
@@ -32,9 +34,11 @@ export default class Player implements IPlayer {
    * Get the player's name.
    * @returns Player name
    * @example
+   * ```
    * player.getName(); // 'Alpha Omega'
+   * ```
    */
-  getName() {
+  getName(): string {
     // in case of null name
     // ref: https://rakuten-games.slack.com/archives/D7VUJ9DTL/p1544506295001500
     return this.$player.name || '';
@@ -44,17 +48,21 @@ export default class Player implements IPlayer {
    * Get the player's photo.
    * @returns URL of player photo
    * @example
+   * ```
    * player.getPhoto(); // A CORS supported URL to user's photo
+   * ```
    */
-  getPhoto() {
+  getPhoto(): string {
     return this.$player.photo;
   }
 
   /**
-   * (Experimental) Get the player's playing status.
-   * @returns A boolean value showing if the player has played the game before
+   * Get info about if the player has played the game.
+   * @returns True if the player has played the game
    * @example
+   * ```
    * player.hasPlayed();
+   * ```
    */
   hasPlayed(): boolean {
     if (this.$player.hasPlayed === undefined) {

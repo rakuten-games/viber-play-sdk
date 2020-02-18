@@ -9,39 +9,52 @@ import {
 } from '../types/bridge';
 
 /**
- * (Experimental)
+ * Set a callback when payment features are ready.
+ * On unsupported device, the callback will never be invoked.
+ * @category Experimental
  * @example
+ * ```
  * ViberPlay.payments.onReady(function () {
  *   console.log('Ready to receive payments requests')
  * })
+ * ```
  */
 export function onReady (callback: () => any): void {
   conn.request('sgPaymentsOnReady').then(() => callback());
 }
 
 /**
- * (Experimental)
+ * Get the catalog for info on available products. 
+ * There's chance in getting an empty list even though the device supports In-App Purchase.
+ * (e.g. Google Play doesn't support purchase in the user's region.)
+ * @category Experimental
  * @returns Array of products with pricing information
  * @example
+ * ```
  * ViberPlay.payments.getCatalogAsync().then((catalog) => {
  *   console.log(catalog)
  * })
+ * ```
  */
 export function getCatalogAsync (): Promise<Product[]> {
   return conn.request<PaymentsGetCatalogResponse>('sgPaymentsGetCatalog')
 }
 
 /**
- * (Experimental)
+ * Request an purchase on the specified product.
+ * This will invoke the native In-App Purchase screen and return the result.
+ * @category Experimental
  * @param config - An object containing purchase configuration information
  * @returns Purchase information
  * @example
+ * ```
  * ViberPlay.payments.purchaseAsync({
  *   productID: 'someProduct',
  *   developerPayload: 'somePayload'
  * }).then((purchase) => {
  *   console.log(purchase)
  * })
+ * ```
  */
 export function purchaseAsync (config: PurchaseConfig): Promise<Purchase> {
   if (typeof config !== 'object') {
@@ -69,12 +82,16 @@ export function purchaseAsync (config: PurchaseConfig): Promise<Purchase> {
 }
 
 /**
- * (Experimental)
+ * Get unconsumed purchases.
+ * Developers should validate the purchase signatures on server side before provisioning corresponding game item.
+ * @category Experimental
  * @returns purchases
  * @example
+ * ```
  * ViberPlay.payments.getPurchasesAsync().then((purchases) => {
- *   console.log(purchases);
+ *   console.log(purchases)
  * })
+ * ```
  */
 export function getPurchasesAsync (): Promise<Purchase[]> {
   return conn.request<PaymentsGetPurchasesResponse>(
@@ -83,13 +100,17 @@ export function getPurchasesAsync (): Promise<Purchase[]> {
 }
 
 /**
- * (Experimental)
+ * Consume a purchase.
+ * This will update the status of the corrsponding purchase, and allow the player to purchase the same product for another time.
+ * @category Experimental
  * @param purchaseToken - A string of purchase token used for consumption
  * @returns
  * @example
+ * ```
  * ViberPlay.payments.consumePurchaseAsync('somePurchaseToken').then(() => {
- *   console.log('Purchase is consumed');
+ *   console.log('Purchase is consumed')
  * })
+ * ```
  */
 export function consumePurchaseAsync (purchaseToken: string): Promise<void> {
   if (typeof purchaseToken !== 'string') {

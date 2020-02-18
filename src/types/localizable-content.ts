@@ -1,13 +1,9 @@
 /**
- * LocalizableContent
- * To provide localized versions of your own call to action, pass an object
- * with the default cta as the value of 'default' and another object mapping
- * locale keys to translations as the value of 'localizations'.
- * @typedef {Object} LocalizableContent
- * @property {string} default - The text to be used if no suitable text is
- * found.
+ * Enable passing localizable content to API calls.
+ * SDK will use the current player's locale for locale matching.
  */
 export interface LocalizableContent {
+  /** Text will be used if not finding matching locale */
   default: string,
   [locale: string]: string,
 };
