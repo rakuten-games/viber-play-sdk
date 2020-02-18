@@ -192,79 +192,60 @@ ViberPlay.player.subscribeBotAsync()
   .catch((err) => console.error(err));
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  ViberPlay.subscribePlatformBotAsync();
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  ViberPlay.setSessionData({
-    "test-data-1": "test1",
-    "test-data-2": "test2"
-  });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.setSessionData({
+  "test-data-1": "test1",
+  "test-data-2": "test2"
+});
 </script>
 </div>
 
 <div class="section">
 <h2>ad viber (experimental)</h2>
 <script class="example-code" type="text/plain">
-  if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-    window.preloadedAd = null;
+window.preloadedAd = null;
 
-  ViberPlay.getInterstitialAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(interstitialAd) {
-      preloadedAd = interstitialAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('interstitialAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('interstitialAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.getInterstitialAdAsync(
+  'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+)
+  .then(function(interstitialAd) {
+    preloadedAd = interstitialAd;
+    return preloadedAd.loadAsync();
+  })
+  .then(function() {
+    console.log('interstitialAd preloaded');
+  })
+  .then(function() {
+    preloadedAd.showAsync();
+  })
+  .then(function() {
+    console.log('interstitialAd shown');
+  })
+  .catch(function(err){
+    console.error(err);
+  });
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
+window.preloadedAd = null;
 
-  ViberPlay.getRewardedVideoAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(rewardedVideoAd) {
-      preloadedAd = rewardedVideoAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('rewardedVideoAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('rewardedVideoAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.getRewardedVideoAdAsync(
+  'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+)
+  .then(function(rewardedVideoAd) {
+    preloadedAd = rewardedVideoAd;
+    return preloadedAd.loadAsync();
+  })
+  .then(function() {
+    console.log('rewardedVideoAd preloaded');
+  })
+  .then(function() {
+    preloadedAd.showAsync();
+  })
+  .then(function() {
+    console.log('rewardedVideoAd shown');
+  })
+  .catch(function(err){
+    console.error(err);
+  });
 </script>
 </div>
 
@@ -413,7 +394,7 @@ console.log(ViberPlay.context.isSizeBetween(null, null));
 <script class="example-code" type="text/plain">
 ViberPlay.context.getPlayersAsync()
   .then((players) => console.log(JSON.stringify(players.map(player =>
-    ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()/*, hasPlayed: player.hasPlayed()*/})))));
 </script>
 </div>
 
@@ -741,11 +722,7 @@ console.log(ViberPlay.getLocale());
 ViberPlay.quit();
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  console.log(ViberPlay.getTrafficSource());
-} else {
-  console.log('This feature is not available outside Viber');
-}
+console.log(ViberPlay.getTrafficSource());
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.getEntryPointAsync().then(console.log);
