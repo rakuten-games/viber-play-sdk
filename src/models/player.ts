@@ -57,8 +57,8 @@ export default class Player {
   }
 
   /**
-   * (Experimental) Get the player's playing status.
-   * @returns A boolean value showing if the player has played the game before
+   * Get info about if the player has played the game.
+   * @returns True if the player has played the game
    * @example
    * ```
    * player.hasPlayed();

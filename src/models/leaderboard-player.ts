@@ -6,7 +6,7 @@ import Player from './player';
  */
 export default class LeaderboardPlayer extends Player {
   /**
-   * Get the player's played status.
+   * Get info about if the player has played the game.
    * @returns Always true
    */
   hasPlayed(): true {
