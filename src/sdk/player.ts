@@ -123,6 +123,18 @@ export function getPhoto (): string | null {
 }
 
 /**
+ * Get the player's played status.
+ * @returns Always true
+ * @example
+ * ```
+ * ViberPlay.player.hasPlayed() // true
+ * ```
+ */
+export function hasPlayed (): boolean {
+  return true;
+}
+
+/**
  * Get a [[SignedPlayerInfo]] object with custom payload and a signature.
  * This can be useful for game server to validate if the user's identity and its payload is really sent from the game or tampered.
  * Please read more on [[SignedPlayerInfo]] for more information.
