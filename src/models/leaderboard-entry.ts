@@ -1,16 +1,5 @@
-// @flow
-
 import LeaderboardPlayer from './leaderboard-player';
-import type { LeaderboardPlayerPayload } from './leaderboard-player';
-
-export type LeaderboardEntryPayload = {
-  score: number,
-  formattedScore: string,
-  timestamp: number,
-  rank: number,
-  extraData: ?string,
-  player: LeaderboardPlayerPayload,
-}
+import { LeaderboardEntryRawData } from '../types/leaderboard';
 
 /**
  * Represent a leaderboard entry. An entry is created when a player submit score
@@ -18,37 +7,41 @@ export type LeaderboardEntryPayload = {
  * only updated when a better score is submit by this player.
  */
 export default class LeaderboardEntry {
+  private $leaderboardEntry: LeaderboardEntryRawData;
+
   /**
-   * @hideconstructor
+   * @hidden
    */
-  constructor(payload: LeaderboardEntryPayload) {
+  constructor(payload: LeaderboardEntryRawData) {
     const {
       score,
       formattedScore,
       timestamp,
       rank,
       extraData,
-      player,
+      player
     } = payload;
 
-    this.$leaderboardEntry = {};
-
-    this.$leaderboardEntry.score = score;
-    this.$leaderboardEntry.formattedScore = formattedScore;
-    this.$leaderboardEntry.timestamp = timestamp;
-    this.$leaderboardEntry.rank = rank;
-    this.$leaderboardEntry.extraData = extraData;
-    this.$leaderboardEntry.player = new LeaderboardPlayer(player);
+    this.$leaderboardEntry = {
+      score,
+      formattedScore,
+      timestamp,
+      rank,
+      extraData,
+      player,
+    };
   }
 
   /**
    * Get the score of this entry.
    * @returns Score
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getScore(); // 100
-   *   });
+   *     entry.getScore() // 100
+   *   })
+   * ```
    */
   getScore(): number {
     return this.$leaderboardEntry.score;
@@ -59,10 +52,12 @@ export default class LeaderboardEntry {
    * leaderboard's setting.
    * @returns Formatted score
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getFormattedScore(); // '100pt'
-   *   });
+   *     entry.getFormattedScore() // '100pt'
+   *   })
+   * ```
    */
   getFormattedScore(): string {
     return this.$leaderboardEntry.formattedScore;
@@ -73,10 +68,12 @@ export default class LeaderboardEntry {
    * time.
    * @returns Timestamp of last update or creation
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getTimestamp(); // 1527810893
-   *   });
+   *     entry.getTimestamp() // 1527810893
+   *   })
+   * ```
    */
   getTimestamp(): number {
     return this.$leaderboardEntry.timestamp;
@@ -87,10 +84,12 @@ export default class LeaderboardEntry {
    * and the leaderboard's sort setting.
    * @returns Rank
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getRank(); // 2
-   *   });
+   *     entry.getRank() // 2
+   *   })
+   * ```
    */
   getRank(): number {
     return this.$leaderboardEntry.rank;
@@ -101,12 +100,14 @@ export default class LeaderboardEntry {
    * extra data exists.
    * @returns Extra data appended with last update or creation
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getExtraData(); // 'Hello world'
-   *   });
+   *     entry.getExtraData() // 'Hello world'
+   *   })
+   * ```
    */
-  getExtraData(): ?string {
+  getExtraData(): string | null {
     return this.$leaderboardEntry.extraData;
   }
 
@@ -114,12 +115,14 @@ export default class LeaderboardEntry {
    * Get the player's info of this entry.
    * @returns Player's info
    * @example
+   * ```
    * leaderboard.setScoreAsync(100, 'Hello world')
    *   .then((entry) => {
-   *     entry.getPlayer().getID(); // '5458282176661711'
-   *   });
+   *     entry.getPlayer().getID() // '5458282176661711'
+   *   })
+   * ```
    */
   getPlayer(): LeaderboardPlayer {
-    return this.$leaderboardEntry.player;
+    return new LeaderboardPlayer(this.$leaderboardEntry.player);
   }
 }

@@ -1,5 +1,6 @@
 build
 docs
+website
 src
 examples
 .babelrc
@@ -10,4 +11,6 @@ key.pem
 cert.pem
 get-webpack-config.js
 webpack.config.js
+tsconfig.json
+typedoc.json
 yarn.lock

@@ -1,21 +1,35 @@
-import { send, addListener } from '../mirror/post-message';
+import { send, addListener, ISource, ReceivedResponse, ReceivedRequest } from './post-message';
 
+/** @hidden */
 const IS_IOS = /iPhone/.test(navigator.userAgent);
 
-let instance;
+/** @hidden */
+interface Request {
+  reject: (error: Error) => any;
+  resolve: (response: any) => any;
+}
 
-export default class Messenger {
+/** @hidden */
+export class Messenger {
+  requests: {
+    [id: string]: Request;
+  };
+
+  target: Promise<ISource>;
+
+  width?: number;
+
   constructor() {
     this.requests = {};
 
     this.target = Promise.resolve({
-      postMessage: window.parent.postMessage.bind(window.parent)
+      postMessage: window.parent.postMessage.bind(window.parent),
     });
 
     addListener(
       window,
-      request => {
-        const { command } = request.data;
+      (receivedRequest: ReceivedRequest) => {
+        const { command } = receivedRequest.data;
 
         if (command === 'resize') {
           try {
@@ -33,7 +47,11 @@ export default class Messenger {
         }
         // currently, the game-wrapper does not make any requests to the game
       },
-      ({ id, error, response }) => {
+      ({
+        id,
+        error,
+        response
+      }: ReceivedResponse) => {
         if (error) {
           this.requests[id].reject(error);
         } else {
@@ -44,7 +62,7 @@ export default class Messenger {
     );
   }
 
-  request(command, opts) {
+  request<T>(command: string, opts?: object) {
     return new Promise((resolve, reject) => {
       this.target.then(source => {
         const id = send(source, {
@@ -54,14 +72,11 @@ export default class Messenger {
 
         this.requests[id] = { resolve, reject };
       });
-    });
+    }) as Promise<T>;
   }
 }
 
-export const getMessenger = () => {
-  if (!instance) {
-    instance = new Messenger();
-  }
+/** @hidden */
+const instance = new Messenger();
 
-  return instance;
-};
+export default instance;

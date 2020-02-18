@@ -1,19 +1,22 @@
-declare interface ViberPlay {}
-declare var __webpack_public_path__: string;
+import conn from './utils/conn';
+import state from './utils/state';
 
-if (process.env.BABEL_ENV !== 'node') {
-  if (document.currentScript) {
-    const src: string | null = document.currentScript.getAttribute('src');
-    if (src) {
-      __webpack_public_path__ = src.replace(/bundle.js$/i, '');
-    }
-  }
-}
+import {
+  ReadyResponse,
+} from './types/bridge';
 
-module.exports = require('./sdk').default;
+import * as _ViberPlay from './sdk';
 
-const globalObj: any = global;
+/**
+ * `ViberPlay` stands for the namespace containing all APIs of the Viber Play SDK.
+ */
+const ViberPlay = _ViberPlay
 
-if (!globalObj.ViberPlay) {
-  globalObj.ViberPlay = module.exports;
-}
+conn
+  .request<ReadyResponse>('sgReady')
+  .then(({ gameId }) => {
+    state.gameId = gameId;
+  })
+  .catch(() => {});
+
+export default ViberPlay;
