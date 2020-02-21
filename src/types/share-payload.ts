@@ -39,7 +39,7 @@ export interface SharePayload {
   description?: string | LocalizableContent,
   /**
    * Optional property to switch share UI mode.
-   * Default: Serial contact card with share and skip button.
+   * DEFAULT: Serial contact card with share and skip button.
    * MULTIPLE: Selectable contact list.
   */
   ui?: 'DEFAULT' | 'MULTIPLE',
