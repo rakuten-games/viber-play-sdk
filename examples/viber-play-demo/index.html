@@ -654,6 +654,16 @@ ViberPlay.shareAsync({
   }
 }).then((res) => console.log(res));
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.shareAsync({
+  intent: 'REQUEST',
+  image: createImg(1200, 1200),
+  minShare: 3,
+  text: 'This is share async test message',
+  data: {foo: 'bar'},
+  ui: 'MULTIPLE',
+}).then((res) => console.log(res));
+</script>
 </div>
 
 <div class="section">

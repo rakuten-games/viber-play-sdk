@@ -203,9 +203,10 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
  *   minShare: 3,
  *   data: { someData: '...' },
  *   description: 'Win 100 gems for every friend who joins from your invite.',
- * }).then(shareResult => {
- *   console.log(shareResult) // {sharedCount: 3}
- * })
+ *   ui: 'MULTIPLE',
+ * }).then(function(shareResult) {
+ *   console.log(shareResult); // {sharedCount: 3}
+ * });
  * ```
  */
 export function shareAsync (payload: SharePayload): Promise<ShareResult> {

@@ -37,4 +37,10 @@ export interface SharePayload {
    * This can be used to describe the incentive a user can get from sharing.
    */
   description?: string | LocalizableContent,
+  /**
+   * Optional property to switch share UI mode.
+   * Default: Serial contact card with share and skip button.
+   * MULTIPLE: Selectable contact list.
+  */
+  ui?: 'DEFAULT' | 'MULTIPLE',
 };
