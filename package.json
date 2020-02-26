@@ -12,7 +12,7 @@
     "build": "webpack -p",
     "build:node": "BABEL_ENV=node npm run build",
     "document": "yarn run document:md && yarn run document:website",
-    "document:md": "typedoc",
+    "document:md": "rm -rf docs && typedoc",
     "document:website": "rsync -avz docs/ website/docs/",
     "deploy": "./scripts/deploy.sh",
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
