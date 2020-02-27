@@ -37,7 +37,7 @@ export const context = _context
 
 /**
  * `ViberPlay.player` namespace contains player related APIs
- */
+ */   
 export const player = _player
 
 /**
@@ -55,6 +55,12 @@ let isInitialized = false;
  * Initialize the SDK for the game.
  * In the background, SDK will try to setup environment and retrieve data for later use in the game.
  * We recommend calling this API in the game ASAP to shorten the total loading wait time for players.
+ * @example
+ * ```
+ * ViberPlay.initializeAsync().then(() => {
+ *   // Initialize player session with game backend
+ * })
+ * ```
  * @param options - Extra options to alter the runtime behavior of the SDK.
  */
 export function initializeAsync (options: InitializationOptions = {}): Promise<void> {
@@ -85,6 +91,7 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
 /**
  * Updates the load progress of the game.
  * The value will be shown at the loading screen.
+
  * @param percentage Represents percentage of loading progress. It should be between 0 and 100.
  * @example
  * ```
