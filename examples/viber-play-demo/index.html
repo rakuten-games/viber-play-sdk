@@ -33,76 +33,14 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 <body>
 <div class="wrapper">
+<div class="section">
+<h2>player info</h2>
+<p>id: <code id="player-id"></code></p>
+<p>name: <code id="player-name"></code></p>
+</div>
+
 <div class="toc section" id="toc">
 <h2>table of content</h2>
-</div>
-
-<div class="section">
-<h2>ua string</h2>
-<script class="example-code" type="text/plain">
-console.log(navigator.userAgent);
-</script>
-</div>
-
-<div class="section">
-<h2>inline video</h2>
-<div id="inline-video-placeholder"></div>
-<script class="example-code" type="text/plain">
-document.querySelector('#inline-video-placeholder').innerHTML =
-'<video playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4" style="width:280px;height:210px;"></video>';
-</script>
-<script class="example-code" type="text/plain">
-document.querySelector('#inline-video-placeholder').innerHTML =
-'<video autoplay muted loop playsinline src="https://rawgit.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4" style="width:280px;height:210px;"></video>';
-</script>
-<script class="example-code" type="text/plain">
-// get ref to video element
-window.vid = document.querySelector('#inline-video-placeholder > video');
-</script>
-<script class="example-code" type="text/plain">
-vid.play();
-</script>
-<script class="example-code" type="text/plain">
-vid.pause();
-</script>
-<script class="example-code" type="text/plain">
-// clean up video element
-document.querySelector('#inline-video-placeholder').innerHTML = '';
-</script>
-</div>
-
-<div class="section">
-<h2>screen size</h2>
-<script class="example-code" type="text/plain">
-console.log(window.innerWidth, window.innerHeight);
-</script>
-</div>
-
-<div class="section">
-<h2>hijack console</h2>
-<script class="example-code" type="text/plain">
-window.test1();
-window.test2();
-console.log('test3');
-</script>
-<script class="example-code" type="text/plain">
-console.log('LOG');
-console.log('1', '2', '3');
-
-console.log(NaN);
-console.log(Infinity);
-console.log(-Infinity);
-console.log(null);
-console.log(undefined);
-console.log(window);
-
-console.info('INFO');
-
-console.warn('WARN');
-
-console.error({code: 'ERROR'});
-console.error(new TypeError('ERROR'));
-</script>
 </div>
 
 <div class="section">
@@ -192,79 +130,60 @@ ViberPlay.player.subscribeBotAsync()
   .catch((err) => console.error(err));
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  ViberPlay.subscribePlatformBotAsync();
-} else {
-  console.log('This feature is not available outside Viber');
-}
-</script>
-<script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  ViberPlay.setSessionData({
-    "test-data-1": "test1",
-    "test-data-2": "test2"
-  });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.setSessionData({
+  "test-data-1": "test1",
+  "test-data-2": "test2"
+});
 </script>
 </div>
 
 <div class="section">
 <h2>ad viber (experimental)</h2>
 <script class="example-code" type="text/plain">
-  if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-    window.preloadedAd = null;
+window.preloadedAd = null;
 
-  ViberPlay.getInterstitialAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(interstitialAd) {
-      preloadedAd = interstitialAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('interstitialAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('interstitialAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.getInterstitialAdAsync(
+  'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+)
+  .then(function(interstitialAd) {
+    preloadedAd = interstitialAd;
+    return preloadedAd.loadAsync();
+  })
+  .then(function() {
+    console.log('interstitialAd preloaded');
+  })
+  .then(function() {
+    preloadedAd.showAsync();
+  })
+  .then(function() {
+    console.log('interstitialAd shown');
+  })
+  .catch(function(err){
+    console.error(err);
+  });
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  window.preloadedAd = null;
+window.preloadedAd = null;
 
-  ViberPlay.getRewardedVideoAdAsync(
-    'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
-  )
-    .then(function(rewardedVideoAd) {
-      preloadedAd = rewardedVideoAd;
-      return preloadedAd.loadAsync();
-    })
-    .then(function() {
-      console.log('rewardedVideoAd preloaded');
-    })
-    .then(function() {
-      preloadedAd.showAsync();
-    })
-    .then(function() {
-      console.log('rewardedVideoAd shown');
-    })
-    .catch(function(err){
-      console.error(err);
-    });
-} else {
-  console.log('This feature is not available outside Viber');
-}
+ViberPlay.getRewardedVideoAdAsync(
+  'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+)
+  .then(function(rewardedVideoAd) {
+    preloadedAd = rewardedVideoAd;
+    return preloadedAd.loadAsync();
+  })
+  .then(function() {
+    console.log('rewardedVideoAd preloaded');
+  })
+  .then(function() {
+    preloadedAd.showAsync();
+  })
+  .then(function() {
+    console.log('rewardedVideoAd shown');
+  })
+  .catch(function(err){
+    console.error(err);
+  });
 </script>
 </div>
 
@@ -413,7 +332,7 @@ console.log(ViberPlay.context.isSizeBetween(null, null));
 <script class="example-code" type="text/plain">
 ViberPlay.context.getPlayersAsync()
   .then((players) => console.log(JSON.stringify(players.map(player =>
-    ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+    ({id: player.getID(), name: player.getName(), photo: player.getPhoto()/*, hasPlayed: player.hasPlayed()*/})))));
 </script>
 </div>
 
@@ -751,11 +670,7 @@ console.log(ViberPlay.getLocale());
 ViberPlay.quit();
 </script>
 <script class="example-code" type="text/plain">
-if (ViberPlay.getMessengerPlatform() === 'VIBER') {
-  console.log(ViberPlay.getTrafficSource());
-} else {
-  console.log('This feature is not available outside Viber');
-}
+console.log(ViberPlay.getTrafficSource());
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.getEntryPointAsync().then(console.log);
@@ -806,6 +721,47 @@ ViberPlay.switchGameAsync('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
   .catch((err) => console.error(err));
 </script>
 </div>
+
+<div class="section">
+  <h2>ua string</h2>
+  <script class="example-code" type="text/plain">
+  console.log(navigator.userAgent);
+  </script>
+  </div>
+  
+  <div class="section">
+  <h2>screen size</h2>
+  <script class="example-code" type="text/plain">
+  console.log(window.innerWidth, window.innerHeight);
+  </script>
+  </div>
+  
+  <div class="section">
+  <h2>hijack console</h2>
+  <script class="example-code" type="text/plain">
+  window.test1();
+  window.test2();
+  console.log('test3');
+  </script>
+  <script class="example-code" type="text/plain">
+  console.log('LOG');
+  console.log('1', '2', '3');
+  
+  console.log(NaN);
+  console.log(Infinity);
+  console.log(-Infinity);
+  console.log(null);
+  console.log(undefined);
+  console.log(window);
+  
+  console.info('INFO');
+  
+  console.warn('WARN');
+  
+  console.error({code: 'ERROR'});
+  console.error(new TypeError('ERROR'));
+  </script>
+  </div>
 
 <div class="section">
 <h2>sandbox</h2>
@@ -900,6 +856,9 @@ function testGameStart() {
         'clientId': ViberPlay.player.getID(),
       });
       ga('send', 'pageview');
+
+      document.querySelector('#player-id').textContent = ViberPlay.player.getID()
+      document.querySelector('#player-name').textContent = ViberPlay.player.getName()
     });
 }
 </script>

@@ -7,6 +7,5 @@
   "readme": "none",
   "excludePrivate": true,
   "excludeProtected": true,
-  "namedAnchors": true,
   "hideBreadcrumbs": true
 }

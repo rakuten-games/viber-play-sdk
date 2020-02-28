@@ -1,0 +1,12 @@
+[
+  "trigger",
+  ".",
+  {
+    "name": "document",
+    "expression": [
+      "anyof",
+      ["match", "src/**/*.ts", "wholename"]
+    ],
+    "command": ["yarn", "document"]
+  }
+]
