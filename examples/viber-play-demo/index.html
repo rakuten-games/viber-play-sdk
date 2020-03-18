@@ -621,6 +621,12 @@ ViberPlay.player.setDataAsync({ hp: hp })
   .then(() => console.log('hp is set to ' + hp));
 </script>
 <script class="example-code" type="text/plain">
+ViberPlay.player.setDataAsync({ hp: 1 })
+ViberPlay.player.setDataAsync({ map: 2 })
+ViberPlay.player.setDataAsync({ lv: 3 })
+ViberPlay.player.setDataAsync({ sound: 4 })
+</script>
+<script class="example-code" type="text/plain">
 ViberPlay.player.setDataAsync({ hp: null })
   .then(() => console.log('hp is set to ' + null));
 </script>
