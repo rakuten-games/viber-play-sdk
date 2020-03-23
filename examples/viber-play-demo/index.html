@@ -812,6 +812,32 @@ ViberPlay.switchGameAsync('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 <script class="example-code" type="text/plain"></script>
 </div>
 
+<div class="section">
+<h2>advertisement</h2>
+<script class="example-code" type="text/plain">
+ViberPlay.advertisement.getInterstitialAdAsync('AD_00')
+.then( adInstance => {
+  console.log(adInstance.getPlacementID())
+});
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.advertisement.getInterstitialAdAsync('AD_00')
+.then( adInstance => {
+  adInstance.loadAsync().then(rsp => {
+    console.log(rsp)
+  })
+});
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.advertisement.getInterstitialAdAsync('AD_00')
+.then( adInstance => {
+  adInstance.showAsync().then(rsp => {
+    console.log(rsp)
+  })
+});
+</script>
+</div>
+
 <div style="height:70vh"></div>
 </div>
 

@@ -29,6 +29,7 @@ import {
 import * as _context from './context'
 import * as _player from './player'
 import * as _payments from './payments'
+import * as _advertisement from './advertisement'
 
 /**
  * `ViberPlay.context` namespace contains context related APIs
@@ -45,6 +46,7 @@ export const player = _player
  */
 export const payments = _payments
 
+export const advertisement = _advertisement
 /**
  * To prevent dupe initialization.
  * @hidden
