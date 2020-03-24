@@ -394,6 +394,23 @@ ViberPlay.context.chooseAsync({minSize: 3})
 ViberPlay.context.chooseAsync({filters: ['NEW_INVITATIONS_ONLY'], hoursSinceInvitation: 24})
   .then(() => console.log(ViberPlay.context.getID()));
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({
+  description: 'Some description',
+}).then(() => console.log(ViberPlay.context.getID()));
+</script>
+<script class="example-code" type="text/plain">
+ViberPlay.context.chooseAsync({
+  description: {
+    default: 'Description in l10n fallback',
+    localizations: {
+      ja_JP: 'Description in ja_JP',
+      en_US: 'Description in en_US',
+      ru_RU: 'Description in ru_RU',
+    },
+  }
+}).then(() => console.log(ViberPlay.context.getID()));
+</script>
 </div>
 
 <div class="section">
