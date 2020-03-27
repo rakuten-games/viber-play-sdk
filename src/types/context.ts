@@ -1,3 +1,4 @@
+import { LocalizableContent } from './localizable-content'
 import ContextPlayer from '../models/context-player';
 
 /**
@@ -30,6 +31,11 @@ export interface ContextChoosePayload {
    * When not specified, it will filter out any friend who has been sent a message.
    */
   hoursSinceInvitation?: number;
+  /** 
+   * Optional customizable text field in the share UI.
+   * This can be used to describe the incentive a user can get from sharing.
+   */
+  description?: string | LocalizableContent,
 }
 
 export interface ContextSizeResponse {
