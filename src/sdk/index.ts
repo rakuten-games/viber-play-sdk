@@ -211,6 +211,7 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
  *   data: { someData: '...' },
  *   description: 'Win 100 gems for every friend who joins from your invite.',
  *   ui: 'MULTIPLE',
+ *   cta: 'BATTLE',
  * }).then(function(shareResult) {
  *   console.log(shareResult); // {sharedCount: 3}
  * });
@@ -235,9 +236,28 @@ export function shareAsync (payload: SharePayload): Promise<ShareResult> {
     }
   }
 
+  let cta;
+
+  if (typeof payload.cta === 'string') {
+    ({ cta } = payload);
+  } else if (typeof payload.cta === 'object') {
+    const locale = getLocale();
+    cta = getLocalizationString(locale, payload.cta);
+
+    if (!cta) {
+      const err = {
+        code: 'INVALID_PARAM',
+        message: 'No matched localization on cta'
+      };
+
+      throw err;
+    }
+  }
+
   return conn.request<ShareResponse>('sgShare', { 
     ...payload,
-    description
+    description,
+    cta,
   })
 }
 

@@ -43,4 +43,6 @@ export interface SharePayload {
    * MULTIPLE: Selectable contact list.
   */
   ui?: 'DEFAULT' | 'MULTIPLE',
+  /** Text of the call to action button. If not specified, "Play" will be used by default. */
+  cta?: string | LocalizableContent,  
 };
