@@ -254,10 +254,29 @@ export function shareAsync (payload: SharePayload): Promise<ShareResult> {
     }
   }
 
+  let text;
+
+  if (typeof payload.text === 'string') {
+    ({ text } = payload);
+  } else if (typeof payload.text === 'object') {
+    const locale = getLocale();
+    text = getLocalizationString(locale, payload.text);
+
+    if (!text) {
+      const err = {
+        code: 'INVALID_PARAM',
+        message: 'No matched localization on text'
+      };
+
+      throw err;
+    }
+  }
+
   return conn.request<ShareResponse>('sgShare', { 
     ...payload,
     description,
     cta,
+    text,
   })
 }
 
