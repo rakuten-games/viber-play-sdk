@@ -571,7 +571,8 @@ ViberPlay.shareAsync({
   image: createImg(1200, 1200),
   text: 'Some share async test message',
   data: {foo: 'bar'},
-  description: 'Some description'
+  description: 'Some description',
+  cta: 'coustm cta text',
 }).then((res) => console.log(res));
 </script>
 <script class="example-code" type="text/plain">
@@ -595,7 +596,15 @@ ViberPlay.shareAsync({
       en_US: 'Description in en_US',
       ru_RU: 'Description in ru_RU',
     },
-  }
+  },
+  cta: {
+    default: 'Play in l10n fallback',
+    localizations: {
+      ja_JP: 'Play in ja_JP',
+      en_US: 'Play in en_US',
+      ru_RU: 'Play in ru_RU',
+    },
+  },
 }).then((res) => console.log(res));
 </script>
 <script class="example-code" type="text/plain">
