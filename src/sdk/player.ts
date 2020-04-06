@@ -73,7 +73,6 @@ export function setDataAsync (data: object): Promise<void> {
     .request<PlayerSetDataResponse>('sgPlayerSetData', { data })
     .then(res => {
       state.playerData = res.data;
-      flushDataAsync();
     })
 }
 
