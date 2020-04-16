@@ -23,11 +23,7 @@ build_lib() {
   echo "Cleaning up existing builds..."
   rm -rf lib
 
-  if [[ $1 == 'node' ]]; then
-    yarn run build:node
-  else
-    yarn run build
-  fi
+  yarn run build
 }
 
 build_and_deploy_unstable() {
@@ -79,7 +75,7 @@ build_and_deploy_stable() {
 }
 
 build_and_deploy_npm() {
-  NODE_ENV=production build_lib 'node'
+  NODE_ENV=production build_lib
 
   echo "Ready to run npm publish"
 }
