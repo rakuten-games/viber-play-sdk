@@ -2,6 +2,7 @@ import { CurrentPlayer, PlayerData } from '../types/player';
 import { CurrentContext } from '../types/context';
 import { EntryPointData } from '../types/entry-point-data';
 import { TrafficSource } from '../types/traffic-source';
+import { Platform } from '../types/platform';
 
 /** @hidden */
 interface State {
@@ -11,6 +12,7 @@ interface State {
   entryPointData: EntryPointData;
   trafficSource: TrafficSource;
   playerData: PlayerData;
+  platform: Platform;
 }
 
 /**
@@ -34,7 +36,8 @@ const state: State = {
   },
   entryPointData: {},
   trafficSource: {},
-  playerData: {}
+  playerData: {},
+  platform: 'WEB',
 };
 
 export default state;

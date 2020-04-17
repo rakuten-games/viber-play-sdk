@@ -9,8 +9,7 @@ import ContextPlayer from '../models/context-player';
  * `NEW_PLAYERS_ONLY` only enlists fiends who haven't played this game before.
  * `NEW_INVITATIONS_ONLY` only enlists friends who haven't been sent an in-game message before. This filter can be fine-tuned with `hoursSinceInvitation` parameter.
  */
-export type ContextFilter =
-  | 'NEW_CONTEXT_ONLY'
+export type ContextFilter = 'NEW_CONTEXT_ONLY'
   | 'INCLUDE_EXISTING_CHALLENGES'
   | 'NEW_PLAYERS_ONLY'
   | 'NEW_INVITATIONS_ONLY';

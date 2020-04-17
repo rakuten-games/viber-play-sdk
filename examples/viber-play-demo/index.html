@@ -16,7 +16,7 @@ document.write(
     'ipt src="' +
     (/localhost/.test(location.href)
       ? '../../lib/bundle.js'
-      : 'https://vbrpl.io/libs/viber-play-sdk/1.7.0/bundle.js') +
+      : 'https://vbrpl.io/libs/viber-play-sdk/next/bundle.js') +
     '"></scr' +
     'ipt>'
 );
@@ -714,6 +714,9 @@ console.log(ViberPlay.getTrafficSource());
 </script>
 <script class="example-code" type="text/plain">
 ViberPlay.getEntryPointAsync().then(console.log);
+</script>
+<script class="example-code" type="text/plain">
+console.log(ViberPlay.getPlatform())
 </script>
 </div>
 
