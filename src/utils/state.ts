@@ -37,7 +37,7 @@ const state: State = {
   entryPointData: {},
   trafficSource: {},
   playerData: {},
-  platform: 'WEB',
+  platform: 'DESKTOP',
 };
 
 export default state;
