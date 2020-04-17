@@ -10,6 +10,7 @@ import { Product, Purchase } from './iap';
 import { LeaderboardEntryRawData } from './leaderboard';
 import { AdInstanceRawData } from './ad-instance';
 import { Signature } from './signature';
+import { Platform } from './platform';
 
 /** @hidden */
 export interface ReadyResponse {
@@ -28,6 +29,7 @@ export interface InitializeResponse {
   context: CurrentContext;
   entryPointData: EntryPointData;
   trafficSource: TrafficSource;
+  platform: Platform;
 }
 
 /** @hidden */

@@ -13,6 +13,7 @@ import { InitializationOptions } from '../types/initialization';
 import { ShareResult } from '../types/share-result';
 import { EntryPointData } from '../types/entry-point-data';
 import { TrafficSource } from '../types/traffic-source';
+import { Platform } from '../types/platform';
 import {
   InitializeResponse,
   ShareResponse,
@@ -79,11 +80,12 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
           : 'next'
       }`
     })
-    .then(({ player, context, entryPointData, trafficSource }) => {
+    .then(({ player, context, entryPointData, trafficSource, platform }) => {
       state.player = player;
       state.context = context;
       state.entryPointData = entryPointData;
       state.trafficSource = trafficSource;
+      state.platform = platform;
     })
     .then(() => undefined);
 }
@@ -533,4 +535,16 @@ export function getEntryPointAsync (): Promise<string> {
   return Promise.resolve(getTrafficSource()).then(
     trafficSource => trafficSource['r_entrypoint'] || ''
   )
+}
+
+/**
+ * Get information about from which platform the game is started, regarding OS
+ * or browser.
+ * @example
+ * ```
+ * console.log(ViberPlay.getPlatform()) // 'ANDROID'
+ * ```
+ */
+export function getPlatform (): Platform {
+  return state.platform
 }
