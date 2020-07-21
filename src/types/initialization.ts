@@ -5,4 +5,4 @@ export interface InitializationOptions {
    * If scrolling lock needs to be disabled, set `document.body` here.
    */
   scrollTarget?: string | Element,
-};
+}

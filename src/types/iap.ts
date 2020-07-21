@@ -13,14 +13,14 @@ export interface Product {
   price: string,
   /** A string representing which currency is the price calculated in, following [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) */
   priceCurrencyCode: string
-};
+}
 
 export interface PurchaseConfig {
   /** ID of the product */
   productID: string,
   /** Optional payload assigned by game developer, which will be also attached in the signed purchase request */
   developerPayload?: string
-};
+}
 
 export interface Purchase {
   /** Optional payload assigned by game developer, which will be also attached in the signed purchase request */
@@ -35,4 +35,4 @@ export interface Purchase {
   purchaseToken: string,
   /** Signature of the purchase info for server side verification */
   signedRequest: Signature
-};
+}

@@ -47,12 +47,6 @@ export const player = _player
 export const payments = _payments
 
 /**
- * To prevent dupe initialization.
- * @hidden
- */
-let isInitialized = false;
-
-/**
  * Initialize the SDK for the game.
  * In the background, SDK will try to setup environment and retrieve data for later use in the game.
  * We recommend calling this API in the game ASAP to shorten the total loading wait time for players.
@@ -65,8 +59,6 @@ let isInitialized = false;
  * @param options - Extra options to alter the runtime behavior of the SDK.
  */
 export function initializeAsync (options: InitializationOptions = {}): Promise<void> {
-  if (isInitialized) return Promise.resolve();
-
   if (options.scrollTarget) {
     lock(options.scrollTarget);
   }
@@ -100,7 +92,7 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
  * ViberPlay.setLoadingProgress(50) // The game is halfway loaded
  * ```
  */
-export function setLoadingProgress (percentage: number = 0): void {
+export function setLoadingProgress (percentage = 0): void {
   conn.request<SetLoadingProgressResponse>('sgSetLoadingProgress', {
     loadingProgress: Math.min(100, Math.max(Math.round(percentage), 0))
   });

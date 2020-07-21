@@ -29,4 +29,4 @@ export interface CustomUpdatePayload {
    * Not in use. For now, all messages sent will trigger a push notification.
    */
   notification?: 'NO_PUSH' | 'PUSH',
-};
+}
