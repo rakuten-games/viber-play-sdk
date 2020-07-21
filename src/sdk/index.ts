@@ -186,7 +186,7 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
       text,
       cta
     })
-    .then(() => {});
+    .then(() => { return });
 }
 
 /**
@@ -334,7 +334,7 @@ export function onPause (): void {
  * // {"high-score":1000,"current-stage":"stage2"} will be sent with the game_play webhook event
  * ```
  */
-export function setSessionData (sessionData: object): void {
+export function setSessionData (sessionData: Record<string, unknown>): void {
   let serializedString;
 
   try {
@@ -467,7 +467,7 @@ export function getRewardedVideoAdAsync (
  * })
  * ```
  */
-export function switchGameAsync (gameId: string, data?: object): Promise<void> {
+export function switchGameAsync (gameId: string, data?: Record<string, unknown>): Promise<void> {
   /* eslint-disable prefer-promise-reject-errors */
   let serializedData;
 

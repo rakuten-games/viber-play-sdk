@@ -1,1 +1,1 @@
-export interface EntryPointData {}
+export type EntryPointData = Record<string, unknown>

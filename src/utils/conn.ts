@@ -62,7 +62,7 @@ export class Messenger {
     );
   }
 
-  request<T>(command: string, opts?: object) {
+  request<T>(command: string, opts?: Record<string, unknown>) {
     return new Promise((resolve, reject) => {
       this.target.then(source => {
         const id = send(source, {

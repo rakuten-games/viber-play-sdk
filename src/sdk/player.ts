@@ -68,7 +68,7 @@ export function getDataAsync (keys: string[]): Promise<PlayerData> {
  *  })
  * ```
  */
-export function setDataAsync (data: object): Promise<void> {
+export function setDataAsync (data: Record<string, unknown>): Promise<void> {
   return conn
     .request<PlayerSetDataResponse>('sgPlayerSetData', { data })
     .then(res => {
