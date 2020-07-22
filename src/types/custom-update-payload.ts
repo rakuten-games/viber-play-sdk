@@ -16,7 +16,7 @@ export interface CustomUpdatePayload {
    * It can be accessed from `ViberPlay.getEntryPointData()`.
    * Its size must be <=1000 chars when stringified.
    */
-  data?: Object,
+  data?: Record<string, unknown>,
   /**
    * Defines how the update message should be delivered.
    * 'IMMEDIATE': will be sent immediately.
@@ -29,4 +29,4 @@ export interface CustomUpdatePayload {
    * Not in use. For now, all messages sent will trigger a push notification.
    */
   notification?: 'NO_PUSH' | 'PUSH',
-};
+}

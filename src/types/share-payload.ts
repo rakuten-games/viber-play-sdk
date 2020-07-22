@@ -16,7 +16,7 @@ export interface SharePayload {
    * It can be accessed from `ViberPlay.getEntryPointData()`.
    * Its size must be <=1000 chars when stringified.
    */
-  data?: object,
+  data?: Record<string, unknown>,
   /**
    * An array of filters to be applied to the friend list.
    * (Please note that filter combinations are not supported. Only the first filter is respected, the later ones are simply just ignored.)
@@ -45,4 +45,4 @@ export interface SharePayload {
   ui?: 'DEFAULT' | 'MULTIPLE',
   /** Text of the call to action button. If not specified, "Play" will be used by default. */
   cta?: string | LocalizableContent,  
-};
+}

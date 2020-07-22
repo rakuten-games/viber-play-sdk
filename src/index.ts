@@ -17,6 +17,6 @@ conn
   .then(({ gameId }) => {
     state.gameId = gameId;
   })
-  .catch(() => {});
+  .catch(() => { return });
 
 export default ViberPlay;
