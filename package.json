@@ -32,7 +32,7 @@
     "http-server": "^0.12.3",
     "ts-loader": "^8.0.1",
     "typedoc": "0.17.8",
-    "typedoc-plugin-viber-play-sdk-markdown": "1.0.3",
+    "typedoc-plugin-viber-play-sdk-markdown": "2.3.2",
     "typescript": "^3.2.2",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
