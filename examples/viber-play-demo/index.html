@@ -718,6 +718,12 @@ ViberPlay.getEntryPointAsync().then(console.log);
 <script class="example-code" type="text/plain">
 console.log(ViberPlay.getPlatform())
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.onPause(() => {
+  console.log('Pause gameplay')
+})
+console.log('Listening to pause event')
+</script>
 </div>
 
 <div class="section">

@@ -31,21 +31,35 @@ export class Messenger {
       (receivedRequest: ReceivedRequest) => {
         const { command } = receivedRequest.data;
 
-        if (command === 'resize') {
-          try {
-            if (IS_IOS) {
-              document.body.style.display = 'none';
-              this.width = document.body.offsetWidth;
-            }
+        switch (command) {
+          case 'resize': {
+            try {
+              if (IS_IOS) {
+                document.body.style.display = 'none';
+                this.width = document.body.offsetWidth;
+              }
 
-            window.dispatchEvent(new Event('resize'));
-          } finally {
-            if (IS_IOS) {
-              document.body.style.display = 'block';
+              window.dispatchEvent(new Event('resize'));
+            } finally {
+              if (IS_IOS) {
+                document.body.style.display = 'block';
+              }
             }
+            break;
           }
+          case 'pause': {
+            const event = new Event('game-wrapper:pause');
+            window.dispatchEvent(event);
+            break;
+          }
+          case 'unpause': {
+            const event = new Event('game-wrapper:unpause');
+            window.dispatchEvent(event);
+            break;
+          }
+          default:
+            break;
         }
-        // currently, the game-wrapper does not make any requests to the game
       },
       ({
         id,
