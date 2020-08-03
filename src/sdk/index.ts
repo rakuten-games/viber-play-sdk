@@ -46,6 +46,8 @@ export const player = _player
  */
 export const payments = _payments
 
+const pauseCallbacks = new Set<() => void>()
+
 /**
  * Initialize the SDK for the game.
  * In the background, SDK will try to setup environment and retrieve data for later use in the game.
@@ -62,6 +64,11 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
   if (options.scrollTarget) {
     lock(options.scrollTarget);
   }
+
+  // handle pause event dispatched from conn
+  window.addEventListener('game-wrapper:pause', () => {
+    pauseCallbacks.forEach(fn => fn())
+  })
 
   return conn
     .request<InitializeResponse>('sgInitialize', {
@@ -305,11 +312,18 @@ export function getEntryPointData (): EntryPointData {
   return state.entryPointData || {}
 }
 
+
 /**
- * Set a callback which will be invoked when game is paused due to native changes.
- * Not supported.
+ * Set a callback which will be invoked when the app is brought to background.
+ * @example
+ * ```
+ * ViberPlay.onPause(() => {
+ *   pauseGameplay()
+ * })
+ * ```
  */
-export function onPause (): void {
+export function onPause (fn: () => void): void {
+  pauseCallbacks.add(fn)
   return
 }
 
