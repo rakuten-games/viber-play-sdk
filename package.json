@@ -9,9 +9,7 @@
     "start:examples": "./scripts/start-examples.sh",
     "prebuild": "rm -rf lib",
     "build": "webpack -p",
-    "document": "yarn run document:md && yarn run document:website",
-    "document:md": "rm -rf docs && typedoc",
-    "document:website": "rsync -avz docs/ website/docs/",
+    "document": "rm -rf docs && typedoc",
     "deploy": "./scripts/deploy.sh",
     "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
   },
