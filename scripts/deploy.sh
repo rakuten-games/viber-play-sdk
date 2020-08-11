@@ -40,7 +40,7 @@ build_and_deploy_unstable() {
     cp -Z -a public-read build/$i/* $gs_path_root/$i/
 
   echo "Invalidating cache..."
-  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
+  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" --async
 }
 
 build_and_deploy_stable() {
