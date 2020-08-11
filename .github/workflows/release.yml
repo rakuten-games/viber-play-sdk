@@ -5,7 +5,7 @@ on:
       - 'v*'
 jobs:
   release:
-    name: Tag release
+    name: Release
     runs-on: ubuntu-latest
     steps:
     - name: Get version
@@ -20,9 +20,11 @@ jobs:
         release_name: ${{ steps.get_version.outputs.version }}
         body: |
           ## Updates
+          
           - TK
 
           ## Fixes
+          
           - TK
         draft: true
         prerelease: false
