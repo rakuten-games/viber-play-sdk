@@ -2,7 +2,7 @@
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 version=$(git describe --abbrev=0 --tags)
-cdn_id=cdn-rgames-jp-lb
+cdn_id=global-services
 gs_path_root=gs://vbrpl-libs/libs/viber-play-sdk
 
 cleanup() {
