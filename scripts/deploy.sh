@@ -1,7 +1,7 @@
 #!/bin/bash
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-version=$(git describe --abbrev=0 --tags)
+version=$(git tag --points-at HEAD)
 cdn_id=global-services
 gs_path_root=gs://vbrpl-libs/libs/viber-play-sdk
 
@@ -80,7 +80,7 @@ build_and_deploy_npm() {
   echo "Ready to run npm publish"
 }
 
-releasable_branch_re="^release/.*|master$"
+releasable_branch_re="^master$"
 if [[ $current_branch =~ $releasable_branch_re ]]; then
   # for release branch
   if [ -n $version ]; then
