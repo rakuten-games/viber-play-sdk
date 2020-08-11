@@ -38,9 +38,9 @@ jobs:
     # publish to npm
     - run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
 
-    - run: npm version prepatch
-
     - env:
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npm publish
+      run: |
+        npm version prepatch &&
+        npm publish
 
