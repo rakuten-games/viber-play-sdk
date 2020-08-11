@@ -11,7 +11,7 @@
     "build": "webpack -p",
     "document": "rm -rf docs && typedoc",
     "deploy": "./scripts/deploy.sh",
-    "deploy:examples": "dotenv ./scripts/deploy-examples.sh"
+    "deploy:examples": "./scripts/deploy-examples.sh"
   },
   "dependencies": {
     "body-scroll-lock": "^3.0.3",
@@ -23,8 +23,6 @@
     "@types/node": "^14.0.24",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
-    "dotenv-cli": "^3.2.0",
-    "dotenv-webpack": "^2.0.0",
     "eslint": "^7.5.0",
     "eslint-loader": "^4.0.2",
     "http-server": "^0.12.3",
@@ -32,6 +30,7 @@
     "typedoc": "0.17.8",
     "typedoc-plugin-viber-play-sdk-markdown": "2.3.2",
     "typescript": "^3.2.2",
+    "vputil": "^1.0.1",
     "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
   },

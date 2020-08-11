@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const Dotenv = require('dotenv-webpack');
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -41,7 +40,6 @@ const getWebpackConfig = () => ({
   },
   devtool: IS_PRODUCTION ? 'hidden-source-map' : 'eval-source-map',
   plugins: [
-    new Dotenv(),
     new webpack.DefinePlugin({
       'process.env.npm_package_name': JSON.stringify(process.env.npm_package_name),
       'process.env.npm_package_version': JSON.stringify(IS_PRODUCTION ? process.env.npm_package_version : 'next')
