@@ -1,0 +1,30 @@
+name: Release
+on:
+  push:
+    tags: 
+      - 'v*'
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=version::${GITHUB_REF#refs\/tags\//}
+    - name: Tag release
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.version }}
+        release_name: ${{ steps.get_version.outputs.version }}
+        body: |
+          ## Updates
+          
+          - TK
+
+          ## Fixes
+          
+          - TK
+        draft: true
+        prerelease: false

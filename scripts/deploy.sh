@@ -1,8 +1,8 @@
 #!/bin/bash
 
 current_branch=$(git rev-parse --abbrev-ref HEAD)
-version=$(git describe --abbrev=0 --tags)
-cdn_id=cdn-rgames-jp-lb
+version=$(git tag --points-at HEAD)
+cdn_id=global-services
 gs_path_root=gs://vbrpl-libs/libs/viber-play-sdk
 
 cleanup() {
@@ -40,7 +40,7 @@ build_and_deploy_unstable() {
     cp -Z -a public-read build/$i/* $gs_path_root/$i/
 
   echo "Invalidating cache..."
-  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" &
+  gcloud --project rgames-portal-jp-production compute url-maps invalidate-cdn-cache $cdn_id --path "/libs/viber-play-sdk/$i/bundle.js" --async
 }
 
 build_and_deploy_stable() {
@@ -80,7 +80,7 @@ build_and_deploy_npm() {
   echo "Ready to run npm publish"
 }
 
-releasable_branch_re="^release/.*|master$"
+releasable_branch_re="^master$"
 if [[ $current_branch =~ $releasable_branch_re ]]; then
   # for release branch
   if [ -n $version ]; then
