@@ -1,0 +1,8 @@
+{
+  auto_https  disable_redirects
+}
+
+localhost:8080 {
+  tls internal
+  file_server browse
+}
