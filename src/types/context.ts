@@ -1,5 +1,6 @@
 import { LocalizableContent } from './localizable-content'
-import ContextPlayer from '../models/context-player';
+import ContextPlayer from '../models/context-player'
+import { PlayerRawData } from './player'
 
 /**
  * Defines the filtering behavior
@@ -51,5 +52,5 @@ export interface CurrentContext {
   id: string | null;
   type: 'SOLO' | 'THREAD';
   size: number;
-  connectedPlayers: ContextPlayer[];
+  connectedPlayers: ContextPlayer[] | PlayerRawData[];
 }

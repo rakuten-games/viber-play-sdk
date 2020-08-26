@@ -2,6 +2,7 @@ import conn from '../utils/conn';
 import state from '../utils/state';
 
 import ContextPlayer from '../models/context-player';
+import { PlayerRawData } from '../types/player'
 import { ContextChoosePayload, ContextSizeResponse } from '../types/context';
 import {
   ContextCreateContextResponse,
@@ -277,7 +278,7 @@ export function chooseAsync (payload: ContextChoosePayload): Promise<void> {
  * });
  * ```
  */
-export function getPlayersAsync (): Promise<ContextPlayer[]> {
+export function getPlayersAsync (): Promise<PlayerRawData[] | ContextPlayer[]> {
   return Promise.resolve()
     .then(() => {
       if (!state.context.id) {
