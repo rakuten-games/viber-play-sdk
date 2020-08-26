@@ -5,5 +5,5 @@
 export interface LocalizableContent {
   /** Text will be used if not finding matching locale */
   default: string,
-  [locale: string]: string,
+  localizations: Record<string, string>
 }
