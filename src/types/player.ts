@@ -14,16 +14,16 @@ export interface PlayerRawData {
 
 /** @hidden */
 export interface CurrentPlayer {
-  name: string | null;
-  id: string | null;
-  photo: string | null;
-  connectedPlayers: ConnectedPlayer[];
+  name: string | null,
+  id: string | null,
+  photo: string | null,
+  connectedPlayers: ConnectedPlayer[],
 }
 
 /** @hidden */
 export interface InitializeResponsePlayer {
-  name: string | null;
-  id: string | null;
-  photo: string | null;
-  connectedPlayers: PlayerRawData[];
+  name: string,
+  id: string,
+  photo: string,
+  connectedPlayers: PlayerRawData[],
 }
