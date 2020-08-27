@@ -17,5 +17,13 @@ export interface CurrentPlayer {
   name: string | null;
   id: string | null;
   photo: string | null;
-  connectedPlayers?: ConnectedPlayer[];
+  connectedPlayers: ConnectedPlayer[];
+}
+
+/** @hidden */
+export interface InitializeResponsePlayer {
+  name: string | null;
+  id: string | null;
+  photo: string | null;
+  connectedPlayers: PlayerRawData[];
 }

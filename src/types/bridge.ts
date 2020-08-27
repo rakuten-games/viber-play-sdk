@@ -1,9 +1,9 @@
 import {
-  CurrentPlayer,
+  InitializeResponsePlayer,
   PlayerRawData,
   PlayerData
 } from './player';
-import { CurrentContext } from './context';
+import { InitializeResponseContext } from './context';
 import { EntryPointData } from './entry-point-data';
 import { TrafficSource } from './traffic-source';
 import { Product, Purchase } from './iap';
@@ -25,8 +25,8 @@ export type StartGameResponse = void;
 
 /** @hidden */
 export interface InitializeResponse {
-  player: CurrentPlayer;
-  context: CurrentContext;
+  player: InitializeResponsePlayer;
+  context: InitializeResponseContext;
   entryPointData: EntryPointData;
   trafficSource: TrafficSource;
   platform: Platform;

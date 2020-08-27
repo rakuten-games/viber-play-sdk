@@ -52,5 +52,13 @@ export interface CurrentContext {
   id: string | null;
   type: 'SOLO' | 'THREAD';
   size: number;
-  connectedPlayers: ContextPlayer[] | PlayerRawData[];
+  connectedPlayers: ContextPlayer[];
+}
+
+/** @hidden */
+export interface InitializeResponseContext {
+  id: string | null;
+  type: 'SOLO' | 'THREAD';
+  size: number;
+  connectedPlayers: PlayerRawData[];
 }

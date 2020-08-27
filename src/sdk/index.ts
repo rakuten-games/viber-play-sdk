@@ -26,6 +26,8 @@ import {
   GetInterstitialAdResponse
 } from '../types/bridge';
 
+import ContextPlayer from '../models/context-player';
+
 import * as _context from './context'
 import * as _player from './player'
 import * as _payments from './payments'
@@ -79,8 +81,20 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
       }`
     })
     .then(({ player, context, entryPointData, trafficSource, platform }) => {
-      state.player = player;
-      state.context = context;
+      state.player = {
+        ...player,
+        // Convert reponse player.connectedPlayers to ContextPlayer instance
+        connectedPlayers: player.connectedPlayers ? player.connectedPlayers.map(
+          player => new ContextPlayer(player)
+        ):[]
+      };
+      state.context = {
+        ...context,
+        // Convert reponse context.connectedPlayers to ContextPlayer instance
+        connectedPlayers: context.connectedPlayers ? context.connectedPlayers.map(
+          player => new ContextPlayer(player)
+        ) : []
+      };
       state.entryPointData = entryPointData;
       state.trafficSource = trafficSource;
       state.platform = platform;
