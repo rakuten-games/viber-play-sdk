@@ -1,6 +1,5 @@
 import conn from '../utils/conn';
 import state from '../utils/state';
-import getLocalizationString from '../utils/get-localization-string';
 
 import ContextPlayer from '../models/context-player';
 import { ContextChoosePayload, ContextSizeResponse } from '../types/context';
@@ -180,25 +179,7 @@ export function switchAsync (contextId: string): Promise<void> {
  */
 export function chooseAsync (payload: ContextChoosePayload): Promise<void> { 
   return Promise.resolve().then(() => {
-    let description = '';
     if (payload) {
-
-      if (typeof payload.description === 'string') {
-        ({ description } = payload);
-      } else if (typeof payload.description === 'object') {
-        const locale = getLocale();
-        description = getLocalizationString(locale, payload.description);
-
-        if (!description) {
-          const err = {
-            code: 'INVALID_PARAM',
-            message: 'No matched localization on description'
-          };
-
-          throw err;
-        }
-      }
-
       if (payload.filters) {
         for (let i = 0; i < payload.filters.length; i += 1) {
           if (
@@ -277,7 +258,6 @@ export function chooseAsync (payload: ContextChoosePayload): Promise<void> {
     return conn
       .request<ContextChooseContextResponse>('sgContextChooseContext', {
         ...payload,
-        description,
       })
       .then(({ id, type, size }) => {
         state.context.id = id;

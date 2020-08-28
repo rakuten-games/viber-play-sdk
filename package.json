@@ -11,7 +11,8 @@
     "build": "webpack -p",
     "document": "rm -rf docs && typedoc",
     "deploy": "./scripts/deploy.sh",
-    "deploy:examples": "./scripts/deploy-examples.sh"
+    "deploy:examples": "./scripts/deploy-examples.sh",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
     "body-scroll-lock": "^3.0.3",

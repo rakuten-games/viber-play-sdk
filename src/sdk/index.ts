@@ -5,7 +5,6 @@ import conn from '../utils/conn';
 import state from '../utils/state';
 import Leaderboard from '../models/leaderboard';
 import { InterstitialAdInstance, RewardedVideoAdInstance } from '../models/ad-instance';
-import getLocalizationString from '../utils/get-localization-string';
 import { lock } from '../utils/scroll-lock';
 import { CustomUpdatePayload } from '../types/custom-update-payload';
 import { SharePayload } from '../types/share-payload';
@@ -26,6 +25,8 @@ import {
   SetSessionDataResponse,
   GetInterstitialAdResponse
 } from '../types/bridge';
+
+import ContextPlayer from '../models/context-player';
 
 import * as _context from './context'
 import * as _player from './player'
@@ -80,8 +81,20 @@ export function initializeAsync (options: InitializationOptions = {}): Promise<v
       }`
     })
     .then(({ player, context, entryPointData, trafficSource, platform }) => {
-      state.player = player;
-      state.context = context;
+      state.player = {
+        ...player,
+        // Convert reponse player.connectedPlayers to ContextPlayer instance
+        connectedPlayers: player.connectedPlayers ? player.connectedPlayers.map(
+          player => new ContextPlayer(player)
+        ):[]
+      };
+      state.context = {
+        ...context,
+        // Convert reponse context.connectedPlayers to ContextPlayer instance
+        connectedPlayers: context.connectedPlayers ? context.connectedPlayers.map(
+          player => new ContextPlayer(player)
+        ) : []
+      };
       state.entryPointData = entryPointData;
       state.trafficSource = trafficSource;
       state.platform = platform;
@@ -150,48 +163,9 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
   if (!state.context.id) {
     return Promise.resolve();
   }
-
-  let text;
-
-  if (typeof payload.text === 'string') {
-    ({ text } = payload);
-  } else if (typeof payload.text === 'object') {
-    const locale = getLocale();
-    text = getLocalizationString(locale, payload.text);
-
-    if (!text) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'No matched localization on text'
-      };
-
-      throw err;
-    }
-  }
-
-  let cta;
-
-  if (typeof payload.cta === 'string') {
-    ({ cta } = payload);
-  } else if (typeof payload.cta === 'object') {
-    const locale = getLocale();
-    cta = getLocalizationString(locale, payload.cta);
-
-    if (!cta) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'No matched localization on cta'
-      };
-
-      throw err;
-    }
-  }
-
   return conn
     .request<UpdateResponse>('sgUpdate', {
       ...payload,
-      text,
-      cta
     })
     .then(() => { return });
 }
@@ -219,65 +193,8 @@ export function updateAsync (payload: CustomUpdatePayload): Promise<void> {
  * ```
  */
 export function shareAsync (payload: SharePayload): Promise<ShareResult> {
-  let description = '';
-
-  if (typeof payload.description === 'string') {
-    ({ description } = payload);
-  } else if (typeof payload.description === 'object') {
-    const locale = getLocale();
-    description = getLocalizationString(locale, payload.description);
-
-    if (!description) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'No matched localization on description'
-      };
-
-      throw err;
-    }
-  }
-
-  let cta;
-
-  if (typeof payload.cta === 'string') {
-    ({ cta } = payload);
-  } else if (typeof payload.cta === 'object') {
-    const locale = getLocale();
-    cta = getLocalizationString(locale, payload.cta);
-
-    if (!cta) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'No matched localization on cta'
-      };
-
-      throw err;
-    }
-  }
-
-  let text;
-
-  if (typeof payload.text === 'string') {
-    ({ text } = payload);
-  } else if (typeof payload.text === 'object') {
-    const locale = getLocale();
-    text = getLocalizationString(locale, payload.text);
-
-    if (!text) {
-      const err = {
-        code: 'INVALID_PARAM',
-        message: 'No matched localization on text'
-      };
-
-      throw err;
-    }
-  }
-
   return conn.request<ShareResponse>('sgShare', { 
     ...payload,
-    description,
-    cta,
-    text,
   })
 }
 
