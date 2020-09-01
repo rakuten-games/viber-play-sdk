@@ -49,3 +49,14 @@ h2 {
 .compiled-example-code button {
   height: 30px;
 }
+
+.appium-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 101;
+  display: none;
+}
