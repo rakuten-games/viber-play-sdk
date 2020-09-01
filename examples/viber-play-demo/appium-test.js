@@ -1,9 +1,9 @@
 document.querySelector('#appium-open').addEventListener('click', () => {
-  document.querySelector('.appium-panel').style.display = 'block';
+  document.querySelector('#appium-panel').style.display = 'block';
 });
 
 document.querySelector('#appium-close').addEventListener('click', () => {
-  document.querySelector('.appium-panel').style.display = 'none';
+  document.querySelector('#appium-panel').style.display = 'none';
 });
 
 document.querySelector('#appium-choose-async').addEventListener('click', () => {
