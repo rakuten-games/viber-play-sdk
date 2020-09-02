@@ -33,6 +33,23 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 
 <body>
 <div class="wrapper">
+
+<div class="section">
+  <a id="appium-open" href="#">Appium Test</a>
+</div>
+
+<div class="panel" id="appium-panel">
+  <div class="section">
+  <p>
+    <a id="appium-close" href="#">Close</a>
+  </p>
+  </div>
+  <div class="section">
+    <button id="appium-choose-async">ChooseAsync</button>
+    <button id="appium-update-async">UpdateAsync</button>
+  </div>
+</div>
+
 <div class="section">
 <h2>player info</h2>
 <p>id: <code id="player-id"></code></p>
@@ -777,14 +794,14 @@ ViberPlay.switchGameAsync('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
   console.log(navigator.userAgent);
   </script>
   </div>
-  
+
   <div class="section">
   <h2>screen size</h2>
   <script class="example-code" type="text/plain">
   console.log(window.innerWidth, window.innerHeight);
   </script>
   </div>
-  
+
   <div class="section">
   <h2>hijack console</h2>
   <script class="example-code" type="text/plain">
@@ -795,18 +812,18 @@ ViberPlay.switchGameAsync('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
   <script class="example-code" type="text/plain">
   console.log('LOG');
   console.log('1', '2', '3');
-  
+
   console.log(NaN);
   console.log(Infinity);
   console.log(-Infinity);
   console.log(null);
   console.log(undefined);
   console.log(window);
-  
+
   console.info('INFO');
-  
+
   console.warn('WARN');
-  
+
   console.error({code: 'ERROR'});
   console.error(new TypeError('ERROR'));
   </script>
@@ -832,10 +849,10 @@ for (var i = 0; i < 20; i++) {
 
 function createImg(width, height) {
   var canvas = document.createElement('canvas');
-  
+
   canvas.width = width;
   canvas.height = height;
-  
+
   var ctx = canvas.getContext('2d');
 
   ctx.fillRect(0, 0, width, height);
@@ -942,5 +959,6 @@ function createTOC() {
 createTOC();
 </script>
 <script src="example-code.js"></script>
+<script src="appium-test.js"></script>
 </body>
 </html>
