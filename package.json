@@ -26,7 +26,6 @@
     "@typescript-eslint/parser": "^3.7.0",
     "eslint": "^7.5.0",
     "eslint-loader": "^4.0.2",
-    "http-server": "^0.12.3",
     "ts-loader": "^8.0.1",
     "typedoc": "0.17.8",
     "typedoc-plugin-viber-play-sdk-markdown": "2.3.2",
