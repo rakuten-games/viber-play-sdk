@@ -26,7 +26,7 @@ export interface ContextChoosePayload {
   /** Context minimum size for matching */
   minSize?: number;
   /**
-   * Specify how long a friend should be filtered out after the curent player sends him/her a message.
+   * Specify how long a friend should be filtered out after the current player sends him/her a message.
    * This parameter only applies when `NEW_INVITATIONS_ONLY` filter is used.
    * When not specified, it will filter out any friend who has been sent a message.
    */
