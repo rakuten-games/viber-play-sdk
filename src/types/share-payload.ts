@@ -45,4 +45,8 @@ export interface SharePayload {
   ui?: 'DEFAULT' | 'MULTIPLE',
   /** Text of the call to action button. If not specified, "Play" will be used by default. */
   cta?: string | LocalizableContent,  
+  /**
+   * Optional property to directly send share messages to mutiple players.
+  */
+  playerIds?: string[]
 }

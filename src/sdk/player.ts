@@ -186,9 +186,9 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
  *   })
  * ```
  */
-export function getConnectedPlayersAsync ({ filter = 'INCLUDE_PLAYERS' } = {}): Promise<Array<ConnectedPlayer>> {
+export function getConnectedPlayersAsync (payload = {}): Promise<Array<ConnectedPlayer>> {
   return conn
-  .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { filter })
+  .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { ...payload })
   .then((res: { data: PlayerRawData[] }) => {
     const players = res.data.map((profile: PlayerRawData) => new ConnectedPlayer(profile));
 
