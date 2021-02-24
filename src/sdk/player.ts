@@ -14,7 +14,7 @@ import {
   SubscribeBotResponse,
 } from '../types/bridge';
 
-import { GetConnectedPlayerPayload } from '../types/player'
+import { GetConnectedPlayersPayload } from '../types/player'
 
 /**
  * Get game data from platform storage.
@@ -193,7 +193,7 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
  *   })
  * ```
  */
-export function getConnectedPlayersAsync (payload:GetConnectedPlayerPayload = {}): Promise<Array<ConnectedPlayer>> {
+export function getConnectedPlayersAsync (payload:GetConnectedPlayersPayload = {}): Promise<Array<ConnectedPlayer>> {
   return conn
   .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { ...payload })
   .then((res: { data: PlayerRawData[] }) => {

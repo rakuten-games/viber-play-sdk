@@ -41,7 +41,7 @@ export type ConnectedPlayerFilter = 'ALL'
   | 'INCLUDE_NON_PLAYERS'
   | 'NEW_INVITATIONS_ONLY'
 
-export interface GetConnectedPlayerPayload {
+export interface GetConnectedPlayersPayload {
   /**
    * Filter to be applied to the friend list.
    */
