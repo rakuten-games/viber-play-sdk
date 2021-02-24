@@ -634,6 +634,15 @@ ViberPlay.shareAsync({
   ui: 'MULTIPLE',
 }).then((res) => console.log(res));
 </script>
+<script class="example-code" type="text/plain">
+ViberPlay.shareAsync({
+  playerIds: ["5743558323601408", "4899133393469440", "6143854107426816"],
+  intent: 'REQUEST',
+  image: createImg(1200, 1200),
+  text: 'This is share async test message',
+  data: {foo: 'bar'}
+}).then((res) => console.log(res));
+</script>
 </div>
 
 <div class="section">
@@ -703,6 +712,11 @@ ViberPlay.player.getConnectedPlayersAsync()
 </script>
 <script class="example-code" type="text/plain">
   ViberPlay.player.getConnectedPlayersAsync({filter: 'INCLUDE_NON_PLAYERS'})
+    .then((players) => console.log(JSON.stringify(players.map(player =>
+      ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
+</script>
+<script class="example-code" type="text/plain">
+  ViberPlay.player.getConnectedPlayersAsync({filter: 'NEW_INVITATIONS_ONLY', cursor: 0, size: 25, hoursSinceInvitation: 4})
     .then((players) => console.log(JSON.stringify(players.map(player =>
       ({id: player.getID(), name: player.getName(), photo: player.getPhoto(), hasPlayed: player.hasPlayed()})))));
 </script>
