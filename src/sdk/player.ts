@@ -14,6 +14,8 @@ import {
   SubscribeBotResponse,
 } from '../types/bridge';
 
+import { GetConnectedPlayerPayload } from '../types/player'
+
 /**
  * Get game data from platform storage.
  * @param keys - An array of unique keys to retrieve data for.
@@ -171,11 +173,16 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
 
 /**
  * This returns an array containing the friends of the user who has played the current game before.
+ * @param payload Additional parameters to fine-tune the result.
  * @returns Array of connected players
  * @example
  * ```
- * ViberPlay.player.getConnectedPlayersAsync()
- *   .then(players => {
+ * ViberPlay.player.getConnectedPlayersAsync({
+ *   filter: 'NEW_INVITATIONS_ONLY',
+ *   cursor: 0,
+ *   size: 20,
+ *   hoursSinceInvitation: 4,
+ * }).then(players => {
  *     console.log(players.map(player => {
  *       return {
  *         id: player.getID(),
@@ -186,7 +193,7 @@ export function getSignedPlayerInfoAsync (payload?: string): Promise<SignedPlaye
  *   })
  * ```
  */
-export function getConnectedPlayersAsync (payload = {}): Promise<Array<ConnectedPlayer>> {
+export function getConnectedPlayersAsync (payload:GetConnectedPlayerPayload = {}): Promise<Array<ConnectedPlayer>> {
   return conn
   .request<PlayerGetConnectedPlayersResponse>('sgPlayerGetConnectedPlayers', { ...payload })
   .then((res: { data: PlayerRawData[] }) => {
