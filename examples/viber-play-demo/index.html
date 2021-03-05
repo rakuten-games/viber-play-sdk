@@ -210,6 +210,28 @@ ViberPlay.getRewardedVideoAsync(
     console.error(err);
   });
 </script>
+<script class="example-code" type="text/plain">
+// test rate limit
+window.preloadedAd = null;
+
+ViberPlay.getRewardedVideoAsync(
+  'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
+)
+  .then(function(rewardedVideo) {
+    preloadedAd = rewardedVideo;
+    return preloadedAd.loadAsync();
+  })
+  .then(function() {
+    console.log('rewardedVideo preloaded');
+  })
+  .then(function() {
+    preloadedAd.showAsync();
+    return preloadedAd.showAsync();
+  })
+  .catch(function(err){
+    console.error(err);
+  });
+</script>
 </div>
 
 <div class="section">
