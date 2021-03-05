@@ -98,7 +98,7 @@ export class InterstitialAdInstance extends AdInstance {
   }
 }
 
-export class RewardedVideoAdInstance extends AdInstance {
+export class RewardedVideoInstance extends AdInstance {
   /**
    * @hidden
    */
@@ -108,20 +108,22 @@ export class RewardedVideoAdInstance extends AdInstance {
   }
 
   loadAsync() {
-    const adsNoFillErr = {
-      code: 'ADS_NO_FILL',
-      message: 'Ads failed to be filled'
-    };
-
-    return Promise.reject(adsNoFillErr);
+    return Promise.resolve()
+      .then(() =>
+        conn.request('sgLoadRewardedVideo', {
+          placementId: this.$ad.placementId
+        })
+      )
+      .then(() => undefined);
   }
 
   showAsync() {
-    const adsNotLoadedErr = {
-      code: 'ADS_NOT_LOADED',
-      message: 'Ads failed to be filled or loaded'
-    };
-
-    return Promise.reject(adsNotLoadedErr);
+    return Promise.resolve()
+      .then(() =>
+        conn.request('sgShowRewardedVideo', {
+          placementId: this.$ad.placementId
+        })
+      )
+      .then(() => undefined);
   }
 }

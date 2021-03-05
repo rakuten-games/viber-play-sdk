@@ -178,7 +178,7 @@ ViberPlay.getInterstitialAdAsync(
     console.log('interstitialAd preloaded');
   })
   .then(function() {
-    preloadedAd.showAsync();
+    return preloadedAd.showAsync();
   })
   .then(function() {
     console.log('interstitialAd shown');
@@ -190,21 +190,21 @@ ViberPlay.getInterstitialAdAsync(
 <script class="example-code" type="text/plain">
 window.preloadedAd = null;
 
-ViberPlay.getRewardedVideoAdAsync(
+ViberPlay.getRewardedVideoAsync(
   'DUMMY_PLACEMENT_ID', // Your Ad Placement Id
 )
-  .then(function(rewardedVideoAd) {
-    preloadedAd = rewardedVideoAd;
+  .then(function(rewardedVideo) {
+    preloadedAd = rewardedVideo;
     return preloadedAd.loadAsync();
   })
   .then(function() {
-    console.log('rewardedVideoAd preloaded');
+    console.log('rewardedVideo preloaded');
   })
   .then(function() {
-    preloadedAd.showAsync();
+    return preloadedAd.showAsync();
   })
   .then(function() {
-    console.log('rewardedVideoAd shown');
+    console.log('rewardedVideo shown');
   })
   .catch(function(err){
     console.error(err);

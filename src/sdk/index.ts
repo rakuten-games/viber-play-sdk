@@ -4,7 +4,7 @@ import isPlainObject from 'lodash-es/isPlainObject';
 import conn from '../utils/conn';
 import state from '../utils/state';
 import Leaderboard from '../models/leaderboard';
-import { InterstitialAdInstance, RewardedVideoAdInstance } from '../models/ad-instance';
+import { InterstitialAdInstance, RewardedVideoInstance } from '../models/ad-instance';
 import { lock } from '../utils/scroll-lock';
 import { CustomUpdatePayload } from '../types/custom-update-payload';
 import { SharePayload } from '../types/share-payload';
@@ -368,17 +368,17 @@ export function getInterstitialAdAsync (
  * @category Experimental
  * @example
  * ```
- * ViberPlay.getRewardedVideoAdAsync('DUMMY_PLACEMENT_ID')
+ * ViberPlay.getRewardedVideoAsync('DUMMY_PLACEMENT_ID')
  *   .then(adInstance => {
  *     // do something
  *   })
  * ```
  */
-export function getRewardedVideoAdAsync (
+export function getRewardedVideoAsync (
   placementId: string
-): Promise<RewardedVideoAdInstance> {
+): Promise<RewardedVideoInstance> {
   return Promise.resolve(
-    new RewardedVideoAdInstance({
+    new RewardedVideoInstance({
       placementId
     })
   )
