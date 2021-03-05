@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
-import conn from '../utils/conn';
-import { AdInstanceRawData, AdType } from '../types/ad-instance';
+import conn from "../utils/conn";
+import { AdInstanceRawData, AdType } from "../types/ad-instance";
 
 /** @hidden */
 interface AdRawData {
@@ -23,7 +23,7 @@ export default class AdInstance implements IAdInstance {
    */
   constructor(payload: AdInstanceRawData) {
     this.$ad = {
-      placementId: payload.placementId
+      placementId: payload.placementId,
     };
   }
 
@@ -41,9 +41,6 @@ export default class AdInstance implements IAdInstance {
 
   /**
    * (Experimental) Start loading ad.
-   * Notes: On Android, the interstitial ad will start autoplaying right
-   * after it's loaded. To give the best result, please start loading the
-   * interstitial ad right before you want to show it.
    * @example
    * ```
    * // after adInstance is created
@@ -56,7 +53,8 @@ export default class AdInstance implements IAdInstance {
 
   /**
    * (Experimental) Show the loaded ad to player. The returned promise will be only resolved
-   * when user closed the ad's overlay.
+   * when user finished watching the ad. It will reject when ad is skipped during the playback
+   * or failed to load.
    * @example
    * ```
    * // after adInstance is loaded
@@ -80,8 +78,8 @@ export class InterstitialAdInstance extends AdInstance {
   loadAsync() {
     return Promise.resolve()
       .then(() =>
-        conn.request('sgLoadInterstitialAd', {
-          placementId: this.$ad.placementId
+        conn.request("sgLoadInterstitialAd", {
+          placementId: this.$ad.placementId,
         })
       )
       .then(() => undefined);
@@ -90,8 +88,8 @@ export class InterstitialAdInstance extends AdInstance {
   showAsync() {
     return Promise.resolve()
       .then(() =>
-        conn.request('sgShowInterstitialAd', {
-          placementId: this.$ad.placementId
+        conn.request("sgShowInterstitialAd", {
+          placementId: this.$ad.placementId,
         })
       )
       .then(() => undefined);
@@ -110,8 +108,8 @@ export class RewardedVideoInstance extends AdInstance {
   loadAsync() {
     return Promise.resolve()
       .then(() =>
-        conn.request('sgLoadRewardedVideo', {
-          placementId: this.$ad.placementId
+        conn.request("sgLoadRewardedVideo", {
+          placementId: this.$ad.placementId,
         })
       )
       .then(() => undefined);
@@ -120,8 +118,8 @@ export class RewardedVideoInstance extends AdInstance {
   showAsync() {
     return Promise.resolve()
       .then(() =>
-        conn.request('sgShowRewardedVideo', {
-          placementId: this.$ad.placementId
+        conn.request("sgShowRewardedVideo", {
+          placementId: this.$ad.placementId,
         })
       )
       .then(() => undefined);
