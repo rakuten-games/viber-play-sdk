@@ -80,7 +80,7 @@ build_and_deploy_npm() {
   echo "Ready to run npm publish"
 }
 
-releasable_branch_re="^develop$"
+releasable_branch_re="^master$"
 if [[ $current_branch =~ $releasable_branch_re ]]; then
   # for release branch
   if [ -n $version ]; then
