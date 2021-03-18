@@ -21,8 +21,7 @@ jobs:
           
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        service_account_email: github-actions@rgames-portal-jp-production.iam.gserviceaccount.com
-        service_account_key: ${{ secrets.GCS_UPLOAD_SA_KEY }}
+        service_account_key: ${{ secrets.GH_ACTIONS_PROD_SA_KEY }}
         export_default_credentials: true
 
     - id: yarn-cache-dir-path
